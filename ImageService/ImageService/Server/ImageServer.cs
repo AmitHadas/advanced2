@@ -31,11 +31,8 @@ namespace ImageService.Server
                 IDirectoryHandler handler = new DirectoryHandler(this.m_controller, this.m_logging);
                 // start listen to the directory
                handler.StartHandleDirectory(dir);
+                this.m_logging.Log("handler for " + dir + " was created", Logging.Modal.MessageTypeEnum.INFO);
           }
         }
-
-
-
-
     }
 }

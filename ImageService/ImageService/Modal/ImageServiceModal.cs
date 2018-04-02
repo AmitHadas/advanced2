@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Configuration;
-
+using ImageService.Logging;
 
 namespace ImageService.Modal
 {
@@ -19,9 +19,10 @@ namespace ImageService.Modal
 
         private string m_OutputFolder;            // The Output Folder
         private int m_thumbnailSize;              // The Size Of The Thumbnail Size
-
-        public ImageServiceModal()
+        private ILoggingService m_logging;
+        public ImageServiceModal(ILoggingService logging)
         {
+            this.m_logging = logging;
             this.m_OutputFolder = ConfigurationManager.AppSettings.Get("OutputDir");
             this.m_thumbnailSize = int.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
         }
@@ -29,6 +30,7 @@ namespace ImageService.Modal
         {
             return true;
         }
+
         public string AddFile(string path, out bool result)
         {
 
@@ -36,10 +38,12 @@ namespace ImageService.Modal
             if (!Directory.Exists(m_OutputFolder))
             {
                 System.IO.Directory.CreateDirectory(m_OutputFolder);
-// לטפלב log
+                this.m_logging.Log("The output folder " + this.m_OutputFolder + " was created", Logging.Modal.MessageTypeEnum.INFO);
                 System.IO.Directory.CreateDirectory(m_OutputFolder + "\\Thumbnails");
+                this.m_logging.Log("The thumbnail folder was created", Logging.Modal.MessageTypeEnum.INFO);
+
             }
-      
+
             Image myImage = Image.FromFile(path);
             PropertyItem propItem = null;
             string info = "";
@@ -72,14 +76,13 @@ namespace ImageService.Modal
                     Directory.CreateDirectory(monthPath);
                     Directory.CreateDirectory(thumbMonthPath);
                 }
-               //PictureBox1 pictureBox1 = pictureBox1.Image.Load("Image Path");
-               // string imgPath = pictureBox1.ImageLocation;
-               // string nameImage = imgPath.Substring(imgPath.LastIndexOf('\\') + 1);
-                
+               
                 System.IO.File.Copy(path, monthPath + "\\" + imageName);
+                this.m_logging.Log("The Image " + imageName + " was copied succesfully" , Logging.Modal.MessageTypeEnum.INFO);
                 Image thumb = Image.FromFile(path);
                 thumb = (Image)(new Bitmap(thumb, new Size(this.m_thumbnailSize, this.m_thumbnailSize)));
                 thumb.Save(thumbMonthPath + "\\" + imageName);
+                this.m_logging.Log("The thumbnail image " + imageName + " was created succesfully", Logging.Modal.MessageTypeEnum.INFO);
             }
             catch (Exception e)
             {
@@ -90,6 +93,8 @@ namespace ImageService.Modal
             return info;
         }
         
+        /// ////////////להשתמש בזה
+    
         public bool CreateFolder(string path)
         {
             System.IO.Directory.CreateDirectory(path);

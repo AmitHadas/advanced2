@@ -13,13 +13,12 @@ using ImageService.Logging.Modal;
 using ImageService.Server;
 using ImageService.Controller;
 using ImageService.Modal;
-
 namespace ImageService
 {
     public partial class ImageService : ServiceBase
     {
         private System.ComponentModel.IContainer components;
-        private System.Diagnostics.EventLog eventLog2;
+     //   private System.Diagnostics.EventLog eventLog2;
         private int eventId = 1;
         private ILoggingService logging;
         private ImageServer server;
@@ -37,15 +36,16 @@ namespace ImageService
             {
                 logName = args[1];
             }
-            eventLog2 = new System.Diagnostics.EventLog();
+            eventLog1 = new System.Diagnostics.EventLog();
             if (!System.Diagnostics.EventLog.SourceExists(eventSourceName))
             {
                 System.Diagnostics.EventLog.CreateEventSource(eventSourceName, logName);
             }
-            eventLog2.Source = eventSourceName;
-            eventLog2.Log = logName;
-            this.logging = new LoggingService();
-            IImageController controller = new ImageController(new ImageServiceModal());
+            eventLog1.Source = eventSourceName;
+            eventLog1.Log = logName;
+            EventHandler<MessageRecievedEventArgs> MessageRecieved = new EventHandler<MessageRecievedEventArgs>(onMsg);
+            this.logging = new LoggingService(MessageRecieved);
+            IImageController controller = new ImageController(new ImageServiceModal(this.logging));
             this.server = new ImageServer(controller, this.logging);
            
         }
@@ -64,7 +64,7 @@ namespace ImageService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-            eventLog2.WriteEntry("In OnStart");
+            eventLog1.WriteEntry("In OnStart");
             // Set up a timer to trigger every minute.  
             System.Timers.Timer timer = new System.Timers.Timer();
             // Start the timer
@@ -83,16 +83,16 @@ namespace ImageService
         }
         private void onMsg(object sender, MessageRecievedEventArgs e)
         {
-            eventLog2.WriteEntry(e.Message);
+            eventLog1.WriteEntry(e.Message);
         }
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
             // TODO: Insert monitoring activities here.  
-            eventLog2.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
+            eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
         }
         protected override void OnContinue()
         {
-            eventLog2.WriteEntry("In OnContinue.");
+            eventLog1.WriteEntry("In OnContinue.");
         }
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
