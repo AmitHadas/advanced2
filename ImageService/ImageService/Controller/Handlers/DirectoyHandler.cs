@@ -50,7 +50,7 @@ namespace ImageService.Controller.Handlers
             // Add event handlers.
             m_dirWatcher.Changed += new FileSystemEventHandler(OnChanged);
             m_dirWatcher.Created += new FileSystemEventHandler(OnChanged);
-            m_dirWatcher.Deleted += new FileSystemEventHandler(OnChanged);
+        //    m_dirWatcher.Deleted += new FileSystemEventHandler(OnChanged);
 
             // Begin watching.
             m_dirWatcher.EnableRaisingEvents = true;
@@ -72,36 +72,18 @@ namespace ImageService.Controller.Handlers
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
-            //bool isSuccess;
-            //string filePath = e.FullPath();
-            //this.m_controller.executeCommand(CommandEnum.NewFileCommand, filePath, out isSuccess);
-
-            //Image myImage = Image.FromFile(filePath);
-            //PropertyItem propItem = myImage.GetPropertyItem(306);
-            //DateTime dateTime;
-
-            ////Convert date taken metadata to a DateTime object
-            //string sdate = Encoding.UTF8.GetString(propItem.Value).Trim();
-            //string secondhalf = sdate.Substring(sdate.IndexOf(" "), (sdate.Length - sdate.IndexOf(" ")));
-            //string firsthalf = sdate.Substring(0, 10);
-            //firsthalf = firsthalf.Replace(":", "-");
-            //sdate = firsthalf + secondhalf;
-            //dateTime = DateTime.Parse(sdate);
-
-            //string year = dateTime.Year;
-            //string yearPath = this.m_path + "/" + year;
-            //string monthPath = this.m_path + "/" + yaer + dateTime.Month;
-            //if (!Directory.Exists(yearPath))
-            //{
-            //    Directory.CreateDirectory(yearPath);
-            //    Directory.CreateDirectory(monthPath);
-            //}
-            //else if (!Directory.Exists(monthPath))
-            //{
-            //    Directory.CreateDirectory(monthPath);
-            //}
-            //System.IO.File.Move(filePath, monthPath);
+            if (e.CommandID == (int)CommandEnum.CloseCommand)
+            {
+                try
+                {
+                    this.m_dirWatcher.EnableRaisingEvents = false;
+                    this.m_logging.Log("handler of " + this.m_path + " was closed", MessageTypeEnum.INFO);
+                }
+                catch (Exception exception)
+                {
+                    this.m_logging.Log(exception.Data.ToString(), MessageTypeEnum.FAIL);
+                }
+            }
         }
-        
     }
 }

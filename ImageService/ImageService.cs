@@ -55,10 +55,6 @@ namespace ImageService
            // logging = new LoggingService();
             logging.MessageRecieved += onMsg;
 
-
-            //Logger.onMsgEevnt += 
-            //onMsg (after the service creates the logger in onStart())
-
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
@@ -79,7 +75,8 @@ namespace ImageService
 
         protected override void OnStop()
         {
-            //eventLog2.WriteEntry("In onStop.");
+            this.server.onClose();
+            eventLog1.WriteEntry("In onStop.");
         }
         private void onMsg(object sender, MessageRecievedEventArgs e)
         {

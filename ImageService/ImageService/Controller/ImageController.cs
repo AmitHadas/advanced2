@@ -25,11 +25,20 @@ namespace ImageService.Controller
                 {(int)CommandEnum.NewFileCommand, new NewFileCommand(this.m_modal)}
             };
         }
+        
+
         public string ExecuteCommand(int commandID, string[] args, out bool resultSuccesful)
         {
-            // Write Code
-             ICommand command = this.commands[commandID];
-             return command.Execute(args, out resultSuccesful);
+            ICommand command = this.commands[commandID];
+            // make task for each command
+            Task<Tuple<string, bool>> t = new Task<Tuple<string, bool>>(() => {
+                bool result;
+              return Tuple.Create(command.Execute(args, out result), result);
+               });
+            t.Start();
+            Tuple<string, bool> taskOutput = t.Result;
+            resultSuccesful = taskOutput.Item2;
+            return taskOutput.Item1;
         }
     }
 }
