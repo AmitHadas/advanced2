@@ -30,6 +30,12 @@ namespace ImageService.Modal
         {
             return true;
         }
+        public static DateTime getImageDate(string path)
+        {
+            DateTime now = DateTime.Now;
+            TimeSpan offset = now - now.ToUniversalTime();
+            return File.GetLastWriteTimeUtc(path) + offset;
+        }
 
         public string AddFile(string path, out bool result)
         {
@@ -52,7 +58,7 @@ namespace ImageService.Modal
                 propItem = myImage.GetPropertyItem(20624);
                 myImage.Dispose();
                 //Convert date taken metadata to a DateTime object
-                DateTime dateTime = File.GetCreationTime(path);
+                 DateTime dateTime = getImageDate(path);
 
                 string year = dateTime.Year.ToString();
                 string yearPath = this.m_OutputFolder + "\\" + year;
@@ -76,13 +82,22 @@ namespace ImageService.Modal
                     Directory.CreateDirectory(monthPath);
                     Directory.CreateDirectory(thumbMonthPath);
                 }
-               
-                System.IO.File.Copy(path, monthPath + "\\" + imageName);
-                this.m_logging.Log("The Image " + imageName + " was copied succesfully" , Logging.Modal.MessageTypeEnum.INFO);
-                Image thumb = Image.FromFile(path);
+
+                System.Threading.Thread.Sleep(100);
+                File.Move(path, monthPath + "\\" + imageName);
+                this.m_logging.Log("The Image " + imageName + " was moved succesfully" , Logging.Modal.MessageTypeEnum.INFO);
+                Image thumb = Image.FromFile(monthPath + "\\" + imageName);
                 thumb = (Image)(new Bitmap(thumb, new Size(this.m_thumbnailSize, this.m_thumbnailSize)));
                 thumb.Save(thumbMonthPath + "\\" + imageName);
+                myImage.Dispose();
                 this.m_logging.Log("The thumbnail image " + imageName + " was created succesfully", Logging.Modal.MessageTypeEnum.INFO);
+                try
+                {
+                    System.IO.File.Delete(path);
+                } catch (Exception e)
+                {
+                   
+                }
             }
             catch (Exception e)
             {
@@ -92,8 +107,7 @@ namespace ImageService.Modal
 
             return info;
         }
-        
-        /// ////////////להשתמש בזה
+  
     
         public bool CreateFolder(string path)
         {

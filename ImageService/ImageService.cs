@@ -13,6 +13,9 @@ using ImageService.Logging.Modal;
 using ImageService.Server;
 using ImageService.Controller;
 using ImageService.Modal;
+using ImageService.Infrastructure.Enums;
+using System.Configuration;
+
 namespace ImageService
 {
     public partial class ImageService : ServiceBase
@@ -26,8 +29,8 @@ namespace ImageService
         public ImageService(string[] args)
         {
             InitializeComponent();
-            string eventSourceName = "MySource";
-            string logName = "MyNewLog";
+            string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
+            string logName = ConfigurationManager.AppSettings.Get("LogName");
             if (args.Count() > 0) 
             {
                 eventSourceName = args[0];
@@ -75,7 +78,7 @@ namespace ImageService
 
         protected override void OnStop()
         {
-            this.server.onClose();
+            this.server.sendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
             eventLog1.WriteEntry("In onStop.");
         }
         private void onMsg(object sender, MessageRecievedEventArgs e)

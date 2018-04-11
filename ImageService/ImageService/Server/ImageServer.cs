@@ -35,14 +35,22 @@ namespace ImageService.Server
                 // start listen to the directory
                handler.StartHandleDirectory(dir);
                 this.m_logging.Log("handler for " + dir + " was created", Logging.Modal.MessageTypeEnum.INFO);
+                CommandRecieved += handler.OnCommandRecieved;
+                handler.DirectoryClose += onClose;
           }
         }
-
-        public void onClose()
+        public void sendCommand(CommandRecievedEventArgs eventArgs)
         {
-            foreach(var handler in this.handlersList)
+            CommandRecieved?.Invoke(this, eventArgs); //– closes handlers  
+        }
+        public void onClose(object sender, DirectoryCloseEventArgs e)
+        {
+            if (sender is DirectoryHandler)
             {
-                handler.OnCommandRecieved(this, new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
+                DirectoryHandler handler = (DirectoryHandler)sender;
+                CommandRecieved -= handler.OnCommandRecieved;
+                handler.DirectoryClose -= onClose;
+                m_logging.Log(e.Message, Logging.Modal.MessageTypeEnum.INFO);
             }
         }
     }
