@@ -8,6 +8,7 @@ namespace ImageService.Controller
 {
     public interface IImageController
     {
+        //The function get command id and execute the specific command by dictionary.
         string ExecuteCommand(int commandID, string[] args, out bool result);          // Executing the Command Requet
     }
 }

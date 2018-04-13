@@ -11,6 +11,7 @@ namespace ImageService.Logging.Modal
         
         public MessageTypeEnum Status { get; set; }
         public string Message { get; set; }
+        //constructor
         public MessageRecievedEventArgs(string message, MessageTypeEnum type)
         {
             this.Message = message;

@@ -21,7 +21,6 @@ namespace ImageService
     public partial class ImageService : ServiceBase
     {
         private System.ComponentModel.IContainer components;
-     //   private System.Diagnostics.EventLog eventLog2;
         private int eventId = 1;
         private ILoggingService logging;
         private ImageServer server;
@@ -29,8 +28,8 @@ namespace ImageService
         public ImageService(string[] args)
         {
             InitializeComponent();
-            string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
-            string logName = ConfigurationManager.AppSettings.Get("LogName");
+            string eventSourceName = "MySource1";
+            string logName = "MyLogFile1";
             if (args.Count() > 0) 
             {
                 eventSourceName = args[0];
@@ -44,18 +43,18 @@ namespace ImageService
             {
                 System.Diagnostics.EventLog.CreateEventSource(eventSourceName, logName);
             }
-            eventLog1.Source = eventSourceName;
-            eventLog1.Log = logName;
+            eventLog1.Source = ConfigurationManager.AppSettings.Get("SourceName");
+            eventLog1.Log = ConfigurationManager.AppSettings.Get("LogName");
             EventHandler<MessageRecievedEventArgs> MessageRecieved = new EventHandler<MessageRecievedEventArgs>(onMsg);
             this.logging = new LoggingService(MessageRecieved);
             IImageController controller = new ImageController(new ImageServiceModal(this.logging));
             this.server = new ImageServer(controller, this.logging);
            
         }
-
+        
+        //The function that is called when we start the service.
         protected override void OnStart(string[] args)
         {
-           // logging = new LoggingService();
             logging.MessageRecieved += onMsg;
 
             // Update the service state to Start Pending.  
@@ -76,8 +75,10 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
            }
 
+        //The function that is called when we stop the service.
         protected override void OnStop()
         {
+            //notify the server that the service is about to close
             this.server.sendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
             eventLog1.WriteEntry("In onStop.");
         }

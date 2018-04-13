@@ -12,6 +12,7 @@ namespace ImageService.Modal_
         public string[] Args { get; set; }
         public string RequestDirPath { get; set; }  // The Request Directory
 
+        //constructor
         public CommandRecievedEventArgs(int id, string[] args, string path)
         {
             CommandID = id;

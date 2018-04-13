@@ -30,13 +30,24 @@ namespace ImageService.Modal
         {
             return true;
         }
+
+        //The function returns the creation date of the image.
         public static DateTime getImageDate(string path)
         {
             DateTime now = DateTime.Now;
             TimeSpan offset = now - now.ToUniversalTime();
-            return File.GetLastWriteTimeUtc(path) + offset;
+            try
+            {
+                return File.GetLastWriteTimeUtc(path) + offset;
+            } catch (Exception e)
+            {
+                return File.GetCreationTime(path);
+            }
         }
 
+
+        //The function creates direcories according to the date of the image,
+        //creates thumbnail file and moves the image to the output direcory.
         public string AddFile(string path, out bool result)
         {
 
@@ -49,7 +60,7 @@ namespace ImageService.Modal
                 this.m_logging.Log("The thumbnail folder was created", Logging.Modal.MessageTypeEnum.INFO);
 
             }
-
+            System.Threading.Thread.Sleep(100);
             Image myImage = Image.FromFile(path);
             PropertyItem propItem = null;
             string info = "";
@@ -60,6 +71,7 @@ namespace ImageService.Modal
                 //Convert date taken metadata to a DateTime object
                  DateTime dateTime = getImageDate(path);
 
+                //create path of the image
                 string year = dateTime.Year.ToString();
                 string yearPath = this.m_OutputFolder + "\\" + year;
                 string thumbMonthPath = this.m_OutputFolder + "\\Thumbnails\\" + year + "\\" + dateTime.Month;
@@ -109,12 +121,14 @@ namespace ImageService.Modal
         }
   
     
+        //The function creates folder in the path.
         public bool CreateFolder(string path)
         {
             System.IO.Directory.CreateDirectory(path);
             return true;
         }
 
+        //The funtion move the file from srcPath to dstPath
         public bool MoveFile(string fileName, string srcPath, string dstPath)
         {
             System.IO.File.Move(srcPath, dstPath);

@@ -9,13 +9,16 @@ namespace ImageService.Modal.Event
     public class DirectoryCloseEventArgs : EventArgs
     {
         public string DirectoryPath { get; set; }
+        // The Message That goes to the logger
+        public string Message { get; set; }             
 
-        public string Message { get; set; }             // The Message That goes to the logger
-
+        //constructor
         public DirectoryCloseEventArgs(string dirPath, string message)
         {
-            DirectoryPath = dirPath;                    // Setting the Directory Name
-            Message = message;                          // Storing the String
+            // Setting the Directory Name
+            DirectoryPath = dirPath;
+            // Storing the String          
+            Message = message;                         
         }
 
     }

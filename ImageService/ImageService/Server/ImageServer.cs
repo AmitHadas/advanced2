@@ -39,10 +39,14 @@ namespace ImageService.Server
                 handler.DirectoryClose += onClose;
           }
         }
+
+        //The function gets command args and invoke the event. 
         public void sendCommand(CommandRecievedEventArgs eventArgs)
         {
             CommandRecieved?.Invoke(this, eventArgs); //– closes handlers  
         }
+
+        //The function removes the functions from the events and notify the logger.
         public void onClose(object sender, DirectoryCloseEventArgs e)
         {
             if (sender is DirectoryHandler)

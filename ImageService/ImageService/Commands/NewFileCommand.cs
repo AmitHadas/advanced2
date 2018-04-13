@@ -12,12 +12,14 @@ namespace ImageService.Commands
     {
         private IImageServiceModal m_modal;
 
+        //constructor
         public NewFileCommand(IImageServiceModal modal)
         {
             // Storing the Modal
             m_modal = modal;           
         }
 
+        //The function execute the command according to args - notify the madal to add file.
         public string Execute(string[] args, out bool result)
         {
             result = true;
