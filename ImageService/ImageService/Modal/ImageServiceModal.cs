@@ -54,13 +54,9 @@ namespace ImageService.Modal
             // if outputDir doesn't exists:
             if (!Directory.Exists(m_OutputFolder))
             {
-                System.IO.Directory.CreateDirectory(m_OutputFolder);
-                DirectoryInfo dir = new DirectoryInfo(m_OutputFolder);
-                dir.Attributes |= FileAttributes.Hidden;
+                this.CreateFolder(m_OutputFolder);
                 this.m_logging.Log("The output folder " + this.m_OutputFolder + " was created", Logging.Modal.MessageTypeEnum.INFO);
-                System.IO.Directory.CreateDirectory(m_OutputFolder + "\\Thumbnails");
-                dir = new DirectoryInfo(m_OutputFolder + "\\Thumbnails");
-                dir.Attributes |= FileAttributes.Hidden;
+                this.CreateFolder(m_OutputFolder + "\\Thumbnails");
                 this.m_logging.Log("The thumbnail folder was created", Logging.Modal.MessageTypeEnum.INFO);
 
             }
@@ -87,26 +83,16 @@ namespace ImageService.Modal
 
                 if (!Directory.Exists(yearPath))
                 {
-                    Directory.CreateDirectory(yearPath);
-                    Directory.CreateDirectory(monthPath);
-                    Directory.CreateDirectory(thumbYearPath);
-                    Directory.CreateDirectory(thumbMonthPath);
-
-                    DirectoryInfo dir = new DirectoryInfo(yearPath);
-                    dir.Attributes |= FileAttributes.Hidden;
-                    dir = new DirectoryInfo(monthPath);
-                    dir.Attributes |= FileAttributes.Hidden;
-                    dir = new DirectoryInfo(thumbYearPath);
-                    dir.Attributes |= FileAttributes.Hidden;
-                    dir = new DirectoryInfo(thumbMonthPath);
-                    dir.Attributes |= FileAttributes.Hidden;
-
+                    this.CreateFolder(yearPath);
+                    this.CreateFolder(monthPath);
+                    this.CreateFolder(thumbYearPath);
+                    this.CreateFolder(thumbMonthPath);
 
                 }
                 else if (!Directory.Exists(monthPath))
                 {
-                    Directory.CreateDirectory(monthPath);
-                    Directory.CreateDirectory(thumbMonthPath);
+                    this.CreateFolder(monthPath);
+                    this.CreateFolder(thumbMonthPath);
                 }
 
                 System.Threading.Thread.Sleep(100);
@@ -140,6 +126,8 @@ namespace ImageService.Modal
         public bool CreateFolder(string path)
         {
             System.IO.Directory.CreateDirectory(path);
+            DirectoryInfo dir = new DirectoryInfo(path);
+            dir.Attributes |= FileAttributes.Hidden;
             return true;
         }
 
