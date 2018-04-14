@@ -55,8 +55,12 @@ namespace ImageService.Modal
             if (!Directory.Exists(m_OutputFolder))
             {
                 System.IO.Directory.CreateDirectory(m_OutputFolder);
+                DirectoryInfo dir = new DirectoryInfo(m_OutputFolder);
+                dir.Attributes |= FileAttributes.Hidden;
                 this.m_logging.Log("The output folder " + this.m_OutputFolder + " was created", Logging.Modal.MessageTypeEnum.INFO);
                 System.IO.Directory.CreateDirectory(m_OutputFolder + "\\Thumbnails");
+                dir = new DirectoryInfo(m_OutputFolder + "\\Thumbnails");
+                dir.Attributes |= FileAttributes.Hidden;
                 this.m_logging.Log("The thumbnail folder was created", Logging.Modal.MessageTypeEnum.INFO);
 
             }
@@ -88,6 +92,16 @@ namespace ImageService.Modal
                     Directory.CreateDirectory(thumbYearPath);
                     Directory.CreateDirectory(thumbMonthPath);
 
+                    DirectoryInfo dir = new DirectoryInfo(yearPath);
+                    dir.Attributes |= FileAttributes.Hidden;
+                    dir = new DirectoryInfo(monthPath);
+                    dir.Attributes |= FileAttributes.Hidden;
+                    dir = new DirectoryInfo(thumbYearPath);
+                    dir.Attributes |= FileAttributes.Hidden;
+                    dir = new DirectoryInfo(thumbMonthPath);
+                    dir.Attributes |= FileAttributes.Hidden;
+
+
                 }
                 else if (!Directory.Exists(monthPath))
                 {
@@ -96,9 +110,10 @@ namespace ImageService.Modal
                 }
 
                 System.Threading.Thread.Sleep(100);
-                File.Move(path, monthPath + "\\" + imageName);
+                string dstPath = monthPath + "\\" + imageName;
+                this.MoveFile(ref imageName, path, ref dstPath);
                 this.m_logging.Log("The Image " + imageName + " was moved succesfully" , Logging.Modal.MessageTypeEnum.INFO);
-                Image thumb = Image.FromFile(monthPath + "\\" + imageName);
+                Image thumb = Image.FromFile(dstPath);
                 thumb = (Image)(new Bitmap(thumb, new Size(this.m_thumbnailSize, this.m_thumbnailSize)));
                 thumb.Save(thumbMonthPath + "\\" + imageName);
                 myImage.Dispose();
@@ -129,9 +144,25 @@ namespace ImageService.Modal
         }
 
         //The funtion move the file from srcPath to dstPath
-        public bool MoveFile(string fileName, string srcPath, string dstPath)
+        public bool MoveFile(ref string fileName, string srcPath, ref string dstPath)
         {
-            System.IO.File.Move(srcPath, dstPath);
+
+            int count = 1;
+
+            string fileNameOnly = Path.GetFileNameWithoutExtension(dstPath);
+            string extension = Path.GetExtension(dstPath);
+            string path = Path.GetDirectoryName(dstPath);
+            string newFullPath = dstPath;
+
+            while (File.Exists(newFullPath))
+            {
+                string tempFileName = string.Format("{0}({1})", fileNameOnly, count++);
+                newFullPath = Path.Combine(path, tempFileName + extension);
+                fileName = tempFileName + extension;
+            }
+            System.Threading.Thread.Sleep(100);
+            System.IO.File.Move(srcPath, newFullPath);
+            dstPath = newFullPath;
             return true;
         }
     }
