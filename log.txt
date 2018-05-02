@@ -1,11 +1,17 @@
+commit af18927255c454fe349e482ec1f54e636c1bf461
+Author: noa or <noaor7@gmail.com>
+Date:   Sun Apr 15 20:23:20 2018 +0300
+
+    added comments
+
 commit 2338fb698932934f9030d4468e5f4a17d3018a15
-Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Author: noa or <noaor7@gmail.com>
 Date:   Sun Apr 15 00:48:48 2018 +0300
 
     handle duplicated images
 
 commit 43b5312e2fc30ba69793e1509afadbad78397705
-Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Author: noa or <noaor7@gmail.com>
 Date:   Sun Apr 15 00:39:26 2018 +0300
 
     handle create hidden directory
@@ -17,37 +23,37 @@ Date:   Fri Apr 13 14:47:43 2018 +0300
     add comments, fix creation time of image
 
 commit 1d47c9a1ddb3e742eb5c6f05bc4378725371c12b
-Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Author: noa or <noaor7@gmail.com>
 Date:   Wed Apr 11 21:50:35 2018 +0300
 
     fix lof name
 
 commit fbe29e0932cdf27787d17313db02c29c9c8f06c0
-Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Author: amit hadas <amitr.hadas@gmail.com>
 Date:   Wed Apr 4 19:56:00 2018 +0300
 
     handle service closing
 
 commit be38e484c3c766ababaf1dacfd72e283972d6a5f
-Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Author: amit hadas <amitr.hadas@gmail.com>
 Date:   Mon Apr 2 10:05:22 2018 +0300
 
     fix log
 
 commit 49928bbe78994f2dd7cfc9dec17ff85ae449c958
-Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Author: noa or <noaor7@gmail.com>
 Date:   Sun Apr 1 01:12:42 2018 +0300
 
     Initial Commit
 
 commit 523733d6e03960032757ce1275487ebb170ca700
-Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Author: amit hadas <amitr.hadas@gmail.com>
 Date:   Wed Mar 28 00:52:03 2018 +0300
 
     Add project files.
 
 commit fb23131e7dc5c360f59e2590ecb686cb74f88d66
-Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Author: noa or <noaor7@gmail.com>
 Date:   Wed Mar 28 00:52:01 2018 +0300
 
     Add .gitignore and .gitattributes.
