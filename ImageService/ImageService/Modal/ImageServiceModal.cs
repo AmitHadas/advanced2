@@ -94,7 +94,7 @@ namespace ImageService.Modal
                     this.CreateFolder(monthPath);
                     this.CreateFolder(thumbMonthPath);
                 }
-
+                // sleep for 100 milisecondes.
                 System.Threading.Thread.Sleep(100);
                 string dstPath = monthPath + "\\" + imageName;
                 this.MoveFile(ref imageName, path, ref dstPath);
