@@ -3,52 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ImageServiceGui.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
    <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+       
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Settings" Margin="4" HorizontalAlignment="Center" FontSize="40" FontStyle="Italic" FontWeight="Bold" />
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Output Directory: " Margin="4" FontSize="20" FontStyle="Italic"/>
+        <TextBlock Grid.Row = "3" Grid.Column="1" FontStyle="Italic" FontSize="20" Text="{Binding VM_OutputDir}"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Source Name:" Margin="4" FontSize="20" FontStyle="Italic" />
+        <TextBlock Grid.Row = "4" Grid.Column="1" FontStyle="Italic" FontSize="20" Text="{Binding VM_SourceName}"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Log Name:" Margin="4" FontSize="20" FontStyle="Italic" />
+        <TextBlock Grid.Row = "5" Grid.Column="1" FontStyle="Italic" FontSize="20" Text="{Binding VM_LogName}"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Thumbnail Size:" Margin="4" FontSize="20" FontStyle="Italic"/>
+        <TextBlock Grid.Row = "6" Grid.Column="1" FontStyle="Italic" FontSize="20" Text="{Binding VM_ThumbnailSize}"/>
+       
+        <ListBox Grid.Row="8" Grid.ColumnSpan="2" Margin="5" SelectionMode="Single" Name="list" 
+                 ItemsSource="{Binding VM_HandlersList}" SelectedItem="{Binding selectedHandler, Mode=TwoWay}" IsTabStop="False"/>
+
         <ScrollViewer Grid.Row="8"
                       Grid.ColumnSpan="8"
                       VerticalAlignment="Stretch">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0"
-                        >
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Output Directory: " Margin="4" FontSize="13"/>
-                        <TextBlock Text="{Binding SettingsModel.OutputDir, Mode=TwoWay}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Source Name" Margin="4" FontSize="10" HorizontalAlignment="Center" />
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Log Name" Margin="4" FontSize="10" HorizontalAlignment="Center" />
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Thumbnail Size" Margin="4" FontSize="1" HorizontalAlignment="Center" />
-
-                       
-                    </Grid>
-                </Border>
-            </Grid>
+            <Border Grid.Row="0">
+            </Border>
         </ScrollViewer>
     </Grid>
 </UserControl>

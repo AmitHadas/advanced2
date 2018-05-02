@@ -20,7 +20,9 @@ namespace ImageServiceGui.Model
         public string OutputDir
         {
             get { return m_outputDir; }
-            set { m_outputDir = value;
+            set
+            {
+                m_outputDir = value;
                 OnPropertyChanged("Output Directory");
             }
         }
@@ -63,6 +65,27 @@ namespace ImageServiceGui.Model
             {
                 m_thumbSize = value;
                 OnPropertyChanged("Thumbnail Size");
+            }
+        }
+
+        private string[] m_handlersList;
+        public string[] HandlersList
+        {
+            get { return m_handlersList; }
+            set
+            {
+                m_handlersList = value;
+                OnPropertyChanged("Handlers List");
+            }
+        }
+        private string m_selectedHandler;
+        public string SelectedHandler
+        {
+            get { return m_selectedHandler; }
+            set
+            {
+                m_selectedHandler = value;
+                OnPropertyChanged("Selected Handler");
             }
         }
 
