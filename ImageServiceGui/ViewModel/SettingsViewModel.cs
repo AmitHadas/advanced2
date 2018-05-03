@@ -7,6 +7,9 @@ using System.ComponentModel;
 using ImageServiceGui.Model;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
+using System.Collections.ObjectModel;
 
 namespace ImageServiceGui.Views_Model
 {
@@ -59,8 +62,8 @@ namespace ImageServiceGui.Views_Model
                 this.m_settingsModel.ThumbSize = value;
             }
         }
-        private string[] m_vm_handlersList;
-        public string[] VM_HandlersList
+        private ObservableCollection<string> m_vm_handlersList;
+        public ObservableCollection<string> VM_HandlersList
         {
             get { return m_settingsModel.HandlersList;}
             set { m_settingsModel.HandlersList = value; }
@@ -77,17 +80,15 @@ namespace ImageServiceGui.Views_Model
         }
         public SettingsViewModel()
         {
+            this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
             this.m_settingsModel = new SettingsModel();
+            m_settingsModel.PropertyChanged += PropertyChangedMethod;
             m_settingsModel.OutputDir = "noa";
             m_settingsModel.LogName = "amit";
             m_settingsModel.SourceName = "source";
             m_settingsModel.ThumbSize = "8";
-            m_settingsModel.HandlersList = new [] {"hi", "there", "amit", "and", "noa"};
-            m_settingsModel.PropertyChanged +=
-       delegate (Object sender, PropertyChangedEventArgs e) {
-           NotifyPropertyChanged(e.PropertyName);
-       };
-           
+            m_settingsModel.HandlersList = new ObservableCollection<string> { "hi", "there", "amit", "and", "noa" };
+
         }
 
         public SettingsModel SettingsModel
@@ -99,9 +100,31 @@ namespace ImageServiceGui.Views_Model
             }
         }
 
+        public ICommand RemoveCommand { get; private set; }
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void OnRemove(object obj)
+        {
+            for (int i = 0; i < VM_HandlersList.Count; i++)
+            {
+                if (VM_HandlersList[i].Equals(VM_SelectedHandler))
+                {
+                    this.VM_HandlersList.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+        private bool CanRemove(object obj)
+        {
+            return (!string.IsNullOrEmpty(VM_SelectedHandler));
+        }
+        private void PropertyChangedMethod(object sender, PropertyChangedEventArgs e)
+        {
+            var command = this.RemoveCommand as DelegateCommand<object>;
+            command.RaiseCanExecuteChanged();
+            NotifyPropertyChanged(e.PropertyName);
         }
     }
 }

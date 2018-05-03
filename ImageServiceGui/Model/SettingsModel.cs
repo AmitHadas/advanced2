@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace ImageServiceGui.Model
 {
@@ -68,8 +69,8 @@ namespace ImageServiceGui.Model
             }
         }
 
-        private string[] m_handlersList;
-        public string[] HandlersList
+        private ObservableCollection<string> m_handlersList;
+        public ObservableCollection<string> HandlersList
         {
             get { return m_handlersList; }
             set
