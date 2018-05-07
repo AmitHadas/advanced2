@@ -4,9 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ImageServiceGui.Views"
+             xmlns:converters="clr-namespace:ImageServiceGui.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+
+    <UserControl.Resources>
+        <converters:TypeToBack x:Key="TypeToBack"/>
+    </UserControl.Resources>
+
+<Grid>
         <ScrollViewer Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
 
             <StackPanel Margin="3">
@@ -22,8 +28,33 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="type:      " Margin="4" FontSize="20" FontStyle="Italic"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="info:" Margin="4" FontSize="20" FontStyle="Italic"/>
+                    <TextBlock  Grid.Column="0" Text="type: " Margin="4" FontSize="20" FontStyle="Italic"/>
+                    <TextBlock  Grid.Column="2" Text="info:" Margin="4" FontSize="20" FontStyle="Italic"/>
+
+                    <StackPanel>
+                        <ListBox x:Name="InfoListBox" Margin="5" FontSize="15"
+                            ItemsSource="{Binding VM_LogList}" IsTabStop="False">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="Black" BorderThickness="1" 
+                                          Background="{Binding Path=Item1, Converter={StaticResource TypeToBack}}" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="0" Margin="6,2" Text="{Binding Path=Item1}" />
+                                            <TextBlock Margin="6,2" Grid.Column="1" Text="{Binding Path=Item2}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
         </ScrollViewer>
