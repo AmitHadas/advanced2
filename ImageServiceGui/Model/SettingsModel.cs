@@ -77,7 +77,7 @@ namespace ImageServiceGui.Model
             {
                 m_handlersList = value;
                 OnPropertyChanged("Handlers List");
-            }
+                            }
         }
         private string m_selectedHandler;
         public string SelectedHandler
