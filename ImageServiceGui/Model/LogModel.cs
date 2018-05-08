@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageServiceDesktopApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Model
 {
-    class LogModel : INotifyPropertyChanged
+    class LogModel : ILogModel
     {
         // implement the iINotifyPropertyChanged interface
         public event PropertyChangedEventHandler PropertyChanged;

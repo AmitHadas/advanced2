@@ -1,4 +1,5 @@
 ﻿using ImageServiceGui.Model;
+using ImageServiceGui.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Views_Model
 {
-    class LogViewModel : INotifyPropertyChanged
+    class LogViewModel : ILogViewModel
     {
 
         public event PropertyChangedEventHandler PropertyChanged;

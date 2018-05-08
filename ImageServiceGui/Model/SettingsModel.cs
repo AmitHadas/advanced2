@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using ImageServiceGui.ViewModel;
 
 namespace ImageServiceGui.Model
 {
-    class SettingsModel : INotifyPropertyChanged
+    class SettingsModel : ISettingsViewModel
     {
         // implement the iINotifyPropertyChanged interface
         public event PropertyChangedEventHandler PropertyChanged;
