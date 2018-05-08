@@ -13,7 +13,7 @@ namespace ImageServiceGui.Model
         string OutputDir { get; set; }
         string SourceName { get; set; }
         string LogName { get; set; }
-        string TumbSize { get; set; }
+        string ThumbSize { get; set; }
         ObservableCollection<string> HandlersList { get; set; }
         string SelectedHandler { get; set; }
        // IImageServiceClient GuiClient { get; set; }

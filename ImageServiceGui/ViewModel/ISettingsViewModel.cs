@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.ViewModel
 {
-    interface ISettingsViewModel : INotifyPropertyChanged
+    interface ISettingsModel : INotifyPropertyChanged
     {
         string VM_OutputDir { get; set; }
         string VM_SourceName { get; set; }

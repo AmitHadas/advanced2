@@ -9,7 +9,7 @@ using ImageServiceGui.ViewModel;
 
 namespace ImageServiceGui.Model
 {
-    class SettingsModel : ISettingsViewModel
+    class SettingsModel : ISettingsModel
     {
         // implement the iINotifyPropertyChanged interface
         public event PropertyChangedEventHandler PropertyChanged;
