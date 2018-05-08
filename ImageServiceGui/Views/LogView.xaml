@@ -13,50 +13,25 @@
     </UserControl.Resources>
 
 <Grid>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Logs" Margin="4" HorizontalAlignment="Center" 
+                               FontSize="40" Foreground="BlueViolet" FontStyle="Italic" FontWeight="Bold" />
         <ScrollViewer Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
 
-            <StackPanel Margin="3">
-                <Grid x:Name="LayoutRoot">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock  Grid.Column="0" Text="type: " Margin="4" FontSize="20" FontStyle="Italic"/>
-                    <TextBlock  Grid.Column="2" Text="info:" Margin="4" FontSize="20" FontStyle="Italic"/>
-
-                    <StackPanel>
-                        <ListBox x:Name="InfoListBox" Margin="5" FontSize="15"
-                            ItemsSource="{Binding VM_LogList}" IsTabStop="False">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BorderBrush="Black" BorderThickness="1" 
-                                          Background="{Binding Path=Item1, Converter={StaticResource TypeToBack}}" >
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Grid.Column="0" Margin="6,2" Text="{Binding Path=Item1}" />
-                                            <TextBlock Margin="6,2" Grid.Column="1" Text="{Binding Path=Item2}" />
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
-                </Grid>
-            </StackPanel>
+            <DataGrid Grid.Row="10" ItemsSource="{Binding VM_LogList}" AutoGenerateColumns="False" CanUserAddRows="False" 
+                      VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Width="Auto" 
+                      Height="Auto" Margin="0,70,0,10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Type}" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Background" 
+                                        Value="{Binding Path=Type, Converter={StaticResource TypeToBack}}"></Setter>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding Info}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </ScrollViewer>
     </Grid>
 </UserControl>

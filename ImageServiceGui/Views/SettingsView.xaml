@@ -31,7 +31,8 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="3" Grid.Column="1" Text="    " Margin="4" FontSize="20" FontStyle="Italic" />
-                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Settings" Margin="4" HorizontalAlignment="Center" FontSize="40" Foreground="BlueViolet" FontStyle="Italic" FontWeight="Bold" />
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Settings" Margin="4" HorizontalAlignment="Center" 
+                               FontSize="40" Foreground="BlueViolet" FontStyle="Italic" FontWeight="Bold" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Output Directory: " Margin="4" FontSize="20" FontStyle="Italic"/>
                     <TextBlock Grid.Row = "3" Grid.Column="2" FontStyle="Italic" FontSize="20" Text="{Binding VM_OutputDir}"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Source Name:" Margin="4" FontSize="20" FontStyle="Italic" />

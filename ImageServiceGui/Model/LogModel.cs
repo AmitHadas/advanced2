@@ -18,8 +18,8 @@ namespace ImageServiceGui.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
-        private ObservableCollection<Tuple<string, string>> m_logList;
-        public ObservableCollection<Tuple<string, string>> LogList
+        private ObservableCollection<Log> m_logList;
+        public ObservableCollection<Log> LogList
         {
             get { return this.m_logList; }
             set
@@ -28,16 +28,6 @@ namespace ImageServiceGui.Model
                 OnPropertyChanged("Log List");
             }
         }
-        //private string m_type;
-        //public string Type
-        //{
-        //    get
-        //    {
-        //        return this.m_type;
-        //    }
-        //    set { this.m_type = value;
-        //    om}
-        //}
 
     }
 }

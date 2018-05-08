@@ -21,8 +21,8 @@ namespace ImageServiceGui.Views_Model
         }
 
         private LogModel m_logModel;
-        private ObservableCollection<Tuple<string, string>> m_vm_logList;
-        public ObservableCollection<Tuple<string, string>> VM_LogList
+        private ObservableCollection<Log> m_vm_logList;
+        public ObservableCollection<Log> VM_LogList
         {
             get
             {
@@ -41,8 +41,8 @@ namespace ImageServiceGui.Views_Model
         {
             this.m_logModel = new LogModel();
             m_logModel.PropertyChanged += PropertyChangedMethod;
-            m_logModel.LogList = new ObservableCollection<Tuple<string, string>> { new Tuple<string, string>("INFO", "AMIT HADAS"),
-                new Tuple<string, string>("WARNING", "NOA OR"), new Tuple<string, string>("ERROR", "HI")};
+            m_logModel.LogList = new ObservableCollection<Log> { new Log("INFO", "AMIT HADAS"),
+                new Log("WARNING", "NOA OR"), new Log("ERROR", "HI")};
         }
     }
 }
