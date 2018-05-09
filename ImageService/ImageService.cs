@@ -15,6 +15,8 @@ using ImageService.Controller;
 using ImageService.Modal;
 using ImageService.Infrastructure.Enums;
 using System.Configuration;
+using ImageService.Communication;
+//using ImageService.Communication;
 
 namespace ImageService
 {
@@ -48,15 +50,18 @@ namespace ImageService
             EventHandler<MessageRecievedEventArgs> MessageRecieved = new EventHandler<MessageRecievedEventArgs>(onMsg);
             this.logging = new LoggingService(MessageRecieved);
             IImageController controller = new ImageController(new ImageServiceModal(this.logging));
-            this.server = new ImageServer(controller, this.logging);
-           
+            this.server = new ImageServer(controller, this.logging);      
+            controller.ImageServerProp = server;
+            ClientHandler clientHandler = new ClientHandler(controller);
+            TcpServer tcpServer = new TcpServer(logging, clientHandler, 8000);
+            tcpServer.Start();
         }
         
         //The function that is called when we start the service.
         protected override void OnStart(string[] args)
         {
             logging.MessageRecieved += onMsg;
-
+            eventLog1.WriteEntry("log 4");
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
@@ -73,13 +78,14 @@ namespace ImageService
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-           }
+            eventLog1.WriteEntry("log 5");
+        }
 
         //The function that is called when we stop the service.
         protected override void OnStop()
         {
             //notify the server that the service is about to close
-            this.server.sendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
+           // this.server.sendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
             eventLog1.WriteEntry("In onStop.");
         }
         private void onMsg(object sender, MessageRecievedEventArgs e)

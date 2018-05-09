@@ -25,6 +25,10 @@ namespace ImageService.Controller.Handlers
         private FileSystemWatcher m_dirWatcher;
         // The Path of directory
         private string m_path;
+        public string Path
+        {
+            get; set;
+        }
         private ICollection<string> extensions;
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
 
@@ -52,14 +56,14 @@ namespace ImageService.Controller.Handlers
             m_dirWatcher.Created += new FileSystemEventHandler(OnCreated);
 
             // Begin watching.
-            m_dirWatcher.EnableRaisingEvents = true;
+           // m_dirWatcher.EnableRaisingEvents = true;
         }
 
         private void OnCreated(object source, FileSystemEventArgs e)
         {
             //  bool isSuccess;
             string filePath = e.FullPath;
-            string extension = Path.GetExtension(filePath);
+            string extension = System.IO.Path.GetExtension(filePath);
             if (this.extensions.Contains(extension))
             {
                 string[] filePath2 = new string[1];

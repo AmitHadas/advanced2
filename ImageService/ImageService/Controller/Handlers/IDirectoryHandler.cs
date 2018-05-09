@@ -9,6 +9,11 @@ namespace ImageService.Controller.Handlers
 {
     public interface IDirectoryHandler
     {
+       
+        string Path
+        {
+            get; set;
+        }
         // The Event That Notifies that the Directory is being closed
         event EventHandler<DirectoryCloseEventArgs> DirectoryClose;
         // The Function Recieves the directory to Handle

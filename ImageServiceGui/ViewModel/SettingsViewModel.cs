@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using System.Collections.ObjectModel;
+using ImageService.Infrastructure.Enums;
 
 namespace ImageServiceGui.Views_Model
 {
@@ -112,6 +113,9 @@ namespace ImageServiceGui.Views_Model
                 if (VM_HandlersList[i].Equals(VM_SelectedHandler))
                 {
                     this.VM_HandlersList.RemoveAt(i);
+                    string[] args = { VM_SelectedHandler };
+                   this.m_settingsModel.InformServer
+                        (new ImageService.Modal.CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, ""));
                     return;
                 }
             }
