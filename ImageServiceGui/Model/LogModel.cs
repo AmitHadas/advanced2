@@ -39,7 +39,7 @@ namespace ImageServiceGui.Model
         public LogModel()
         {
             this.GuiClient = GuiClientSingleton.ClientInsatnce;
-            this.GuiClient.ReceivedCommand();
+            //this.GuiClient.ReceivedCommand();
             this.GuiClient.UpdateResponse += UpdateResponse;
             this.InitializeLog();
         }
@@ -55,7 +55,7 @@ namespace ImageServiceGui.Model
                 BindingOperations.EnableCollectionSynchronization(LogList, thisLock);
                 string[] array = new string[5];
                 CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetLogList, array, "");
-                this.GuiClient.SendCommand(request);
+              //  this.GuiClient.SendCommand(request);
             }
             catch (Exception ex)
             {

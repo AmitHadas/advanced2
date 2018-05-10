@@ -18,6 +18,7 @@ namespace ImageServiceGui.Model
     {
         // implement the iINotifyPropertyChanged interface
         public event PropertyChangedEventHandler PropertyChanged;
+        private bool updateApp;
         protected void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
@@ -98,10 +99,12 @@ namespace ImageServiceGui.Model
         }
         public SettingsModel()
         {
+            this.updateApp = false;
             this.GuiClient = GuiClientSingleton.ClientInsatnce;
             this.GuiClient.ReceivedCommand();
             this.GuiClient.UpdateResponse += UpdateResponse;
             this.InitializeSettings();
+            //while (!updateApp) { }
         }
 
         public void RemoveHandler(string handler)
@@ -144,6 +147,7 @@ namespace ImageServiceGui.Model
             this.LogName = args[2];
             this.ThumbSize = args[3];
             this.HandlersList = JsonConvert.DeserializeObject<ObservableCollection<string>>(args[4]);
+            this.updateApp = true;
         }
         private void UpdateResponse(CommandRecievedEventArgs e)
         {

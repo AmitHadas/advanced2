@@ -61,34 +61,35 @@ namespace ImageServiceGui.Communication
 
         public void SendCommand(CommandRecievedEventArgs e)
         {
-            // new Task(() =>
-            //  {
-            try
-            {
-                string commandToJson = JsonConvert.SerializeObject(e);
-                using (NetworkStream netWorkStream = this.m_client.GetStream())
-                using (StreamWriter writer = new StreamWriter(netWorkStream))
-                {
-                    //sending data to server
-                    Console.WriteLine($"Sending {commandToJson} to server");
-                    m_mtx.WaitOne();
-                    writer.Write(commandToJson);
-                    writer.Flush();
-                    m_mtx.ReleaseMutex();
-                }
-                }
-                catch (Exception exception)
-            {
-                Console.WriteLine(exception.ToString());
-            
-            // }).Start();
-        }
+            new Task(() =>
+             {
+                 try
+                 {
+                     string commandToJson = JsonConvert.SerializeObject(e);
+                     using (NetworkStream netWorkStream = this.m_client.GetStream())
+                     using (StreamWriter writer = new StreamWriter(netWorkStream))
+                     {
+
+                         //sending data to server
+                         Console.WriteLine($"Sending {commandToJson} to server");
+                         m_mtx.WaitOne();
+                         writer.Write(commandToJson);
+                         writer.Flush();
+                         m_mtx.ReleaseMutex();
+                     }
+                 }
+                 catch (Exception exception)
+                 {
+                     Console.WriteLine(exception.ToString());
+                 }
+             }).Start();
+       
         }
 
         public void ReceivedCommand()
         {
-            //new Task(() =>
-            //{
+            new Task(() =>
+            {
                 try
                 {
                     while(m_isListening)
@@ -96,16 +97,25 @@ namespace ImageServiceGui.Communication
                         NetworkStream stream = this.m_client.GetStream();
                         StreamReader reader = new StreamReader(stream);
                         string responseString = reader.ReadLine();
+                        if (responseString == null)
+                        {
+                            Console.WriteLine("111");
+                        }
+                        Console.WriteLine("111");
+
+
+                        //  {
                         Console.WriteLine($"received {responseString} from Server");
-                        CommandRecievedEventArgs responseCommand = 
-                            JsonConvert.DeserializeObject<CommandRecievedEventArgs>(responseString);
-                        this.UpdateResponse?.Invoke(responseCommand);
+                            CommandRecievedEventArgs responseCommand =
+                                JsonConvert.DeserializeObject<CommandRecievedEventArgs>(responseString);
+                            this.UpdateResponse?.Invoke(responseCommand);
+                      //  }                   
                     }
                 } catch(Exception exp)
                 {
                     Console.WriteLine(exp.ToString());
                 }
-            //}).Start();
+            }).Start();
         }
     }
 }

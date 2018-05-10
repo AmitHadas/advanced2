@@ -24,11 +24,9 @@ namespace ImageService.Commands
                 arr[2] = ConfigurationManager.AppSettings.Get("LogName");
                 arr[3] = ConfigurationManager.AppSettings.Get("ThumbnailSize");
                 arr[4] = ConfigurationManager.AppSettings.Get("Handler");
-                //  CommandRecievedEventArgs commandSendArgs = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");
-                //  return JsonConvert.SerializeObject(commandSendArgs);
-                return "";
-
-                //write
+                CommandRecievedEventArgs commandSendArgs = new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, arr, "");
+                return JsonConvert.SerializeObject(commandSendArgs);
+                
             }
             catch (Exception e)
             {
