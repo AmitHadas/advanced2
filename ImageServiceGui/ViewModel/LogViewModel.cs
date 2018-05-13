@@ -44,8 +44,9 @@ namespace ImageServiceGui.Views_Model
         {
             this.m_logModel = new LogModel();
             m_logModel.PropertyChanged += PropertyChangedMethod;
-            m_logModel.LogList = new ObservableCollection<LogEntry> { new LogEntry("INFO", "AMIT HADAS"),
-                new LogEntry("WARNING", "NOA OR"), new LogEntry("ERROR", "HI")};
+            //m_logModel.LogList = new ObservableCollection<LogEntry> { new LogEntry("INFO", "AMIT HADAS"),
+            //    new LogEntry("WARNING", "NOA OR"), new LogEntry("ERROR", "HI")};
+            
         }
     }
 }

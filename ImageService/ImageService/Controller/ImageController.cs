@@ -17,13 +17,13 @@ namespace ImageService.Controller
     public class ImageController : IImageController
     {
         // The Modal Object
-        private IImageServiceModal m_modal;   
+        private IImageServiceModal m_modal;
         private Dictionary<int, ICommand> commands;
         private ILoggingService m_logging;
         public ImageServer ImageServerProp { get; set; }
         //constructor
         public ImageController(IImageServiceModal modal, ILoggingService logging)
-        {           
+        {
             // Storing the Modal Of The System
             m_modal = modal;
             m_logging = logging;
@@ -35,7 +35,7 @@ namespace ImageService.Controller
                 {(int)CommandEnum.GetLogList, new GetLogListCommand(m_logging) }
             };
         }
-        
+
 
         public string ExecuteCommand(int commandID, string[] args, out bool resultSuccesful)
         {
@@ -43,8 +43,8 @@ namespace ImageService.Controller
             // make task for each command
             Task<Tuple<string, bool>> t = new Task<Tuple<string, bool>>(() => {
                 bool result;
-              return Tuple.Create(command.Execute(args, out result), result);
-               });
+                return Tuple.Create(command.Execute(args, out result), result);
+            });
             t.Start();
             Tuple<string, bool> taskOutput = t.Result;
             resultSuccesful = taskOutput.Item2;

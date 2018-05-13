@@ -66,7 +66,7 @@ namespace ImageServiceGui.Views_Model
         private ObservableCollection<string> m_vm_handlersList;
         public ObservableCollection<string> VM_HandlersList
         {
-            get { return m_settingsModel.HandlersList;}
+            get { return m_settingsModel.HandlersList; }
             set { m_settingsModel.HandlersList = value; }
         }
 
@@ -114,8 +114,8 @@ namespace ImageServiceGui.Views_Model
                 {
                     this.VM_HandlersList.RemoveAt(i);
                     string[] args = { VM_SelectedHandler };
-                   this.m_settingsModel.InformServer
-                        (new ImageService.Modal.CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, ""));
+                    this.m_settingsModel.InformServer
+                         (new ImageService.Modal.CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, ""));
                     return;
                 }
             }

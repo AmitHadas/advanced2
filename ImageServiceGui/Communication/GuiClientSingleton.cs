@@ -53,7 +53,7 @@ namespace ImageServiceGui.Communication
                 this.m_client.Connect(endPoint);
                 stream = m_client.GetStream();
                 reader = new BinaryReader(stream);
-                writer = new BinaryWriter(stream);
+              //  reader.ReadString();
                 Console.WriteLine("Client Connected");
                 m_isListening = true;
                 return true;
@@ -71,13 +71,16 @@ namespace ImageServiceGui.Communication
              {
                  try
                  {
-                        string commandToJson = JsonConvert.SerializeObject(e);
-                         //sending data to server
-                         Console.WriteLine($"Sending {commandToJson} to server");
-                        // m_mtx.WaitOne();
+                     string commandToJson = JsonConvert.SerializeObject(e);
+                     stream = this.m_client.GetStream();
+                     writer = new BinaryWriter(stream);
+
+                     //sending data to server
+                     Console.WriteLine($"Sending {commandToJson} to server");
+                         m_mtx.WaitOne();
                          writer.Write(commandToJson);
                          writer.Flush();
-                        // m_mtx.ReleaseMutex();
+                         m_mtx.ReleaseMutex();
                  }
                  catch (Exception exception)
                  {
@@ -95,11 +98,22 @@ namespace ImageServiceGui.Communication
                 {
                     while(m_isListening)
                     {
+                        stream = this.m_client.GetStream();
+                        reader = new BinaryReader(stream);
                         string responseString = reader.ReadString();
+                        if (responseString == null)
+                        {
+                            Console.WriteLine("111");
+                        }
+                        Console.WriteLine("111");
+
+
+                        //  {
                         Console.WriteLine($"received {responseString} from Server");
-                        CommandRecievedEventArgs responseCommand =
+                            CommandRecievedEventArgs responseCommand =
                                 JsonConvert.DeserializeObject<CommandRecievedEventArgs>(responseString);
-                        this.UpdateResponse?.Invoke(responseCommand);              
+                            this.UpdateResponse?.Invoke(responseCommand);
+                      //  }                   
                     }
                 } catch(Exception exp)
                 {
