@@ -1,4 +1,5 @@
 ﻿using ImageService.Infrastructure.Enums;
+using ImageService.Logging;
 using ImageService.Modal;
 using ImageServiceDesktopApp.Model;
 using ImageServiceGui.Communication;
@@ -16,6 +17,7 @@ namespace ImageServiceGui.Model
 {
     class LogModel : ILogModel
     {
+        private bool updateLog;
         // implement the iINotifyPropertyChanged interface
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
@@ -25,8 +27,8 @@ namespace ImageServiceGui.Model
         }
         public GuiClientSingleton GuiClient { get; }
 
-        private ObservableCollection<Log> m_logList;
-        public ObservableCollection<Log> LogList
+        private ObservableCollection<LogEntry> m_logList;
+        public ObservableCollection<LogEntry> LogList
         {
             get { return this.m_logList; }
             set
@@ -36,26 +38,27 @@ namespace ImageServiceGui.Model
             }
         }
 
-        public LogModel()
-        {
+        public LogModel(){
+            this.updateLog = false;
             this.GuiClient = GuiClientSingleton.ClientInsatnce;
-            //this.GuiClient.ReceivedCommand();
+            this.GuiClient.ReceivedCommand();
             this.GuiClient.UpdateResponse += UpdateResponse;
             this.InitializeLog();
+            while(!updateLog) { }
         }
 
         private void InitializeLog()
         {
             try
             {
-              
-                LogList = new ObservableCollection<Log>();
+
+                LogList = new ObservableCollection<LogEntry>();
                 Object thisLock = new Object();
                 //לברררררר
-                BindingOperations.EnableCollectionSynchronization(LogList, thisLock);
+              //  BindingOperations.EnableCollectionSynchronization(LogList, thisLock);
                 string[] array = new string[5];
                 CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetLogList, array, "");
-              //  this.GuiClient.SendCommand(request);
+                this.GuiClient.SendCommand(request);
             }
             catch (Exception ex)
             {
@@ -82,7 +85,8 @@ namespace ImageServiceGui.Model
 
         public void UpdateLogList(string args)
         {
-            this.LogList = JsonConvert.DeserializeObject<ObservableCollection<Log>>(args);
+            this.LogList = JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(args);
+            this.updateLog = true;
         }
     }
 }

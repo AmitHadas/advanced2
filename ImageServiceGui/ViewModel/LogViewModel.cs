@@ -1,12 +1,14 @@
 ﻿using ImageServiceGui.Model;
 using ImageServiceGui.ViewModel;
 using System;
+using ImageService.Logging.Modal;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ImageService.Logging;
 
 namespace ImageServiceGui.Views_Model
 {
@@ -22,8 +24,8 @@ namespace ImageServiceGui.Views_Model
         }
 
         private LogModel m_logModel;
-        private ObservableCollection<Log> m_vm_logList;
-        public ObservableCollection<Log> VM_LogList
+        private ObservableCollection<LogEntry> m_vm_logList;
+        public ObservableCollection<LogEntry> VM_LogList
         {
             get
             {
@@ -42,8 +44,8 @@ namespace ImageServiceGui.Views_Model
         {
             this.m_logModel = new LogModel();
             m_logModel.PropertyChanged += PropertyChangedMethod;
-            m_logModel.LogList = new ObservableCollection<Log> { new Log("INFO", "AMIT HADAS"),
-                new Log("WARNING", "NOA OR"), new Log("ERROR", "HI")};
+            m_logModel.LogList = new ObservableCollection<LogEntry> { new LogEntry("INFO", "AMIT HADAS"),
+                new LogEntry("WARNING", "NOA OR"), new LogEntry("ERROR", "HI")};
         }
     }
 }

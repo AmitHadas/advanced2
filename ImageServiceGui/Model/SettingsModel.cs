@@ -104,7 +104,7 @@ namespace ImageServiceGui.Model
             this.GuiClient.ReceivedCommand();
             this.GuiClient.UpdateResponse += UpdateResponse;
             this.InitializeSettings();
-            //while (!updateApp) { }
+            while (!updateApp) { }
         }
 
         public void RemoveHandler(string handler)
@@ -146,7 +146,13 @@ namespace ImageServiceGui.Model
             this.SourceName = args[1];
             this.LogName = args[2];
             this.ThumbSize = args[3];
-            this.HandlersList = JsonConvert.DeserializeObject<ObservableCollection<string>>(args[4]);
+
+            string[] directories = args[4].Split(';');
+            HandlersList = new ObservableCollection<string>();
+            foreach (var dir in directories)
+            {
+                this.HandlersList.Add(dir);
+            }
             this.updateApp = true;
         }
         private void UpdateResponse(CommandRecievedEventArgs e)

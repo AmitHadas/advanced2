@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageServiceGui.Model
+namespace ImageService.Logging
 {
-    class Log : INotifyPropertyChanged
+    class LogEntry : INotifyPropertyChanged
     {
 
         // implement the iINotifyPropertyChanged interface
@@ -40,7 +40,7 @@ namespace ImageServiceGui.Model
             }
         }
 
-        public Log(string type, string info)
+        public LogEntry(string type, string info)
         {
             this.m_type = type;
             this.m_info = info;

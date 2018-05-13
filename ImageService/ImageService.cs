@@ -49,10 +49,10 @@ namespace ImageService
             eventLog1.Log = ConfigurationManager.AppSettings.Get("LogName");
             EventHandler<MessageRecievedEventArgs> MessageRecieved = new EventHandler<MessageRecievedEventArgs>(onMsg);
             this.logging = new LoggingService(MessageRecieved);
-            IImageController controller = new ImageController(new ImageServiceModal(this.logging));
+            IImageController controller = new ImageController(new ImageServiceModal(this.logging), this.logging);
             this.server = new ImageServer(controller, this.logging);      
             controller.ImageServerProp = server;
-            ClientHandler clientHandler = new ClientHandler(controller);
+            ClientHandler clientHandler = new ClientHandler(controller, logging);
             TcpServer tcpServer = new TcpServer(logging, clientHandler, 8000);
             tcpServer.Start();
         }

@@ -38,7 +38,7 @@ namespace ImageService.Communication
                 m_listener = new TcpListener(endPoint);
                 m_listener.Start();
  
-            m_logging.Log("Waiting for connections ...", MessageTypeEnum.INFO);
+                m_logging.Log("Waiting for connections ...", MessageTypeEnum.INFO);
             Task task = new Task(() => {
                 while (true)
                 {
@@ -47,18 +47,18 @@ namespace ImageService.Communication
                         TcpClient client = m_listener.AcceptTcpClient();
                         m_logging.Log("Got new connection", MessageTypeEnum.INFO);
                         m_clientsList.Add(client);
-                        m_clientHandler.HandleClient(client);
+                        m_clientHandler.HandleClient(client, client.GetStream());
                     }
-                    catch (SocketException)
+                    catch (Exception e)
                     {
+                        m_logging.Log("Exception occured", MessageTypeEnum.FAIL);
                         break;
                     }
                 }
                 m_logging.Log("Server stopped", MessageTypeEnum.INFO);
             });
             task.Start();
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 m_logging.Log(e.ToString(), MessageTypeEnum.FAIL);
             }

@@ -6,12 +6,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ImageService.Logging;
+
 
 namespace ImageServiceGui.ViewModel
 {
     interface ILogViewModel : INotifyPropertyChanged
     {
-        ObservableCollection<Log> VM_LogList { get; set; }
+       ObservableCollection<LogEntry> VM_LogList { get; set; }
 
     }
 }

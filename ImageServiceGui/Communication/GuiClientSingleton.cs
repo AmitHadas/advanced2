@@ -22,6 +22,9 @@ namespace ImageServiceGui.Communication
         private static GuiClientSingleton m_clientInstance;
         private static Mutex m_mtx = new Mutex();
         private bool m_isConnected;
+        private NetworkStream stream;
+        private BinaryReader reader;
+        private BinaryWriter writer;
         public bool IsConnected { get; set; }
 
 
@@ -48,6 +51,9 @@ namespace ImageServiceGui.Communication
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3000);
                 this.m_client = new TcpClient();
                 this.m_client.Connect(endPoint);
+                stream = m_client.GetStream();
+                reader = new BinaryReader(stream);
+                writer = new BinaryWriter(stream);
                 Console.WriteLine("Client Connected");
                 m_isListening = true;
                 return true;
@@ -65,18 +71,13 @@ namespace ImageServiceGui.Communication
              {
                  try
                  {
-                     string commandToJson = JsonConvert.SerializeObject(e);
-                     using (NetworkStream netWorkStream = this.m_client.GetStream())
-                     using (StreamWriter writer = new StreamWriter(netWorkStream))
-                     {
-
+                        string commandToJson = JsonConvert.SerializeObject(e);
                          //sending data to server
                          Console.WriteLine($"Sending {commandToJson} to server");
-                         m_mtx.WaitOne();
+                        // m_mtx.WaitOne();
                          writer.Write(commandToJson);
                          writer.Flush();
-                         m_mtx.ReleaseMutex();
-                     }
+                        // m_mtx.ReleaseMutex();
                  }
                  catch (Exception exception)
                  {
@@ -94,22 +95,11 @@ namespace ImageServiceGui.Communication
                 {
                     while(m_isListening)
                     {
-                        NetworkStream stream = this.m_client.GetStream();
-                        StreamReader reader = new StreamReader(stream);
-                        string responseString = reader.ReadLine();
-                        if (responseString == null)
-                        {
-                            Console.WriteLine("111");
-                        }
-                        Console.WriteLine("111");
-
-
-                        //  {
+                        string responseString = reader.ReadString();
                         Console.WriteLine($"received {responseString} from Server");
-                            CommandRecievedEventArgs responseCommand =
+                        CommandRecievedEventArgs responseCommand =
                                 JsonConvert.DeserializeObject<CommandRecievedEventArgs>(responseString);
-                            this.UpdateResponse?.Invoke(responseCommand);
-                      //  }                   
+                        this.UpdateResponse?.Invoke(responseCommand);              
                     }
                 } catch(Exception exp)
                 {
