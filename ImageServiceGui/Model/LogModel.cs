@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
@@ -43,6 +44,7 @@ namespace ImageServiceGui.Model
             this.GuiClient = GuiClientSingleton.ClientInsatnce;
             this.GuiClient.ReceivedCommand();
             this.GuiClient.UpdateResponse += UpdateResponse;
+            Thread.Sleep(100);
             this.InitializeLog();
             while(!updateLog) { }
         }
@@ -55,7 +57,7 @@ namespace ImageServiceGui.Model
                 LogList = new ObservableCollection<LogEntry>();
                 Object thisLock = new Object();
                 //לברררררר
-              //  BindingOperations.EnableCollectionSynchronization(LogList, thisLock);
+                BindingOperations.EnableCollectionSynchronization(LogList, thisLock);
                 string[] array = new string[5];
                 CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetLogList, array, "");
                 this.GuiClient.SendCommand(request);

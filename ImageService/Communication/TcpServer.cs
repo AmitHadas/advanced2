@@ -20,7 +20,7 @@ namespace ImageService.Communication
         private int m_port;
         private List<TcpClient> m_clientsList;
         private TcpListener m_listener;
-     
+
         public TcpServer(ILoggingService logging, ClientHandler clientHandler, int port)
         {
             this.m_logging = logging;
@@ -37,28 +37,29 @@ namespace ImageService.Communication
                 IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3000);
                 m_listener = new TcpListener(endPoint);
                 m_listener.Start();
- 
+
                 m_logging.Log("Waiting for connections ...", MessageTypeEnum.INFO);
-            Task task = new Task(() => {
-                while (true)
-                {
-                    try
+                Task task = new Task(() => {
+                    while (true)
                     {
-                        TcpClient client = m_listener.AcceptTcpClient();
-                        m_logging.Log("Got new connection", MessageTypeEnum.INFO);
-                        m_clientsList.Add(client);
-                        m_clientHandler.HandleClient(client, client.GetStream());
+                        try
+                        {
+                            TcpClient client = m_listener.AcceptTcpClient();
+                            m_logging.Log("Got new connection", MessageTypeEnum.INFO);
+                            m_clientsList.Add(client);
+                            m_clientHandler.HandleClient(client, client.GetStream());
+                        }
+                        catch (Exception e)
+                        {
+                            m_logging.Log("Exception occured", MessageTypeEnum.FAIL);
+                            break;
+                        }
                     }
-                    catch (Exception e)
-                    {
-                        m_logging.Log("Exception occured", MessageTypeEnum.FAIL);
-                        break;
-                    }
-                }
-                m_logging.Log("Server stopped", MessageTypeEnum.INFO);
-            });
-            task.Start();
-            } catch (Exception e)
+                    m_logging.Log("Server stopped", MessageTypeEnum.INFO);
+                });
+                task.Start();
+            }
+            catch (Exception e)
             {
                 m_logging.Log(e.ToString(), MessageTypeEnum.FAIL);
             }
@@ -71,19 +72,20 @@ namespace ImageService.Communication
         {
             foreach (TcpClient client in m_clientsList)
             {
-                new Task(() =>{
+                new Task(() => {
                     try
                     {
                         NetworkStream stream = client.GetStream();
                         BinaryWriter writer = new BinaryWriter(stream);
                         string command = JsonConvert.SerializeObject(e);
                         writer.Write(command);
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         m_logging.Log(ex.ToString(), MessageTypeEnum.FAIL);
                     }
-                    }).Start();
-                
+                }).Start();
+
             }
         }
     }

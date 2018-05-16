@@ -43,7 +43,8 @@ namespace ImageServiceGui.Model
             {
                 return m_sourceName;
             }
-            set {
+            set
+            {
                 m_sourceName = value;
                 OnPropertyChanged("Source Name");
             }
@@ -85,7 +86,7 @@ namespace ImageServiceGui.Model
             {
                 m_handlersList = value;
                 OnPropertyChanged("Handlers List");
-                            }
+            }
         }
         private string m_selectedHandler;
         public string SelectedHandler
@@ -130,7 +131,7 @@ namespace ImageServiceGui.Model
                 HandlersList = new ObservableCollection<string>();
                 Object thisLock = new Object();
                 BindingOperations.EnableCollectionSynchronization(HandlersList, thisLock);
-                CommandRecievedEventArgs request = 
+                CommandRecievedEventArgs request =
                     new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, null, "");
                 this.GuiClient.SendCommand(request);
             }
@@ -166,12 +167,14 @@ namespace ImageServiceGui.Model
                     {
                         args = e.Args;
                         UpdateConfig(args);
-                    } else if (e.CommandID == (int)CommandEnum.CloseHandler)
+                    }
+                    else if (e.CommandID == (int)CommandEnum.CloseHandler)
                     {
                         RemoveHandler(e.Args[0]);
                     }
                 }
-            } catch (Exception exc)
+            }
+            catch (Exception exc)
             {
                 Console.WriteLine(exc.ToString());
             }

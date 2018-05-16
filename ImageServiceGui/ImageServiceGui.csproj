@@ -65,7 +65,6 @@
     <Compile Include="Communication\GuiClientSingleton.cs" />
     <Compile Include="Model\ILogModel.cs" />
     <Compile Include="Model\ISettingsModel.cs" />
-    <Compile Include="Model\LogEntry.cs" />
     <Compile Include="Model\LogModel.cs" />
     <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="ViewModel\ILogViewModel.cs" />

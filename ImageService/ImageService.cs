@@ -32,7 +32,7 @@ namespace ImageService
             InitializeComponent();
             string eventSourceName = "MySource1";
             string logName = "MyLogFile1";
-            if (args.Count() > 0) 
+            if (args.Count() > 0)
             {
                 eventSourceName = args[0];
             }
@@ -50,13 +50,13 @@ namespace ImageService
             EventHandler<MessageRecievedEventArgs> MessageRecieved = new EventHandler<MessageRecievedEventArgs>(onMsg);
             this.logging = new LoggingService(MessageRecieved);
             IImageController controller = new ImageController(new ImageServiceModal(this.logging), this.logging);
-            this.server = new ImageServer(controller, this.logging);      
+            this.server = new ImageServer(controller, this.logging);
             controller.ImageServerProp = server;
             ClientHandler clientHandler = new ClientHandler(controller, logging);
             TcpServer tcpServer = new TcpServer(logging, clientHandler, 8000);
             tcpServer.Start();
         }
-        
+
         //The function that is called when we start the service.
         protected override void OnStart(string[] args)
         {
@@ -85,7 +85,7 @@ namespace ImageService
         protected override void OnStop()
         {
             //notify the server that the service is about to close
-           // this.server.sendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
+            // this.server.sendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, null, null));
             eventLog1.WriteEntry("In onStop.");
         }
         private void onMsg(object sender, MessageRecievedEventArgs e)

@@ -13,7 +13,7 @@ namespace ImageServiceGui.ViewModel
 {
     interface ILogViewModel : INotifyPropertyChanged
     {
-       ObservableCollection<LogEntry> VM_LogList { get; set; }
+        ObservableCollection<LogEntry> VM_LogList { get; set; }
 
     }
 }
