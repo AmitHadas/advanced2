@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Collections.ObjectModel;
 
 namespace ImageServiceGui.Model
 {
@@ -73,7 +74,8 @@ namespace ImageServiceGui.Model
                 {
                     if (e.CommandID == (int)CommandEnum.GetLogList)
                     {
-                        UpdateLogList(e.Args[0]);
+                        ObservableCollection<LogEntry> logsList = JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(e.Args[0]);
+                        UpdateLogList(logsList);
                     }
                 }
             }
@@ -83,9 +85,9 @@ namespace ImageServiceGui.Model
             }
         }
 
-        public void UpdateLogList(string args)
+        public void UpdateLogList(ObservableCollection<LogEntry> logs)
         {
-            this.LogList = JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(args);
+            this.m_logList = logs;
             this.updateLog = true;
         }
     }

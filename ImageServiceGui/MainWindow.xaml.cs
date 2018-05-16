@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ImageServiceGui.Views_Model;
-
+using ImageServiceGui.ViewModel;
 
 namespace ImageServiceGui
 {
@@ -25,6 +25,7 @@ namespace ImageServiceGui
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowViewModel();
         }
     }
 }

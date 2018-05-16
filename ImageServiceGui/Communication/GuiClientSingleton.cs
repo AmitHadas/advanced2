@@ -25,7 +25,7 @@ namespace ImageServiceGui.Communication
         private NetworkStream stream;
         private StreamReader reader;
         private StreamWriter writer;
-        public bool IsConnected { get; set; }
+        public bool IsConnected { get; private set; }
 
 
         private GuiClientSingleton()

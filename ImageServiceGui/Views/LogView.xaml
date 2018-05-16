@@ -9,7 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
-        <converters:TypeToBack x:Key="TypeToBack"/>
+        <converters:MsgToColor x:Key="MsgToColor"/>
     </UserControl.Resources>
 
 <Grid>
@@ -25,7 +25,7 @@
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Background" 
-                                        Value="{Binding Path=Type, Converter={StaticResource TypeToBack}}"></Setter>
+                                        Value="{Binding Path=Type, Converter={StaticResource MsgToColor}}"></Setter>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>

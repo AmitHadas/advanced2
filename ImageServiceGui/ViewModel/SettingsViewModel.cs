@@ -84,12 +84,6 @@ namespace ImageServiceGui.Views_Model
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
             this.m_settingsModel = new SettingsModel();
             m_settingsModel.PropertyChanged += PropertyChangedMethod;
-            //m_settingsModel.OutputDir = "noa";
-            //m_settingsModel.LogName = "amit";
-            //m_settingsModel.SourceName = "source";
-            //m_settingsModel.ThumbSize = "8";
-            //m_settingsModel.HandlersList = new ObservableCollection<string> { "hi", "there", "amit", "and", "noa" };
-
         }
 
         public SettingsModel SettingsModel

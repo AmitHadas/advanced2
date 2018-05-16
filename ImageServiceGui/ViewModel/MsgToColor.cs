@@ -9,7 +9,7 @@ using System.Windows.Media;
 
 namespace ImageServiceGui.ViewModel
 {
-    class TypeToBack : IValueConverter
+    class MsgToColor : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -18,13 +18,13 @@ namespace ImageServiceGui.ViewModel
             string type = (string)value;
             if (type == "INFO")
             {
-                return Brushes.Green;
+                return Brushes.LightGreen;
             } else if (type == "WARNING")
             {
-                return Brushes.Yellow;
+                return Brushes.LightYellow;
             } else
             {
-                return Brushes.Red;
+                return Brushes.LightPink;
             }
         }
 
@@ -35,15 +35,15 @@ namespace ImageServiceGui.ViewModel
             string type = (string)value;
             if (type == "INFO")
             {
-                return Brushes.Green;
+                return Brushes.LightGreen;
             }
             else if (type == "WARNING")
             {
-                return Brushes.Yellow;
+                return Brushes.LightYellow;
             }
             else
             {
-                return Brushes.Red;
+                return Brushes.LightPink;
             }
         }
     }

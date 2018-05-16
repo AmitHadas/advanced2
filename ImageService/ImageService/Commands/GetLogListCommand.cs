@@ -1,5 +1,7 @@
 ﻿using ImageService.Commands;
+using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
+using ImageService.Modal;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,8 +23,12 @@ namespace ImageService.Commands
         {
             result = true;
             ObservableCollection<LogEntry> logs = m_log.LogMessages;
-            string logStr = JsonConvert.SerializeObject(logs);
-            return logStr;
+            string jsonLogMessages = JsonConvert.SerializeObject(logs);
+            string[] arr = new string[1];
+            arr[0] = jsonLogMessages;
+            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.GetLogList, arr, "");
+            return JsonConvert.SerializeObject(command);
+
         }
     }
 }
