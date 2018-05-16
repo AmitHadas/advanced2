@@ -100,6 +100,20 @@ namespace ImageServiceGui.Views_Model
         {
 
         }
+
+        private string getUpdatedList()
+        {
+            string handlers = "";
+            for (int i = 0; i < VM_HandlersList.Count; i++)
+            {
+                if (i != 0)
+                {
+                    handlers += ";";
+                }
+                handlers += VM_HandlersList[i];
+            }
+            return handlers;
+        }
         private void OnRemove(object obj)
         {
             for (int i = 0; i < VM_HandlersList.Count; i++)
@@ -107,7 +121,9 @@ namespace ImageServiceGui.Views_Model
                 if (VM_HandlersList[i].Equals(VM_SelectedHandler))
                 {
                     this.VM_HandlersList.RemoveAt(i);
-                    string[] args = { VM_SelectedHandler };
+
+                    string updatedList = getUpdatedList();
+                    string[] args = { updatedList };
                     this.m_settingsModel.InformServer
                          (new ImageService.Modal.CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, ""));
                     return;

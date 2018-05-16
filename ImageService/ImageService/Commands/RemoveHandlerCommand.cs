@@ -21,9 +21,12 @@ namespace ImageService.Commands
             result = true;
             //  m_imageServer.RemoveHandler(args[0]);
             //לעדכן app config
-            System.Configuration.Configuration config =
-             ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings.Remove(args[0]);
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            // Add an Application Setting.
+            config.AppSettings.Settings.Remove("Handler");
+            config.AppSettings.Settings.Add("Handler", args[0]);
+            config.Save(ConfigurationSaveMode.Modified, true);
+            ConfigurationManager.RefreshSection("appSettings");
             return "";
         }
     }
