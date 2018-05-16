@@ -23,8 +23,8 @@ namespace ImageServiceGui.Communication
         private static Mutex m_mtx = new Mutex();
         private bool m_isConnected;
         private NetworkStream stream;
-        private BinaryReader reader;
-        private BinaryWriter writer;
+        private StreamReader reader;
+        private StreamWriter writer;
         public bool IsConnected { get; set; }
 
 
@@ -52,8 +52,8 @@ namespace ImageServiceGui.Communication
                 this.m_client = new TcpClient();
                 this.m_client.Connect(endPoint);
                 stream = m_client.GetStream();
-                reader = new BinaryReader(stream);
-              //  reader.ReadString();
+                reader = new StreamReader(stream);
+                writer = new StreamWriter(stream);
                 Console.WriteLine("Client Connected");
                 m_isListening = true;
                 return true;
@@ -71,16 +71,13 @@ namespace ImageServiceGui.Communication
              {
                  try
                  {
-                     string commandToJson = JsonConvert.SerializeObject(e);
-                     stream = this.m_client.GetStream();
-                     writer = new BinaryWriter(stream);
-
-                     //sending data to server
-                     Console.WriteLine($"Sending {commandToJson} to server");
-                         m_mtx.WaitOne();
-                         writer.Write(commandToJson);
+                        string commandToJson = JsonConvert.SerializeObject(e);
+                         //sending data to server
+                         Console.WriteLine($"Sending {commandToJson} to server");
+                        // m_mtx.WaitOne();
+                         writer.WriteLine(commandToJson);
                          writer.Flush();
-                         m_mtx.ReleaseMutex();
+                        // m_mtx.ReleaseMutex();
                  }
                  catch (Exception exception)
                  {
@@ -98,22 +95,15 @@ namespace ImageServiceGui.Communication
                 {
                     while(m_isListening)
                     {
-                        stream = this.m_client.GetStream();
-                        reader = new BinaryReader(stream);
-                        string responseString = reader.ReadString();
-                        if (responseString == null)
+                        string responseString = reader.ReadLine();
+                        while (reader.Peek() > 0)
                         {
-                            Console.WriteLine("111");
+                            responseString += reader.ReadLine();
                         }
-                        Console.WriteLine("111");
-
-
-                        //  {
                         Console.WriteLine($"received {responseString} from Server");
-                            CommandRecievedEventArgs responseCommand =
+                        CommandRecievedEventArgs responseCommand =
                                 JsonConvert.DeserializeObject<CommandRecievedEventArgs>(responseString);
-                            this.UpdateResponse?.Invoke(responseCommand);
-                      //  }                   
+                        this.UpdateResponse?.Invoke(responseCommand);              
                     }
                 } catch(Exception exp)
                 {
