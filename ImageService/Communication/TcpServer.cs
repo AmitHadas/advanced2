@@ -75,7 +75,7 @@ namespace ImageService.Communication
                     try
                     {
                         NetworkStream stream = client.GetStream();
-                        StreamWriter writer = new StreamWriter(stream);
+                        BinaryWriter writer = new BinaryWriter(stream);
                         string command = JsonConvert.SerializeObject(e);
                         writer.Write(command);
                     } catch (Exception ex)
