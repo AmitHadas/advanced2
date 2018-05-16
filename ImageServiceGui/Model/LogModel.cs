@@ -42,10 +42,13 @@ namespace ImageServiceGui.Model
         public LogModel(){
             this.updateLog = false;
             this.GuiClient = GuiClientSingleton.ClientInsatnce;
-            this.GuiClient.ReceivedCommand();
-            this.GuiClient.UpdateResponse += UpdateResponse;
-            this.InitializeLog();
-            while(!updateLog) { }
+            if (GuiClient.IsConnected)
+            {
+                this.GuiClient.ReceivedCommand();
+                this.GuiClient.UpdateResponse += UpdateResponse;
+                this.InitializeLog();
+                while (!updateLog) { }
+            }
         }
 
         private void InitializeLog()

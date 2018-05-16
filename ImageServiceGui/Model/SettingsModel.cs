@@ -102,10 +102,13 @@ namespace ImageServiceGui.Model
         {
             this.updateApp = false;
             this.GuiClient = GuiClientSingleton.ClientInsatnce;
-            this.GuiClient.ReceivedCommand();
-            this.GuiClient.UpdateResponse += UpdateResponse;
-            this.InitializeSettings();
-            while (!updateApp) { }
+            if (GuiClient.IsConnected)
+            {
+                this.GuiClient.ReceivedCommand();
+                this.GuiClient.UpdateResponse += UpdateResponse;
+                this.InitializeSettings();
+                while (!updateApp) { }
+            }
         }
 
         public void RemoveHandler(string handler)
