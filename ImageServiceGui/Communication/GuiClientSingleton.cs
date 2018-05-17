@@ -100,10 +100,13 @@ namespace ImageServiceGui.Communication
                         {
                             responseString += reader.ReadLine();
                         }
-                        Console.WriteLine($"received {responseString} from Server");
-                        CommandRecievedEventArgs responseCommand =
-                                JsonConvert.DeserializeObject<CommandRecievedEventArgs>(responseString);
-                        this.UpdateResponse?.Invoke(responseCommand);              
+                        if (responseString != "")
+                        {
+                            Console.WriteLine($"received {responseString} from Server");
+                            CommandRecievedEventArgs responseCommand =
+                                    JsonConvert.DeserializeObject<CommandRecievedEventArgs>(responseString);
+                            this.UpdateResponse?.Invoke(responseCommand);
+                        }           
                     }
                 } catch(Exception exp)
                 {

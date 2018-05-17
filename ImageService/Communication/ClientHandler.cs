@@ -25,13 +25,12 @@ namespace ImageService.Communication
             m_controller = controller;
             m_logging = log;
         }
-        public void HandleClient(TcpClient client, NetworkStream stream)
+        public void HandleClient(TcpClient client, NetworkStream stream, StreamReader reader, StreamWriter writer)
         {
             new Task(() =>
             {
-                //NetworkStream stream1 = client.GetStream();
-                StreamReader reader = new StreamReader(stream);
-                StreamWriter writer = new StreamWriter(stream);
+                //StreamReader reader = new StreamReader(stream);
+                //StreamWriter writer = new StreamWriter(stream);
                 while (true)
                 {
                     try

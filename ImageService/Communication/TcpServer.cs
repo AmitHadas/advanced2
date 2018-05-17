@@ -18,7 +18,7 @@ namespace ImageService.Communication
         private ILoggingService m_logging;
         private ClientHandler m_clientHandler;
         private int m_port;
-        private List<TcpClient> m_clientsList;
+        private List<ClientInfo> m_clientsList;
         private TcpListener m_listener;
 
         public TcpServer(ILoggingService logging, ClientHandler clientHandler, int port)
@@ -26,7 +26,7 @@ namespace ImageService.Communication
             this.m_logging = logging;
             this.m_clientHandler = clientHandler;
             this.m_port = port;
-            this.m_clientsList = new List<TcpClient>();
+            this.m_clientsList = new List<ClientInfo>();
 
         }
 
@@ -46,8 +46,9 @@ namespace ImageService.Communication
                         {
                             TcpClient client = m_listener.AcceptTcpClient();
                             m_logging.Log("Got new connection", MessageTypeEnum.INFO);
-                            m_clientsList.Add(client);
-                            m_clientHandler.HandleClient(client, client.GetStream());
+                            ClientInfo clientInfo = new ClientInfo(client);
+                            m_clientsList.Add(clientInfo);
+                            m_clientHandler.HandleClient(client, clientInfo.Stream, clientInfo.Reader, clientInfo.Writer);
                         }
                         catch (Exception e)
                         {
@@ -70,13 +71,12 @@ namespace ImageService.Communication
         }
         public void NotifyAllClients(CommandRecievedEventArgs e)
         {
-            foreach (TcpClient client in m_clientsList)
+            foreach (ClientInfo client in m_clientsList)
             {
                 new Task(() => {
                     try
                     {
-                        NetworkStream stream = client.GetStream();
-                        BinaryWriter writer = new BinaryWriter(stream);
+                        StreamWriter writer = client.Writer;
                         string command = JsonConvert.SerializeObject(e);
                         writer.Write(command);
                     }

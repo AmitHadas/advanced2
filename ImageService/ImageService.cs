@@ -54,6 +54,7 @@ namespace ImageService
             controller.ImageServerProp = server;
             ClientHandler clientHandler = new ClientHandler(controller, logging);
             TcpServer tcpServer = new TcpServer(logging, clientHandler, 8000);
+            ImageServer.NotifyHandlerRemoved += tcpServer.NotifyAllClients;
             tcpServer.Start();
         }
 

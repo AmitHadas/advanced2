@@ -75,5 +75,10 @@ namespace ImageService.Server
                 }
             }
         }
+
+        public static void PerformEvent(CommandRecievedEventArgs commandRecievedEventArgs)
+        {
+            NotifyHandlerRemoved.Invoke(commandRecievedEventArgs);
+        }
     }
 }

@@ -111,16 +111,24 @@ namespace ImageServiceGui.Model
             }
         }
 
-        public void RemoveHandler(string handler)
+        public void RemoveHandler(string [] args)
         {
-            for (int i = 0; i < HandlersList.Count; i++)
+            //for (int i = 0; i < HandlersList.Count; i++)
+            //{
+            //    if (HandlersList[i].Equals(handler))
+            //    {
+            //        this.HandlersList.RemoveAt(i);
+            //        return;
+            //    }
+            //}
+
+            string[] directories = args[0].Split(';');
+            HandlersList = new ObservableCollection<string>();
+            foreach (var dir in directories)
             {
-                if (HandlersList[i].Equals(handler))
-                {
-                    this.HandlersList.RemoveAt(i);
-                    return;
-                }
+                this.HandlersList.Add(dir);
             }
+
         }
 
         private void InitializeSettings()
@@ -173,7 +181,7 @@ namespace ImageServiceGui.Model
                     }
                     else if (e.CommandID == (int)CommandEnum.CloseHandler)
                     {
-                        RemoveHandler(e.Args[0]);
+                        RemoveHandler(e.Args);
                     }
                 }
             }

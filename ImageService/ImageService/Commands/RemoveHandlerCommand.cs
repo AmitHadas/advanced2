@@ -1,5 +1,8 @@
 ﻿using ImageService.Commands;
+using ImageService.Infrastructure.Enums;
+using ImageService.Modal;
 using ImageService.Server;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -27,6 +30,8 @@ namespace ImageService.Commands
             config.AppSettings.Settings.Add("Handler", args[0]);
             config.Save(ConfigurationSaveMode.Modified, true);
             ConfigurationManager.RefreshSection("appSettings");
+            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, "");
+            ImageServer.PerformEvent(command);
             return "";
         }
     }
