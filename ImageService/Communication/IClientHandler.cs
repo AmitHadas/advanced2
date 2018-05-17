@@ -10,6 +10,6 @@ namespace ImageService.Communication
 {
     interface IClientHandler
     {
-        void HandleClient(TcpClient client, NetworkStream stream, StreamReader reader, StreamWriter writer);
+        void HandleClient(TcpClient client, NetworkStream stream, BinaryReader reader, BinaryWriter writer);
     }
 }

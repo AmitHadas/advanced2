@@ -23,8 +23,8 @@ namespace ImageServiceGui.Communication
         private static Mutex m_mtx = new Mutex();
         private bool m_isConnected;
         private NetworkStream stream;
-        private StreamReader reader;
-        private StreamWriter writer;
+        private BinaryReader reader;
+        private BinaryWriter writer;
         public bool IsConnected { get; private set; }
 
 
@@ -52,8 +52,8 @@ namespace ImageServiceGui.Communication
                 this.m_client = new TcpClient();
                 this.m_client.Connect(endPoint);
                 stream = m_client.GetStream();
-                reader = new StreamReader(stream);
-                writer = new StreamWriter(stream);
+                reader = new BinaryReader(stream);
+                writer = new BinaryWriter(stream);
                 Console.WriteLine("Client Connected");
                 m_isListening = true;
                 return true;
@@ -75,7 +75,7 @@ namespace ImageServiceGui.Communication
                          //sending data to server
                          Console.WriteLine($"Sending {commandToJson} to server");
                         // m_mtx.WaitOne();
-                         writer.WriteLine(commandToJson);
+                         writer.Write(commandToJson);
                          writer.Flush();
                         // m_mtx.ReleaseMutex();
                  }
@@ -95,13 +95,14 @@ namespace ImageServiceGui.Communication
                 {
                     while(m_isListening)
                     {
-                        string responseString = reader.ReadLine();
-                        while (reader.Peek() > 0)
-                        {
-                            responseString += reader.ReadLine();
-                        }
+                        string responseString = reader.ReadString();
+                        //while (reader.Peek() > 0)
+                        //{
+                        //    responseString += reader.ReadLine();
+                        //}
                         if (responseString != "")
                         {
+                        //    responseString.Replace("#", Environment.NewLine);
                             Console.WriteLine($"received {responseString} from Server");
                             CommandRecievedEventArgs responseCommand =
                                     JsonConvert.DeserializeObject<CommandRecievedEventArgs>(responseString);
@@ -110,7 +111,7 @@ namespace ImageServiceGui.Communication
                     }
                 } catch(Exception exp)
                 {
-                    Console.WriteLine(exp.ToString());
+                    Console.Write(exp.ToString());
                 }
             }).Start();
         }

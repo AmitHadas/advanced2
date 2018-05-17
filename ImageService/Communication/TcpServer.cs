@@ -76,7 +76,7 @@ namespace ImageService.Communication
                 new Task(() => {
                     try
                     {
-                        StreamWriter writer = client.Writer;
+                        BinaryWriter writer = client.Writer;
                         string command = JsonConvert.SerializeObject(e);
                         writer.Write(command);
                     }

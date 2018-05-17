@@ -22,14 +22,14 @@ namespace ImageService.Communication
             get { return m_stream; }
             set { m_stream = value; }
         }
-        private StreamReader m_reader;
-        public StreamReader Reader
+        private BinaryReader m_reader;
+        public BinaryReader Reader
         {
             get { return m_reader; }
             set { m_reader = value; }
         }
-        private StreamWriter m_writer;
-        public StreamWriter Writer
+        private BinaryWriter m_writer;
+        public BinaryWriter Writer
         {
             get { return m_writer; }
             set { m_writer = value; }
@@ -38,8 +38,8 @@ namespace ImageService.Communication
         {
             this.m_client = client;
             this.m_stream = client.GetStream();
-            this.m_reader = new StreamReader(m_stream);
-            this.m_writer = new StreamWriter(m_stream);
+            this.m_reader = new BinaryReader(m_stream);
+            this.m_writer = new BinaryWriter(m_stream);
         }
     }
 }

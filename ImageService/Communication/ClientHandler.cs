@@ -25,38 +25,38 @@ namespace ImageService.Communication
             m_controller = controller;
             m_logging = log;
         }
-        public void HandleClient(TcpClient client, NetworkStream stream, StreamReader reader, StreamWriter writer)
+        public void HandleClient(TcpClient client, NetworkStream stream, BinaryReader reader1, BinaryWriter writer1)
         {
             new Task(() =>
             {
-                //StreamReader reader = new StreamReader(stream);
-                //StreamWriter writer = new StreamWriter(stream);
                 while (true)
                 {
                     try
                     {
+                        BinaryReader reader = new BinaryReader(stream);
+                        BinaryWriter writer = new BinaryWriter(stream);
                         bool res;
                         m_logging.Log("start listening ...", Logging.Modal.MessageTypeEnum.INFO);
-                        string commandLine = reader.ReadLine();
-                        while (reader.Peek() > 0)
-                        {
-                            commandLine += reader.ReadLine();
-                        }
+                        string commandLine = reader.ReadString();
+                        //while (reader.Peek() > 0)
+                        //{
+                        //    commandLine += reader.ReadLine();
+                        //}
                         if (commandLine != null)
                         {
-                            m_logging.Log("log2", Logging.Modal.MessageTypeEnum.INFO);
+
                             CommandRecievedEventArgs command = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(commandLine);
+                          
                             if (command.CommandID.Equals((int)CommandEnum.CloseGui))
                             {
                                 ///add
                                 break;
                             }
                             string result = m_controller.ExecuteCommand(command.CommandID, command.Args, out res);
+                          //  result.Replace(Environment.NewLine, "#");
                             ///   m_mtx.WaitOne();
-                            m_logging.Log("log3", Logging.Modal.MessageTypeEnum.INFO);
-                            writer.WriteLine(result);
+                            writer.Write(result);
                             writer.Flush();
-                            m_logging.Log("log5", Logging.Modal.MessageTypeEnum.INFO);
                             //  m_mtx.ReleaseMutex();
                         }
 
