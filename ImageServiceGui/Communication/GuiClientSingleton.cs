@@ -23,8 +23,8 @@ namespace ImageServiceGui.Communication
         private static Mutex m_mtx = new Mutex();
         private bool m_isConnected;
         private NetworkStream stream;
-        private BinaryReader reader;
-        private BinaryWriter writer;
+        private StreamReader reader;
+        private StreamWriter writer;
         public bool IsConnected { get; private set; }
 
 
@@ -52,8 +52,8 @@ namespace ImageServiceGui.Communication
                 this.m_client = new TcpClient();
                 this.m_client.Connect(endPoint);
                 stream = m_client.GetStream();
-                reader = new BinaryReader(stream);
-                writer = new BinaryWriter(stream);
+                reader = new StreamReader(stream);
+                writer = new StreamWriter(stream);
                 Console.WriteLine("Client Connected");
                 m_isListening = true;
                 return true;
@@ -75,7 +75,7 @@ namespace ImageServiceGui.Communication
                          //sending data to server
                          Console.WriteLine($"Sending {commandToJson} to server");
                         // m_mtx.WaitOne();
-                         writer.Write(commandToJson);
+                         writer.WriteLine(commandToJson);
                          writer.Flush();
                         // m_mtx.ReleaseMutex();
                  }
@@ -95,11 +95,11 @@ namespace ImageServiceGui.Communication
                 {
                     while(m_isListening)
                     {
-                        string responseString = reader.ReadString();
-                        //while (reader.Peek() > 0)
-                        //{
-                        //    responseString += reader.ReadLine();
-                        //}
+                        string responseString = reader.ReadLine();
+                        while (reader.Peek() > 0)
+                        {
+                            responseString += reader.ReadLine();
+                        }
                         if (responseString != "")
                         {
                         //    responseString.Replace("#", Environment.NewLine);
@@ -111,7 +111,7 @@ namespace ImageServiceGui.Communication
                     }
                 } catch(Exception exp)
                 {
-                    Console.Write(exp.ToString());
+                    Console.WriteLine(exp.ToString());
                 }
             }).Start();
         }

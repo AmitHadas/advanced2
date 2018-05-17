@@ -48,7 +48,7 @@ namespace ImageService.Communication
                             m_logging.Log("Got new connection", MessageTypeEnum.INFO);
                             ClientInfo clientInfo = new ClientInfo(client);
                             m_clientsList.Add(clientInfo);
-                            m_clientHandler.HandleClient(client, clientInfo.Stream, clientInfo.Reader, clientInfo.Writer);
+                            m_clientHandler.HandleClient(client, clientInfo.Stream);
                         }
                         catch (Exception e)
                         {
@@ -76,9 +76,10 @@ namespace ImageService.Communication
                 new Task(() => {
                     try
                     {
-                        BinaryWriter writer = client.Writer;
+                        StreamWriter writer = new StreamWriter(client.Stream);
                         string command = JsonConvert.SerializeObject(e);
-                        writer.Write(command);
+                        writer.WriteLine(command);
+                        writer.Flush();
                     }
                     catch (Exception ex)
                     {

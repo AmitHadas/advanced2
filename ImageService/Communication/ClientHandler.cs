@@ -25,23 +25,24 @@ namespace ImageService.Communication
             m_controller = controller;
             m_logging = log;
         }
-        public void HandleClient(TcpClient client, NetworkStream stream, BinaryReader reader1, BinaryWriter writer1)
+        public void HandleClient(TcpClient client, NetworkStream stream)
         {
             new Task(() =>
             {
+                StreamReader reader = new StreamReader(stream);
+                StreamWriter writer = new StreamWriter(stream);
                 while (true)
                 {
                     try
                     {
-                        BinaryReader reader = new BinaryReader(stream);
-                        BinaryWriter writer = new BinaryWriter(stream);
+
                         bool res;
                         m_logging.Log("start listening ...", Logging.Modal.MessageTypeEnum.INFO);
-                        string commandLine = reader.ReadString();
-                        //while (reader.Peek() > 0)
-                        //{
-                        //    commandLine += reader.ReadLine();
-                        //}
+                        string commandLine = reader.ReadLine();
+                        while (reader.Peek() > 0)
+                        {
+                            commandLine += reader.ReadLine();
+                        }
                         if (commandLine != null)
                         {
 
@@ -55,7 +56,7 @@ namespace ImageService.Communication
                             string result = m_controller.ExecuteCommand(command.CommandID, command.Args, out res);
                           //  result.Replace(Environment.NewLine, "#");
                             ///   m_mtx.WaitOne();
-                            writer.Write(result);
+                            writer.WriteLine(result);
                             writer.Flush();
                             //  m_mtx.ReleaseMutex();
                         }
