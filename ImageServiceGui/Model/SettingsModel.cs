@@ -123,12 +123,21 @@ namespace ImageServiceGui.Model
             //}
 
             string[] directories = args[0].Split(';');
-            HandlersList = new ObservableCollection<string>();
-            foreach (var dir in directories)
-            {
-                this.HandlersList.Add(dir);
-            }
+            //ObservableCollection<string> tempHandlersList = new ObservableCollection<string>();
+            //HandlersList.Clear();
 
+            //foreach (var dir in directories)
+            //{
+            //    HandlersList.Add(dir);
+            //}
+
+            foreach (var dir in HandlersList)
+            {
+                if (!directories.Contains(dir))
+                {
+                    HandlersList.Remove(dir)
+                }
+            }
         }
 
         private void InitializeSettings()
