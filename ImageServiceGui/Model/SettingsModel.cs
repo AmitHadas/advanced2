@@ -135,7 +135,10 @@ namespace ImageServiceGui.Model
             {
                 if (!directories.Contains(dir))
                 {
-                    HandlersList.Remove(dir)
+                    App.Current.Dispatcher.Invoke((System.Action)delegate
+                    {
+                        HandlersList.Remove(dir);
+                    });
                 }
             }
         }
