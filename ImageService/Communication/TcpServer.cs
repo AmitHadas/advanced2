@@ -25,6 +25,7 @@ namespace ImageService.Communication
         {
             this.m_logging = logging;
             this.m_clientHandler = clientHandler;
+            m_clientHandler.RemoveClient += RemoveClientFromList;
             this.m_port = port;
             this.m_clientsList = new List<ClientInfo>();
 
@@ -88,6 +89,17 @@ namespace ImageService.Communication
                 }).Start();
 
             }
+        }
+        public void RemoveClientFromList(TcpClient clientToRemove)
+        {
+            foreach (ClientInfo client in m_clientsList)
+            {
+                if (client.Client.Equals(clientToRemove))
+                {
+                    m_clientsList.Remove(client);
+                }
+            }
+
         }
     }
 }

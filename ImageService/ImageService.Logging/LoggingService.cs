@@ -1,5 +1,8 @@
 ﻿
+using ImageService.Infrastructure.Enums;
 using ImageService.Logging.Modal;
+using ImageService.Modal;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +15,8 @@ namespace ImageService.Logging
 {
     public class LoggingService : ILoggingService
     {
+        public delegate void NotifyClientsAboutLog(CommandRecievedEventArgs command);
+        public static event NotifyClientsAboutLog NotifyLogEntry;
 
         public event EventHandler<MessageRecievedEventArgs> MessageRecieved;
         // list of all the event log entries.
@@ -21,7 +26,6 @@ namespace ImageService.Logging
         public ObservableCollection<LogEntry> LogMessages
         {
             get { return this.m_logMessages; }
-            //set { throw new NotImplementedException(); }
             set { this.m_logMessages = value; }
         }
 
@@ -34,8 +38,13 @@ namespace ImageService.Logging
 
         public void Log(string message, MessageTypeEnum type)
         {
-            this.LogMessages.Add(new LogEntry(Enum.GetName(typeof(MessageTypeEnum), type), message));
+            LogEntry logEntry = new LogEntry(Enum.GetName(typeof(MessageTypeEnum), type), message);
+            this.LogMessages.Add(logEntry);
             MessageRecieved?.Invoke(this, new MessageRecievedEventArgs(message, type));
+            string logJson = JsonConvert.SerializeObject(logEntry);
+            string[] args = { logJson };
+            CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.LogCommand, args, "");
+            NotifyLogEntry?.Invoke(command);
 
         }
     }

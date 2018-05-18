@@ -18,6 +18,7 @@ namespace ImageServiceGui.Model
 {
     class LogModel : ILogModel
     {
+        public static bool isFirstTime;
         private bool updateLog;
         // implement the iINotifyPropertyChanged interface
         public event PropertyChangedEventHandler PropertyChanged;
@@ -41,6 +42,7 @@ namespace ImageServiceGui.Model
 
         public LogModel(){
             this.updateLog = false;
+            isFirstTime = true;
             this.GuiClient = GuiClientSingleton.ClientInsatnce;
             if (GuiClient.IsConnected)
             {
@@ -79,6 +81,14 @@ namespace ImageServiceGui.Model
                     {
                         ObservableCollection<LogEntry> logsList = JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(e.Args[0]);
                         UpdateLogList(logsList);
+                        isFirstTime = false;
+                    }
+                    if (e.CommandID == (int)CommandEnum.LogCommand)
+                    {
+                        if (!isFirstTime) {
+                            LogEntry newLog = JsonConvert.DeserializeObject<LogEntry>(e.Args[0]);
+                            LogList.Add(newLog);
+                        }
                     }
                 }
             }

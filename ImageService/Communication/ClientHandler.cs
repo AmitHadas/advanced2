@@ -19,6 +19,8 @@ namespace ImageService.Communication
         private IImageController m_controller;
         private ILoggingService m_logging;
         private static Mutex m_mtx = new Mutex();
+        public event RemoveClientFromList RemoveClient;
+        public delegate void RemoveClientFromList(TcpClient clientToRemove);
 
         public ClientHandler(IImageController controller, ILoggingService log)
         {
@@ -54,11 +56,14 @@ namespace ImageService.Communication
                                 break;
                             }
                             string result = m_controller.ExecuteCommand(command.CommandID, command.Args, out res);
-                          //  result.Replace(Environment.NewLine, "#");
-                            ///   m_mtx.WaitOne();
-                            writer.WriteLine(result);
-                            writer.Flush();
-                            //  m_mtx.ReleaseMutex();
+                            try
+                            {
+                                writer.WriteLine(result);
+                                writer.Flush();
+                            } catch(Exception e)
+                            {
+                                RemoveClient?.Invoke(client);
+                            }
                         }
 
                     }
