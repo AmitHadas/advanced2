@@ -64,6 +64,7 @@
     <Compile Include="ImageService.Logging\LogEntry.cs" />
     <Compile Include="ImageService\Commands\AddLogCommand.cs" />
     <Compile Include="ImageService\Commands\AppConfigCommand.cs" />
+    <Compile Include="ImageService\Commands\CloseGuiCommand.cs" />
     <Compile Include="ImageService\Commands\GetLogListCommand.cs" />
     <Compile Include="ImageService\Commands\ICommand.cs" />
     <Compile Include="ImageService\Commands\NewFileCommand.cs" />

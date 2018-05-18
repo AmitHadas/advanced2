@@ -56,6 +56,9 @@ namespace ImageService
             TcpServer tcpServer = new TcpServer(logging, clientHandler, 8000);
             LoggingService.NotifyLogEntry += tcpServer.NotifyAllClients;
             ImageServer.NotifyHandlerRemoved += tcpServer.NotifyAllClients;
+            ImageServer.NotifyCloseGui += tcpServer.NotifyAllClients;
+            ImageServer.NotifyCloseGui += tcpServer.CallRemoveClient
+;
             tcpServer.Start();
         }
 

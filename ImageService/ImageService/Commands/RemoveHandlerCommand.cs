@@ -31,7 +31,7 @@ namespace ImageService.Commands
             config.Save(ConfigurationSaveMode.Modified, true);
             ConfigurationManager.RefreshSection("appSettings");
             CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, "");
-            ImageServer.PerformEvent(command);
+            ImageServer.RemoveHandlerEvent(command);
             return "";
         }
     }

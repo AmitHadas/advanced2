@@ -1,4 +1,7 @@
-﻿using ImageServiceGui.Communication;
+﻿
+using ImageService.Infrastructure.Enums;
+using ImageService.Modal;
+using ImageServiceGui.Communication;
 using ImageServiceGui.Model;
 using System;
 using System.Collections.Generic;
@@ -6,6 +9,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Practices.Prism.Commands;
+using System.Windows.Input;
 
 namespace ImageServiceGui.ViewModel
 {
@@ -45,12 +50,13 @@ namespace ImageServiceGui.ViewModel
             }
         }
         private MainWindowModel m_mainWinModel;
-        
+        public ICommand WindowClosing { get; private set; }
         public MainWindowViewModel()
         {
             this.m_mainWinModel = new MainWindowModel();
             VM_IsServerConnected = m_mainWinModel.IsServerConnected;
             m_mainWinModel.PropertyChanged += PropertyChangedMethod;
+            this.WindowClosing = new DelegateCommand<object>(this.OnWindowClosing);
 
         }
         private void PropertyChangedMethod(object sender, PropertyChangedEventArgs e)
@@ -58,5 +64,10 @@ namespace ImageServiceGui.ViewModel
             NotifyPropertyChanged(e.PropertyName);
         }
 
+        private void OnWindowClosing(object obj)
+        {
+            CommandRecievedEventArgs e =new CommandRecievedEventArgs((int)CommandEnum.CloseGui, null, null);
+            m_mainWinModel.NotifyServer(e);
+        }
     }
 }

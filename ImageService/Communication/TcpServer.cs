@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageService.Communication
@@ -79,6 +80,7 @@ namespace ImageService.Communication
                     {
                         StreamWriter writer = new StreamWriter(client.Stream);
                         string command = JsonConvert.SerializeObject(e);
+                        Thread.Sleep(1000);
                         writer.WriteLine(command);
                         writer.Flush();
                     }
@@ -100,6 +102,12 @@ namespace ImageService.Communication
                 }
             }
 
+        }
+
+        public void CallRemoveClient(CommandRecievedEventArgs e)
+        {
+            TcpClient client = JsonConvert.DeserializeObject<TcpClient>(e.Args[0]);
+            RemoveClientFromList(client);
         }
     }
 }

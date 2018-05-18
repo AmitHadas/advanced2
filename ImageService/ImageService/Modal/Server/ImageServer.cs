@@ -22,6 +22,7 @@ namespace ImageService.Server
         private LinkedList<IDirectoryHandler> handlersList;
         public delegate void NotifyClients(CommandRecievedEventArgs command);
         public static event NotifyClients NotifyHandlerRemoved;
+        public static event NotifyClients NotifyCloseGui;
 
         public ImageServer(IImageController controller, ILoggingService logging)
         {
@@ -76,9 +77,14 @@ namespace ImageService.Server
             }
         }
 
-        public static void PerformEvent(CommandRecievedEventArgs commandRecievedEventArgs)
+        public static void RemoveHandlerEvent(CommandRecievedEventArgs commandRecievedEventArgs)
         {
-            NotifyHandlerRemoved.Invoke(commandRecievedEventArgs);
+            NotifyHandlerRemoved?.Invoke(commandRecievedEventArgs);
+        }
+
+        public static void CloseGuiEvent(CommandRecievedEventArgs command)
+        {
+            NotifyCloseGui?.Invoke(command);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ImageServiceGui.Communication;
+﻿using ImageService.Modal;
+using ImageServiceGui.Communication;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,6 +38,11 @@ namespace ImageServiceGui.Model
         {
             m_guiClient = GuiClientSingleton.ClientInsatnce;
             m_isServerConnect = m_guiClient.IsConnected;
+        }
+
+        public void NotifyServer(CommandRecievedEventArgs e)
+        {
+            this.m_guiClient.SendCommand(e);
         }
     }
 }

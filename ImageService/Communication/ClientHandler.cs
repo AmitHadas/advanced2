@@ -49,15 +49,19 @@ namespace ImageService.Communication
                         {
 
                             CommandRecievedEventArgs command = JsonConvert.DeserializeObject<CommandRecievedEventArgs>(commandLine);
-                          
+
                             if (command.CommandID.Equals((int)CommandEnum.CloseGui))
                             {
-                                ///add
+                                string[] args = { JsonConvert.SerializeObject(client) };
+                                CommandRecievedEventArgs closeCommand = new CommandRecievedEventArgs((int)CommandEnum.CloseGui, args, "");
+                                m_controller.ExecuteCommand(closeCommand.CommandID, closeCommand.Args, out res);
+                                m_logging.Log("Client disconnected", Logging.Modal.MessageTypeEnum.INFO);
                                 break;
                             }
                             string result = m_controller.ExecuteCommand(command.CommandID, command.Args, out res);
                             try
                             {
+
                                 writer.WriteLine(result);
                                 writer.Flush();
                             } catch(Exception e)
