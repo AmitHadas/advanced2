@@ -52,11 +52,10 @@ namespace ImageService.Controller.Handlers
                 this.m_path = dirPath;
             } catch(Exception e) { }
             // Add event handlers.
-            //m_dirWatcher.Changed += new FileSystemEventHandler(OnChanged);
             m_dirWatcher.Created += new FileSystemEventHandler(OnCreated);
 
             // Begin watching.
-           // m_dirWatcher.EnableRaisingEvents = true;
+            m_dirWatcher.EnableRaisingEvents = true;
         }
 
         private void OnCreated(object source, FileSystemEventArgs e)

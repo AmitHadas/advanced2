@@ -120,10 +120,11 @@ namespace ImageServiceGui.Views_Model
             {
                 if (VM_HandlersList[i].Equals(VM_SelectedHandler))
                 {
+                    string handlerToRemove = VM_SelectedHandler;
                     this.VM_HandlersList.RemoveAt(i);
 
                     string updatedList = getUpdatedList();
-                    string[] args = { updatedList };
+                    string[] args = { updatedList ,handlerToRemove};
                     this.m_settingsModel.InformServer
                          (new ImageService.Modal.CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, ""));
                     return;

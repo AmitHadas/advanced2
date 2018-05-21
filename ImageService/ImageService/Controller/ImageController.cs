@@ -20,7 +20,26 @@ namespace ImageService.Controller
         private IImageServiceModal m_modal;
         private Dictionary<int, ICommand> commands;
         private ILoggingService m_logging;
-        public ImageServer ImageServerProp { get; set; }
+        private ImageServer m_imageServer;
+        //public ImageServer ImageServerProp
+        //{
+        //    get
+        //    {
+        //        return this.m_imageServer;
+        //    }
+
+        //    set
+        //    {
+        //        this.m_imageServer = value;
+        //    }
+        //}
+
+
+        public void setServer(ImageServer server)
+        {
+            this.m_imageServer = server;
+        }
+
         //constructor
         public ImageController(IImageServiceModal modal, ILoggingService logging)
         {
@@ -30,7 +49,7 @@ namespace ImageService.Controller
             commands = new Dictionary<int, ICommand>()
             {
                 {(int)CommandEnum.NewFileCommand, new NewFileCommand(this.m_modal)},
-                {(int)CommandEnum.CloseHandler, new RemoveHandlerCommand(ImageServerProp)},
+                {(int)CommandEnum.CloseHandler, new RemoveHandlerCommand(m_imageServer)},
                 {(int)CommandEnum.GetConfigCommand, new AppConfigCommand()},
                 {(int)CommandEnum.GetLogList, new GetLogListCommand(m_logging) }
             };

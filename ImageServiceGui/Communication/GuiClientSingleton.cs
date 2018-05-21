@@ -25,11 +25,13 @@ namespace ImageServiceGui.Communication
         private NetworkStream stream;
         private StreamReader reader;
         private StreamWriter writer;
+        private Mutex mtx;
         public bool IsConnected { get; private set; }
 
 
         private GuiClientSingleton()
         {
+            this.mtx = new Mutex();
             this.IsConnected = this.Start();
         }
         public static GuiClientSingleton ClientInsatnce
@@ -74,10 +76,10 @@ namespace ImageServiceGui.Communication
                         string commandToJson = JsonConvert.SerializeObject(e);
                          //sending data to server
                          Console.WriteLine($"Sending {commandToJson} to server");
-                        // m_mtx.WaitOne();
+                        mtx.WaitOne();
                          writer.WriteLine(commandToJson);
                          writer.Flush();
-                        // m_mtx.ReleaseMutex();
+                        mtx.ReleaseMutex();
                  }
                  catch (Exception exception)
                  {
@@ -95,11 +97,14 @@ namespace ImageServiceGui.Communication
                 {
                     while(m_isListening)
                     {
+                        //Thread.Sleep(1000);
+                        //mtx.WaitOne();
                         string responseString = reader.ReadLine();
                         while (reader.Peek() > 0)
                         {
                             responseString += reader.ReadLine();
                         }
+                        //mtx.ReleaseMutex();
                         if (responseString != "")
                         {
                         //    responseString.Replace("#", Environment.NewLine);

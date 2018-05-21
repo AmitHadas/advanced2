@@ -21,7 +21,7 @@ namespace ImageService.Communication
         private int m_port;
         private List<ClientInfo> m_clientsList;
         private TcpListener m_listener;
-
+        private Mutex mtx;
         public TcpServer(ILoggingService logging, ClientHandler clientHandler, int port)
         {
             this.m_logging = logging;
@@ -29,9 +29,10 @@ namespace ImageService.Communication
             m_clientHandler.RemoveClient += RemoveClientFromList;
             this.m_port = port;
             this.m_clientsList = new List<ClientInfo>();
+            this.mtx = clientHandler.Mtx;
 
         }
-
+      
         public void Start()
         {
             try
@@ -80,9 +81,11 @@ namespace ImageService.Communication
                     {
                         StreamWriter writer = new StreamWriter(client.Stream);
                         string command = JsonConvert.SerializeObject(e);
-                        Thread.Sleep(1000);
+                       // Thread.Sleep(1000);
+                        mtx.WaitOne();
                         writer.WriteLine(command);
                         writer.Flush();
+                        mtx.ReleaseMutex();
                     }
                     catch (Exception ex)
                     {

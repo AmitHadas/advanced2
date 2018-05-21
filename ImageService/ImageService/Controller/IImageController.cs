@@ -9,8 +9,10 @@ namespace ImageService.Controller
 {
     public interface IImageController
     {
-        ImageServer ImageServerProp { get; set; }
+     //   ImageServer ImageServerProp { get; set; }
         //The function get command id and execute the specific command by dictionary.
         string ExecuteCommand(int commandID, string[] args, out bool result);          // Executing the Command Requet
+
+        void setServer(ImageServer s);
     }
 }

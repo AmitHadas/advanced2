@@ -8,7 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.ImageService.Commands
+namespace ImageService.Commands
 {
     class CloseGuiCommand : ICommand
     {

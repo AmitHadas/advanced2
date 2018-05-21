@@ -50,6 +50,17 @@ namespace ImageService.Server
             CommandRecieved?.Invoke(this, eventArgs); //– closes handlers  
         }
 
+        public void RemoveDirectoryHandler(string path, DirectoryCloseEventArgs e)
+        {
+            for(int i = 0; i < handlersList.Count; i++)
+            {
+                if(handlersList.ElementAt<IDirectoryHandler>(i).Path == path)
+                {
+                    onClose(handlersList.ElementAt<IDirectoryHandler>(i), e);
+                }
+            }
+        }
+
         //The function removes the functions from the events and notify the logger.
         public void onClose(object sender, DirectoryCloseEventArgs e)
         {

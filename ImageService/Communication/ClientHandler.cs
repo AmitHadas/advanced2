@@ -21,12 +21,19 @@ namespace ImageService.Communication
         private static Mutex m_mtx = new Mutex();
         public event RemoveClientFromList RemoveClient;
         public delegate void RemoveClientFromList(TcpClient clientToRemove);
-
+        private Mutex mtx;
+    
         public ClientHandler(IImageController controller, ILoggingService log)
         {
             m_controller = controller;
             m_logging = log;
+            this.mtx = new Mutex();
         }
+        public Mutex Mtx
+        {
+            get { return this.mtx; }
+        }
+
         public void HandleClient(TcpClient client, NetworkStream stream)
         {
             new Task(() =>
@@ -61,9 +68,11 @@ namespace ImageService.Communication
                             string result = m_controller.ExecuteCommand(command.CommandID, command.Args, out res);
                             try
                             {
-
+                              //  Thread.Sleep(1000);
+                                mtx.WaitOne();
                                 writer.WriteLine(result);
                                 writer.Flush();
+                                mtx.ReleaseMutex();
                             } catch(Exception e)
                             {
                                 RemoveClient?.Invoke(client);
