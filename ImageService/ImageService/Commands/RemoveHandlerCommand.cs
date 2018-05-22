@@ -19,6 +19,8 @@ namespace ImageService.Commands
         {
             m_imageServer = server;
         }
+
+
         public string Execute(string[] args, out bool result)
         {
             result = true;
@@ -31,6 +33,7 @@ namespace ImageService.Commands
 
             DirectoryCloseEventArgs e = new DirectoryCloseEventArgs(args[1], "Remove handler");
             this.m_imageServer.RemoveDirectoryHandler(args[1], e);
+
             CommandRecievedEventArgs command = new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, "");
             ImageServer.RemoveHandlerEvent(command);
             return "";

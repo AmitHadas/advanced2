@@ -27,7 +27,11 @@ namespace ImageService.Controller.Handlers
         private string m_path;
         public string Path
         {
-            get; set;
+            get
+            {
+                return this.m_path;
+            }
+            set { this.m_path = value; }
         }
         private ICollection<string> extensions;
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
@@ -95,6 +99,22 @@ namespace ImageService.Controller.Handlers
             {
                 bool result;
                 string resultOfCommand = m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand, e.Args, out result);
+            }
+        }
+
+        public void OnClose()
+        {
+            try
+            {
+                this.m_dirWatcher.EnableRaisingEvents = false;
+                //   this.m_dirWatcher.Created -= new FileSystemEventHandler(OnCreated);
+                m_dirWatcher.Dispose();
+                DirectoryClose?.Invoke(this, new DirectoryCloseEventArgs(m_path, "close handler at path " + m_path));
+                this.m_logging.Log("handler of " + this.m_path + " was closed", MessageTypeEnum.INFO);
+            }
+            catch (Exception exception)
+            {
+                this.m_logging.Log(exception.Data.ToString(), MessageTypeEnum.FAIL);
             }
         }
     }

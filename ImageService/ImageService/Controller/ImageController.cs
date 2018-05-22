@@ -2,7 +2,6 @@
 using ImageService.Infrastructure;
 using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
-using ImageService.Logging.Modal;
 using ImageService.Modal;
 using ImageService.Server;
 using System;
@@ -22,11 +21,34 @@ namespace ImageService.Controller
         private Dictionary<int, ICommand> commands;
         private ILoggingService m_logging;
         private ImageServer m_imageServer;
+        //public ImageServer ImageServerProp
+        //{
+        //    get
+        //    {
+        //        return this.m_imageServer;
+        //    }
+
+        //    set
+        //    {
+        //        this.m_imageServer = value;
+        //    }
+        //}
+        public void SetDictionary()
+        {
+            commands = new Dictionary<int, ICommand>()
+            {
+                {(int)CommandEnum.NewFileCommand, new NewFileCommand(this.m_modal)},
+                {(int)CommandEnum.CloseHandler, new RemoveHandlerCommand(m_imageServer)},
+                {(int)CommandEnum.GetConfigCommand, new AppConfigCommand()},
+                {(int)CommandEnum.GetLogList, new GetLogListCommand(m_logging) }
+            };
+        }
+
 
         public void setServer(ImageServer server)
         {
             this.m_imageServer = server;
-            this.SetDictionary();
+            SetDictionary();
         }
 
         //constructor
@@ -35,25 +57,13 @@ namespace ImageService.Controller
             // Storing the Modal Of The System
             m_modal = modal;
             m_logging = logging;
-        }
-
-        private void SetDictionary()
-        {
-            if (m_imageServer == null)
-            {
-                m_logging.Log("server is null 3", MessageTypeEnum.WARNING);
-            }
-            else
-            {
-                m_logging.Log("server isn't null 3", MessageTypeEnum.WARNING);
-            }
-            commands = new Dictionary<int, ICommand>()
-            {
-                {(int)CommandEnum.NewFileCommand, new NewFileCommand(this.m_modal)},
-                {(int)CommandEnum.CloseHandler, new RemoveHandlerCommand(m_imageServer)},
-                {(int)CommandEnum.GetConfigCommand, new AppConfigCommand()},
-                {(int)CommandEnum.GetLogList, new GetLogListCommand(m_logging) }
-            };
+            //commands = new Dictionary<int, ICommand>()
+            //{
+            //    {(int)CommandEnum.NewFileCommand, new NewFileCommand(this.m_modal)},
+            //    {(int)CommandEnum.CloseHandler, new RemoveHandlerCommand(m_imageServer)},
+            //    {(int)CommandEnum.GetConfigCommand, new AppConfigCommand()},
+            //    {(int)CommandEnum.GetLogList, new GetLogListCommand(m_logging) }
+            //};
         }
 
 

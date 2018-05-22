@@ -69,6 +69,7 @@ namespace ImageService.Server
                 DirectoryHandler handler = (DirectoryHandler)sender;
                 CommandRecieved -= handler.OnCommandRecieved;
                 handler.DirectoryClose -= onClose;
+                handler.OnClose();
                 m_logging.Log(e.Message, Logging.Modal.MessageTypeEnum.INFO);
             }
         }

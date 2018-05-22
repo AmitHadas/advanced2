@@ -28,7 +28,9 @@ namespace ImageServiceGui.Communication
         private Mutex mtx;
         public bool IsConnected { get; private set; }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         private GuiClientSingleton()
         {
             this.mtx = new Mutex();
