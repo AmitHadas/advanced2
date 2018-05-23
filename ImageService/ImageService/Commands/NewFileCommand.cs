@@ -8,11 +8,22 @@ using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
+    /// <summary>
+    /// Class NewFileCommand.
+    /// </summary>
+    /// <seealso cref="ImageService.Commands.ICommand" />
     public class NewFileCommand : ICommand
     {
+        /// <summary>
+        /// The m modal
+        /// </summary>
         private IImageServiceModal m_modal;
 
         //constructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewFileCommand"/> class.
+        /// </summary>
+        /// <param name="modal">The modal.</param>
         public NewFileCommand(IImageServiceModal modal)
         {
             // Storing the Modal
@@ -20,6 +31,12 @@ namespace ImageService.Commands
         }
 
         //The function execute the command according to args - notify the madal to add file.
+        /// <summary>
+        /// Executes the specified arguments.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        /// <param name="result">if set to <c>true</c> [result].</param>
+        /// <returns>System.String.</returns>
         public string Execute(string[] args, out bool result)
         {
             result = true;

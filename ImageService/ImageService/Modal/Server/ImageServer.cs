@@ -13,17 +13,38 @@ using ImageService.Logging.Modal;
 
 namespace ImageService.Server
 {
+    /// <summary>
+    /// Class ImageServer.
+    /// </summary>
     public class ImageServer
     {
+        /// <summary>
+        /// The m controller
+        /// </summary>
         private IImageController m_controller;
+        /// <summary>
+        /// The m logging
+        /// </summary>
         private ILoggingService m_logging;
         // The event that notifies about a new Command being recieved
-        public event EventHandler<CommandRecievedEventArgs> CommandRecieved; 
+        public event EventHandler<CommandRecievedEventArgs> CommandRecieved;
+        /// <summary>
+        /// The handlers list
+        /// </summary>
         private LinkedList<IDirectoryHandler> handlersList;
+        /// <summary>
+        /// Delegate NotifyClients
+        /// </summary>
+        /// <param name="command">The <see cref="CommandRecievedEventArgs"/> instance containing the event data.</param>
         public delegate void NotifyClients(CommandRecievedEventArgs command);
         public static event NotifyClients NotifyHandlerRemoved;
         public static event NotifyClients NotifyCloseGui;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageServer"/> class.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="logging">The logging.</param>
         public ImageServer(IImageController controller, ILoggingService logging)
         {
             this.m_controller = controller;
@@ -45,11 +66,20 @@ namespace ImageService.Server
         }
 
         //The function gets command args and invoke the event. 
+        /// <summary>
+        /// Sends the command.
+        /// </summary>
+        /// <param name="eventArgs">The <see cref="CommandRecievedEventArgs"/> instance containing the event data.</param>
         public void sendCommand(CommandRecievedEventArgs eventArgs)
         {
             CommandRecieved?.Invoke(this, eventArgs); //– closes handlers  
         }
 
+        /// <summary>
+        /// Removes the directory handler.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="e">The <see cref="DirectoryCloseEventArgs"/> instance containing the event data.</param>
         public void RemoveDirectoryHandler(string path, DirectoryCloseEventArgs e)
         {
             for(int i = 0; i < handlersList.Count; i++)
@@ -62,6 +92,11 @@ namespace ImageService.Server
         }
 
         //The function removes the functions from the events and notify the logger.
+        /// <summary>
+        /// Ons the close.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="DirectoryCloseEventArgs"/> instance containing the event data.</param>
         public void onClose(object sender, DirectoryCloseEventArgs e)
         {
             if (sender is DirectoryHandler)
@@ -74,6 +109,10 @@ namespace ImageService.Server
             }
         }
 
+        /// <summary>
+        /// Removes the handler.
+        /// </summary>
+        /// <param name="handlerName">Name of the handler.</param>
         public void RemoveHandler(string handlerName)
         {
             foreach (IDirectoryHandler handler in handlersList)
@@ -89,11 +128,19 @@ namespace ImageService.Server
             }
         }
 
+        /// <summary>
+        /// Removes the handler event.
+        /// </summary>
+        /// <param name="commandRecievedEventArgs">The <see cref="CommandRecievedEventArgs"/> instance containing the event data.</param>
         public static void RemoveHandlerEvent(CommandRecievedEventArgs commandRecievedEventArgs)
         {
             NotifyHandlerRemoved?.Invoke(commandRecievedEventArgs);
         }
 
+        /// <summary>
+        /// Closes the GUI event.
+        /// </summary>
+        /// <param name="command">The <see cref="CommandRecievedEventArgs"/> instance containing the event data.</param>
         public static void CloseGuiEvent(CommandRecievedEventArgs command)
         {
             NotifyCloseGui?.Invoke(command);

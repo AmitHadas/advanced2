@@ -12,15 +12,32 @@ using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
+    /// <summary>
+    /// Class RemoveHandlerCommand.
+    /// </summary>
+    /// <seealso cref="ImageService.Commands.ICommand" />
     class RemoveHandlerCommand : ICommand
     {
+        /// <summary>
+        /// The m image server
+        /// </summary>
         private ImageServer m_imageServer;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoveHandlerCommand"/> class.
+        /// </summary>
+        /// <param name="server">The server.</param>
         public RemoveHandlerCommand(ImageServer server)
         {
             m_imageServer = server;
         }
 
 
+        /// <summary>
+        /// Executes the specified arguments.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        /// <param name="result">if set to <c>true</c> [result].</param>
+        /// <returns>System.String.</returns>
         public string Execute(string[] args, out bool result)
         {
             result = true;

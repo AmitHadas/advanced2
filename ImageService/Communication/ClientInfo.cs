@@ -8,15 +8,32 @@ using System.Threading.Tasks;
 
 namespace ImageService.Communication
 {
+    /// <summary>
+    /// Class ClientInfo.
+    /// </summary>
     class ClientInfo
     {
+        /// <summary>
+        /// The m client
+        /// </summary>
         private TcpClient m_client;
+        /// <summary>
+        /// Gets or sets the client.
+        /// </summary>
+        /// <value>The client.</value>
         public TcpClient Client
         {
             get { return m_client; }
             set { m_client = value; }
         }
+        /// <summary>
+        /// The m stream
+        /// </summary>
         private NetworkStream m_stream;
+        /// <summary>
+        /// Gets or sets the stream.
+        /// </summary>
+        /// <value>The stream.</value>
         public NetworkStream Stream
         {
             get { return m_stream; }
@@ -34,6 +51,10 @@ namespace ImageService.Communication
         //    get { return m_writer; }
         //    set { m_writer = value; }
         //}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientInfo"/> class.
+        /// </summary>
+        /// <param name="client">The client.</param>
         public ClientInfo(TcpClient client)
         {
             this.m_client = client;

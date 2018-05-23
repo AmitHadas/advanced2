@@ -14,24 +14,50 @@ using ImageService.Logging;
 
 namespace ImageService.Modal
 {
+    /// <summary>
+    /// Class ImageServiceModal.
+    /// </summary>
+    /// <seealso cref="ImageService.Modal.IImageServiceModal" />
     public class ImageServiceModal : IImageServiceModal
     {
 
+        /// <summary>
+        /// The m output folder
+        /// </summary>
         private string m_OutputFolder;            // The Output Folder
+        /// <summary>
+        /// The m thumbnail size
+        /// </summary>
         private int m_thumbnailSize;              // The Size Of The Thumbnail Size
+        /// <summary>
+        /// The m logging
+        /// </summary>
         private ILoggingService m_logging;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageServiceModal"/> class.
+        /// </summary>
+        /// <param name="logging">The logging.</param>
         public ImageServiceModal(ILoggingService logging)
         {
             this.m_logging = logging;
             this.m_OutputFolder = ConfigurationManager.AppSettings.Get("OutputDir");
             this.m_thumbnailSize = int.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
         }
+        /// <summary>
+        /// Thumbnails the callback.
+        /// </summary>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool ThumbnailCallback()
         {
             return true;
         }
 
         //The function returns the creation date of the image.
+        /// <summary>
+        /// Gets the image date.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>DateTime.</returns>
         public static DateTime getImageDate(string path)
         {
             DateTime now = DateTime.Now;
@@ -48,6 +74,12 @@ namespace ImageService.Modal
 
         //The function creates direcories according to the date of the image,
         //creates thumbnail file and moves the image to the output direcory.
+        /// <summary>
+        /// Adds the file.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="result">if set to <c>true</c> [result].</param>
+        /// <returns>System.String.</returns>
         public string AddFile(string path, out bool result)
         {
 
@@ -120,9 +152,14 @@ namespace ImageService.Modal
 
             return info;
         }
-  
-    
+
+
         //The function creates folder in the path.
+        /// <summary>
+        /// Creates the folder.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool CreateFolder(string path)
         {
             System.IO.Directory.CreateDirectory(path);
@@ -132,6 +169,13 @@ namespace ImageService.Modal
         }
 
         //The funtion move the file from srcPath to dstPath
+        /// <summary>
+        /// Moves the file.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="srcPath">The source path.</param>
+        /// <param name="dstPath">The DST path.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool MoveFile(ref string fileName, string srcPath, ref string dstPath)
         {
 

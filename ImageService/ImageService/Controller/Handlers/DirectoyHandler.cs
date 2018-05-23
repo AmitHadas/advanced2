@@ -16,15 +16,35 @@ using ImageService.Controller.Handlers;
 
 namespace ImageService.Controller.Handlers
 {
+    /// <summary>
+    /// Class DirectoryHandler.
+    /// </summary>
+    /// <seealso cref="ImageService.Controller.Handlers.IDirectoryHandler" />
     public class DirectoryHandler : IDirectoryHandler
     {
         // The Image Processing Controller
+        /// <summary>
+        /// The m controller
+        /// </summary>
         private IImageController m_controller;
+        /// <summary>
+        /// The m logging
+        /// </summary>
         private ILoggingService m_logging;
         // The Watcher of the Dir
+        /// <summary>
+        /// The m dir watcher
+        /// </summary>
         private FileSystemWatcher m_dirWatcher;
         // The Path of directory
+        /// <summary>
+        /// The m path
+        /// </summary>
         private string m_path;
+        /// <summary>
+        /// Gets or sets the path.
+        /// </summary>
+        /// <value>The path.</value>
         public string Path
         {
             get
@@ -33,9 +53,17 @@ namespace ImageService.Controller.Handlers
             }
             set { this.m_path = value; }
         }
+        /// <summary>
+        /// The extensions
+        /// </summary>
         private ICollection<string> extensions;
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DirectoryHandler"/> class.
+        /// </summary>
+        /// <param name="controller">The controller.</param>
+        /// <param name="logging">The logging.</param>
         public DirectoryHandler(IImageController controller, ILoggingService logging)
         {
             this.m_controller = controller;
@@ -47,6 +75,10 @@ namespace ImageService.Controller.Handlers
             this.extensions.Add(".png");
         }
 
+        /// <summary>
+        /// Starts the handle directory.
+        /// </summary>
+        /// <param name="dirPath">The dir path.</param>
         public void StartHandleDirectory(string dirPath)
         {
             this.m_dirWatcher = new FileSystemWatcher();
@@ -62,6 +94,11 @@ namespace ImageService.Controller.Handlers
             m_dirWatcher.EnableRaisingEvents = true;
         }
 
+        /// <summary>
+        /// Handles the <see cref="E:Created" /> event.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="e">The <see cref="FileSystemEventArgs"/> instance containing the event data.</param>
         private void OnCreated(object source, FileSystemEventArgs e)
         {
             //  bool isSuccess;
@@ -77,6 +114,11 @@ namespace ImageService.Controller.Handlers
         }
 
 
+        /// <summary>
+        /// Handles the <see cref="E:CommandRecieved" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="CommandRecievedEventArgs"/> instance containing the event data.</param>
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             if (e.CommandID == (int)CommandEnum.CloseCommand)
@@ -102,6 +144,9 @@ namespace ImageService.Controller.Handlers
             }
         }
 
+        /// <summary>
+        /// Raises the Close event.
+        /// </summary>
         public void OnClose()
         {
             try

@@ -16,20 +16,45 @@ using System.Collections.ObjectModel;
 
 namespace ImageServiceGui.Model
 {
+    /// <summary>
+    /// Class LogModel.
+    /// </summary>
+    /// <seealso cref="ImageServiceDesktopApp.Model.ILogModel" />
     class LogModel : ILogModel
     {
+        /// <summary>
+        /// The is first time
+        /// </summary>
         public static bool isFirstTime;
+        /// <summary>
+        /// The update log
+        /// </summary>
         private bool updateLog;
         // implement the iINotifyPropertyChanged interface
         public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// Called when [property changed].
+        /// </summary>
+        /// <param name="name">The name.</param>
         protected void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
+        /// <summary>
+        /// Gets the GUI client.
+        /// </summary>
+        /// <value>The GUI client.</value>
         public GuiClientSingleton GuiClient { get; }
 
+        /// <summary>
+        /// The m log list
+        /// </summary>
         private ObservableCollection<LogEntry> m_logList;
+        /// <summary>
+        /// Gets or sets the log list.
+        /// </summary>
+        /// <value>The log list.</value>
         public ObservableCollection<LogEntry> LogList
         {
             get { return this.m_logList; }
@@ -40,6 +65,9 @@ namespace ImageServiceGui.Model
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogModel"/> class.
+        /// </summary>
         public LogModel(){
             this.updateLog = false;
             isFirstTime = true;
@@ -53,6 +81,9 @@ namespace ImageServiceGui.Model
             }
         }
 
+        /// <summary>
+        /// Initializes the log.
+        /// </summary>
         private void InitializeLog()
         {
             try
@@ -71,6 +102,10 @@ namespace ImageServiceGui.Model
                 Console.WriteLine(ex.ToString());
             }
         }
+        /// <summary>
+        /// Updates the response.
+        /// </summary>
+        /// <param name="e">The <see cref="CommandRecievedEventArgs"/> instance containing the event data.</param>
         private void UpdateResponse(CommandRecievedEventArgs e)
         {
             try
@@ -101,6 +136,10 @@ namespace ImageServiceGui.Model
             }
         }
 
+        /// <summary>
+        /// Updates the log list.
+        /// </summary>
+        /// <param name="logs">The logs.</param>
         public void UpdateLogList(ObservableCollection<LogEntry> logs)
         {
             this.m_logList = logs;

@@ -13,29 +13,71 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Communication
 {
+    /// <summary>
+    /// Class GuiClientSingleton.
+    /// </summary>
     class GuiClientSingleton
     {
+        /// <summary>
+        /// The m client
+        /// </summary>
         private TcpClient m_client;
+        /// <summary>
+        /// The m is listening
+        /// </summary>
         private bool m_isListening;
+        /// <summary>
+        /// Delegate UpdateAfterResponse
+        /// </summary>
+        /// <param name="e">The <see cref="CommandRecievedEventArgs"/> instance containing the event data.</param>
         public delegate void UpdateAfterResponse(CommandRecievedEventArgs e);
         public event UpdateAfterResponse UpdateResponse;
+        /// <summary>
+        /// The m client instance
+        /// </summary>
         private static GuiClientSingleton m_clientInstance;
+        /// <summary>
+        /// The m MTX
+        /// </summary>
         private static Mutex m_mtx = new Mutex();
+        /// <summary>
+        /// The m is connected
+        /// </summary>
         private bool m_isConnected;
+        /// <summary>
+        /// The stream
+        /// </summary>
         private NetworkStream stream;
+        /// <summary>
+        /// The reader
+        /// </summary>
         private StreamReader reader;
+        /// <summary>
+        /// The writer
+        /// </summary>
         private StreamWriter writer;
+        /// <summary>
+        /// The MTX
+        /// </summary>
         private Mutex mtx;
+        /// <summary>
+        /// Gets a value indicating whether this instance is connected.
+        /// </summary>
+        /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
         public bool IsConnected { get; private set; }
 
         /// <summary>
-        /// 
+        /// Prevents a default instance of the <see cref="GuiClientSingleton"/> class from being created.
         /// </summary>
         private GuiClientSingleton()
         {
             this.mtx = new Mutex();
             this.IsConnected = this.Start();
         }
+        /// <summary>
+        /// Gets the client insatnce.
+        /// </summary>
+        /// <value>The client insatnce.</value>
         public static GuiClientSingleton ClientInsatnce
         {
             get
@@ -48,6 +90,10 @@ namespace ImageServiceGui.Communication
             }
         }
 
+        /// <summary>
+        /// Starts this instance.
+        /// </summary>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         private bool Start()
         {
             try
@@ -69,6 +115,10 @@ namespace ImageServiceGui.Communication
             }
         }
 
+        /// <summary>
+        /// Sends the command.
+        /// </summary>
+        /// <param name="e">The <see cref="CommandRecievedEventArgs"/> instance containing the event data.</param>
         public void SendCommand(CommandRecievedEventArgs e)
         {
             new Task(() =>
@@ -91,6 +141,9 @@ namespace ImageServiceGui.Communication
        
         }
 
+        /// <summary>
+        /// Receiveds the command.
+        /// </summary>
         public void ReceivedCommand()
         {
             new Task(() =>

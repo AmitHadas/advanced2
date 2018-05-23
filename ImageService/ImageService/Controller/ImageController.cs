@@ -14,12 +14,28 @@ using System.Threading.Tasks;
 
 namespace ImageService.Controller
 {
+    /// <summary>
+    /// Class ImageController.
+    /// </summary>
+    /// <seealso cref="ImageService.Controller.IImageController" />
     public class ImageController : IImageController
     {
         // The Modal Object
+        /// <summary>
+        /// The m modal
+        /// </summary>
         private IImageServiceModal m_modal;
+        /// <summary>
+        /// The commands
+        /// </summary>
         private Dictionary<int, ICommand> commands;
+        /// <summary>
+        /// The m logging
+        /// </summary>
         private ILoggingService m_logging;
+        /// <summary>
+        /// The m image server
+        /// </summary>
         private ImageServer m_imageServer;
         //public ImageServer ImageServerProp
         //{
@@ -33,6 +49,9 @@ namespace ImageService.Controller
         //        this.m_imageServer = value;
         //    }
         //}
+        /// <summary>
+        /// Sets the dictionary.
+        /// </summary>
         public void SetDictionary()
         {
             commands = new Dictionary<int, ICommand>()
@@ -45,6 +64,10 @@ namespace ImageService.Controller
         }
 
 
+        /// <summary>
+        /// Sets the server.
+        /// </summary>
+        /// <param name="server">The server.</param>
         public void setServer(ImageServer server)
         {
             this.m_imageServer = server;
@@ -52,6 +75,11 @@ namespace ImageService.Controller
         }
 
         //constructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageController"/> class.
+        /// </summary>
+        /// <param name="modal">The modal.</param>
+        /// <param name="logging">The logging.</param>
         public ImageController(IImageServiceModal modal, ILoggingService logging)
         {
             // Storing the Modal Of The System
@@ -67,6 +95,13 @@ namespace ImageService.Controller
         }
 
 
+        /// <summary>
+        /// Executes the command.
+        /// </summary>
+        /// <param name="commandID">The command identifier.</param>
+        /// <param name="args">The arguments.</param>
+        /// <param name="resultSuccesful">if set to <c>true</c> [result succesful].</param>
+        /// <returns>System.String.</returns>
         public string ExecuteCommand(int commandID, string[] args, out bool resultSuccesful)
         {
             ICommand command = this.commands[commandID];

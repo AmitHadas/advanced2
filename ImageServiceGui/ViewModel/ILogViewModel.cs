@@ -11,8 +11,16 @@ using ImageService.Logging;
 
 namespace ImageServiceGui.ViewModel
 {
+    /// <summary>
+    /// Interface ILogViewModel
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     interface ILogViewModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Gets or sets the vm log list.
+        /// </summary>
+        /// <value>The vm log list.</value>
         ObservableCollection<LogEntry> VM_LogList { get; set; }
 
     }
