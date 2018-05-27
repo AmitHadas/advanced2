@@ -91,7 +91,6 @@ namespace ImageServiceGui.Model
 
                 LogList = new ObservableCollection<LogEntry>();
                 Object thisLock = new Object();
-                //לברררררר
               //  BindingOperations.EnableCollectionSynchronization(LogList, thisLock);
                 string[] array = new string[5];
                 CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetLogList, array, "");

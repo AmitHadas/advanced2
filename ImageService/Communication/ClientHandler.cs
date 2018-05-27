@@ -70,6 +70,7 @@ namespace ImageService.Communication
         /// <param name="stream">The stream.</param>
         public void HandleClient(TcpClient client, NetworkStream stream)
         {
+            m_logging.Log("start listening to new client...", Logging.Modal.MessageTypeEnum.INFO);
             new Task(() =>
             {
                 StreamReader reader = new StreamReader(stream);
@@ -80,7 +81,6 @@ namespace ImageService.Communication
                     {
 
                         bool res;
-                        m_logging.Log("start listening ...", Logging.Modal.MessageTypeEnum.INFO);
                         string commandLine = reader.ReadLine();
                         while (reader.Peek() > 0)
                         {

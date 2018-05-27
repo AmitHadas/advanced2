@@ -6,6 +6,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <Grid.Resources>
+            <Style x:Key="TextBlock">
+                <Setter Property="TextBlock.Margin" Value ="4"></Setter>
+                <Setter Property="TextBlock.FontStyle"
+            </Style>
+        </Grid.Resources>
         <ScrollViewer Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
 
             <StackPanel Margin="3">
