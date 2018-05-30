@@ -1,28 +1,33 @@
-﻿@model IEnumerable<ImageServiceWeb.Models.Student>
+﻿
 
+@model ImageServiceWeb.Controllers.ProductsController.Data
 @{
     ViewBag.Title = "ImageWeb";
 }
 
 <h2>ImageWeb</h2>
 
+
+<div>
+    <p style="font-size:30px"> Is Service Running: @Html.DisplayFor(model => Model.isServiceRunning)</p>
+
+    <p style="font-size:30px"> Number Of Pictures: @Html.DisplayFor(model => Model.numOfPictures)</p>
+
+</div>
+
+
+
 <div>
     <h2>Students Details</h2>
     <table class="table">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
+            <th> FirstName </th>
+            <th> LastName </th>
+            <th> ID </th>
             <th></th>
         </tr>
        
-        @foreach (var item in Model)
+        @foreach (var item in Model.students)
         {
             <tr>
                 <td>
@@ -38,16 +43,6 @@
         }
 
     </table>
-
-    <div>
-        <h2>Search  by  Salary and Name</h2>
-        <p> Salary: </p>
-        <input type="text" id="txtSalaryId" size="5" />
-        <p> Name: </p>
-        <input type="text" id="NameID" size="5" />
-        <input type="button" id="btnSearch" value="Search" />
-        <ul id="lstProducts"></ul>
-    </div>
 
 </div>
 

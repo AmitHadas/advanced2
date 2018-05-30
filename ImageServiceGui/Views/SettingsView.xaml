@@ -9,7 +9,7 @@
         <Grid.Resources>
             <Style x:Key="TextBlock">
                 <Setter Property="TextBlock.Margin" Value ="4"></Setter>
-                <Setter Property="TextBlock.FontStyle"
+                <Setter Property="TextBlock.FontStyle" Value="Italic"></Setter>
             </Style>
         </Grid.Resources>
         <ScrollViewer Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
