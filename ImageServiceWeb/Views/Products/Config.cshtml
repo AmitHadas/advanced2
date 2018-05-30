@@ -16,9 +16,7 @@
 <div>
     <p style="font-size:30px">Hanlers List:</p>
         <table class="table">
-            @*@while(!Model.isReady){}*@
-            @if (Model.isReady)
-            {
+            @while(!Model.isReady){}
             @foreach (var item in Model.handlers)
             {
                 <tr>
