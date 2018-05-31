@@ -1,0 +1,67 @@
+﻿
+
+@model ImageServiceWeb.Controllers.ProductsController.Data
+@{
+    ViewBag.Title = "ImageWeb";
+}
+
+<h2>ImageWeb</h2>
+
+
+<div>
+    <p style="font-size:30px"> Is Service Running: @Html.DisplayFor(model => Model.isServiceRunning)</p>
+
+    <p style="font-size:30px"> Number Of Pictures: @Html.DisplayFor(model => Model.numOfPictures)</p>
+
+</div>
+
+
+
+<div>
+    <h2>Students Details</h2>
+    <table class="table">
+        <tr>
+            <th> FirstName </th>
+            <th> LastName </th>
+            <th> ID </th>
+            <th></th>
+        </tr>
+       
+        @foreach (var item in Model.students)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+<script>
+    $("#btnStart").click(function () {
+        $.getJSON("@Url.Action("GetEmployee")", function (empl) {
+            $("#prodId").text(empl.FirstName);
+            $("#prodName").text(empl.LastName);
+        });
+    });
+
+    $("#btnSearch").click(function () {
+        var input = {
+            name:$("#NameID").val(),
+            salary: $("#txtSalaryId").val()
+        };
+        $.post("@Url.Action("GetEmployee")", input, function (data) {
+            $("#lstProducts").append("<li>" + data.FirstName + " " + data.LastName + " : $" + data.Salary + "</li>");
+        }, "json");
+    });
+
+</script>

@@ -1,0 +1,34 @@
+﻿@model ImageServiceWeb.Controllers.ProductsController.AppConfig
+    
+@{
+    ViewBag.Title = "Config";
+}
+
+<h2>Config</h2>
+<div>
+    <p style="font-size:30px"> Output Directory: @Html.DisplayFor(model => Model.OutputDir)</p>
+    <p style="font-size:30px"> Source Name: @Html.DisplayFor(model => Model.SourceName)</p>
+    <p style="font-size:30px"> Log Name: @Html.DisplayFor(model => Model.LogName)</p>
+    <p style="font-size:30px"> Thumbnail Size: @Html.DisplayFor(model => Model.ThumbSize)</p>
+
+</div>
+
+<div>
+    <p style="font-size:30px">Hanlers List:</p>
+        <table class="table">
+            @while(!Model.isReady){}
+            @foreach (var item in Model.handlers)
+            {
+                <tr>
+                    <td>
+                        <a href="~/Controllers/ProductsController.cs">
+                            @Html.DisplayFor(modelItem => item)
+                        </a>
+                    </td>
+                </tr>
+            }
+          }
+        </table>
+
+</div>
+    
