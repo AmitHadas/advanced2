@@ -22,6 +22,7 @@
 <div>
     <b style="font-size:20px">Handlers List:</b>
         <table class="table">
+            @while (!Model.isReady) { }
             @foreach (var item in Model.handlers)
             {
                 <tr>

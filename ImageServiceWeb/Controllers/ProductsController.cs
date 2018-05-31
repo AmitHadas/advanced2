@@ -8,7 +8,7 @@ using ImageService.Infrastructure.Enums;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.IO;
-using ImageServiceGui;
+
 
 namespace ImageServiceWeb.Controllers
 {

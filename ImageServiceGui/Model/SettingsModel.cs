@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
-using ImageServiceGui.ViewModel;
 using ImageServiceGui.Communication;
 using System.Windows.Data;
 using ImageService.Modal;
 using ImageService.Infrastructure.Enums;
-using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ImageServiceGui.Model
 {
@@ -182,10 +177,11 @@ namespace ImageServiceGui.Model
             {
                 if (!directories.Contains(dir))
                 {
-                    App.Current.Dispatcher.Invoke((System.Action)delegate
-                    {
-                        HandlersList.Remove(dir);
-                    });
+                    //App.Current.Dispatcher.Invoke((System.Action)delegate
+
+                    //{
+                    //    HandlersList.Remove(dir);
+                    //});
                 }
             }
         }

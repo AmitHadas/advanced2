@@ -123,10 +123,10 @@ namespace ImageServiceGui.Model
                         if (!isFirstTime)
                         {
                             LogEntry newLog = JsonConvert.DeserializeObject<LogEntry>(e.Args[0]);
-                            App.Current.Dispatcher.Invoke((System.Action)delegate
-                            {
-                                LogList.Insert(0, newLog);
-                            });
+                            //App.Current.Dispatcher.Invoke((System.Action)delegate
+                            //{
+                            //    LogList.Insert(0, newLog);
+                            //});
                         }
                     }
                 }

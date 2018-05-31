@@ -169,10 +169,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageServiceGui\ImageServiceGui.csproj">
-      <Project>{101e9419-4c68-4ac7-aed2-6e9a299dbb82}</Project>
-      <Name>ImageServiceGui</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ImageService\ImageService.csproj">
       <Project>{c4c651d7-7357-4836-b46b-d92f3cb07164}</Project>
       <Name>ImageService</Name>
