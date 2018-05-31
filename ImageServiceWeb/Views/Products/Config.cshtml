@@ -1,33 +1,38 @@
 ﻿@model ImageServiceWeb.Controllers.ProductsController.AppConfig
-    
+<br />
 @{
     ViewBag.Title = "Config";
 }
 
+<br />
+<br />
+<br />
+
 <h2>Config</h2>
 <div>
-    <p style="font-size:30px"> Output Directory: @Html.DisplayFor(model => Model.OutputDir)</p>
-    <p style="font-size:30px"> Source Name: @Html.DisplayFor(model => Model.SourceName)</p>
-    <p style="font-size:30px"> Log Name: @Html.DisplayFor(model => Model.LogName)</p>
-    <p style="font-size:30px"> Thumbnail Size: @Html.DisplayFor(model => Model.ThumbSize)</p>
+    <p style="font-size:20px"> <b> Output Directory:</b> @Html.DisplayFor(model => Model.OutputDir)</p>
+    <p style="font-size:20px"> <b> Source Name: </b> @Html.DisplayFor(model => Model.SourceName)</p>
+    <p style="font-size:20px"> <b> Log Name: </b> @Html.DisplayFor(model => Model.LogName)</p>
+    <p style="font-size:20px"> <b> Thumbnail Size: </b> @Html.DisplayFor(model => Model.ThumbSize)</p>
 
 </div>
 
+<br />
+<br />
 <div>
-    <p style="font-size:30px">Hanlers List:</p>
+    <b style="font-size:20px">Handlers List:</b>
         <table class="table">
-            @while(!Model.isReady){}
             @foreach (var item in Model.handlers)
             {
                 <tr>
                     <td>
-                        <a href="~/Controllers/ProductsController.cs">
+                        <a href="@Url.Action("DeleteHandler", "Products", new { handler = item})" style="font-size:15px">
                             @Html.DisplayFor(modelItem => item)
                         </a>
                     </td>
                 </tr>
             }
-          }
+
         </table>
 
 </div>

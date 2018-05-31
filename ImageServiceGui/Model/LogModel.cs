@@ -68,7 +68,8 @@ namespace ImageServiceGui.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="LogModel"/> class.
         /// </summary>
-        public LogModel(){
+        public LogModel()
+        {
             this.updateLog = false;
             isFirstTime = true;
             this.GuiClient = GuiClientSingleton.ClientInsatnce;
@@ -91,7 +92,7 @@ namespace ImageServiceGui.Model
 
                 LogList = new ObservableCollection<LogEntry>();
                 Object thisLock = new Object();
-              //  BindingOperations.EnableCollectionSynchronization(LogList, thisLock);
+                //  BindingOperations.EnableCollectionSynchronization(LogList, thisLock);
                 string[] array = new string[5];
                 CommandRecievedEventArgs request = new CommandRecievedEventArgs((int)CommandEnum.GetLogList, array, "");
                 this.GuiClient.SendCommand(request);
@@ -119,7 +120,8 @@ namespace ImageServiceGui.Model
                     }
                     if (e.CommandID == (int)CommandEnum.LogCommand)
                     {
-                        if (!isFirstTime) {
+                        if (!isFirstTime)
+                        {
                             LogEntry newLog = JsonConvert.DeserializeObject<LogEntry>(e.Args[0]);
                             App.Current.Dispatcher.Invoke((System.Action)delegate
                             {

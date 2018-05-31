@@ -7,6 +7,8 @@ using ImageService.Modal;
 using ImageService.Infrastructure.Enums;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.IO;
+using ImageServiceGui;
 
 namespace ImageServiceWeb.Controllers
 {
@@ -24,7 +26,7 @@ namespace ImageServiceWeb.Controllers
           new Student  { FirstName = s2[0] , LastName =  s2[1], ID = s2[2] }
         };
         static AppConfig config;
-        
+
         public struct AppConfig
         {
             public string OutputDir;
@@ -42,9 +44,16 @@ namespace ImageServiceWeb.Controllers
         }
         public ActionResult ImageWeb()
         {
+           
+            client.UpdateResponse += HandleCommand;
+            client.ReceivedCommand();
+            string[] args = { };
+            client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, args, ""));
+            //Thread.Sleep(1000);
+            while (!config.isReady) { }
             Data data = new Data();
             data.students = m_students;
-            data.numOfPictures = m_numOfPictures;
+            data.numOfPictures = CountPictures();
             data.isServiceRunning = m_isServiceRunning;
 
             return View(data);
@@ -66,17 +75,59 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Config()
         {
-            client.UpdateResponse += GetConfig;
-            client.ReceivedCommand();
-            string[] args = { };
-            client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, args, ""));
-            Thread.Sleep(1000);
+           // while (!config.isReady) { }
             return View(config);
         }
 
-        public void GetConfig(CommandRecievedEventArgs e)
+        public ActionResult DeleteHandler(string handlerToRemove)
         {
-               if(e.CommandID == (int)CommandEnum.GetConfigCommand)
+            for (int i = 0; i < config.handlers.Count; i++)
+            {
+                if (config.handlers[i].Equals(handlerToRemove))
+                {
+                    config.handlers.RemoveAt(i);
+
+                    string updatedList = getUpdatedList();
+                    string[] args = { updatedList, handlerToRemove };
+                    client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, ""));
+                }
+            }
+            return View();
+        }
+
+
+        //public void RemoveHandlerFromList(string[] args)
+        //{
+        //    string[] directories = args[0].Split(';');
+        //    foreach (var dir in config.handlers)
+        //    {
+        //        if (!directories.Contains(dir))
+        //        {
+        //            //App.Current.Dispatcher.Invoke(delegate
+        //           // {
+        //                config.handlers.Remove(dir);
+        //            //});
+        //        }
+        //    }
+        //}
+
+        private string getUpdatedList()
+        {
+            string handlers = "";
+            for (int i = 0; i < config.handlers.Count; i++)
+            {
+                if (i != 0)
+                {
+                    handlers += ";";
+                }
+                handlers += config.handlers[i];
+            }
+            return handlers;
+        }
+
+        public void HandleCommand(CommandRecievedEventArgs e)
+        {
+            if (e.CommandID == (int)CommandEnum.GetConfigCommand)
             {
                 string[] args = e.Args;
                 config = new AppConfig();
@@ -93,7 +144,30 @@ namespace ImageServiceWeb.Controllers
                     config.handlers.Add(dir);
                 }
                 config.isReady = true;
+            } else if (e.CommandID == (int)CommandEnum.CloseHandler)
+            {
+                //RemoveHandlerFromList(e.Args);
             }
+        }
+
+        public int CountPictures()
+        {
+            string outputDirPath = config.OutputDir;
+            //Get Files in Specific directory
+            string[] directoryFiles = Directory.GetFiles(outputDirPath, "*", SearchOption.AllDirectories);
+            //initialize counter
+            int counter = 0;
+            //loop on file paths
+            foreach (string filePath in directoryFiles)
+            {
+                //check files extensions
+                if (Path.GetExtension(filePath) == ".jpg" || Path.GetExtension(filePath) == ".png" ||
+                    Path.GetExtension(filePath) == ".bmp" || Path.GetExtension(filePath) == ".gif")
+                {
+                    counter++;
+                }
+            }
+            return counter;
         }
     }
 }

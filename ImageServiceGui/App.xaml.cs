@@ -13,5 +13,6 @@ namespace ImageServiceGui
     /// </summary>
     public partial class App : Application
     {
+        public static object Current { get; set; }
     }
 }

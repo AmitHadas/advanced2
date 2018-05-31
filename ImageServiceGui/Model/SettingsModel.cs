@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using System.Collections.ObjectModel;
 using ImageServiceGui.ViewModel;
 using ImageServiceGui.Communication;
 using System.Windows.Data;
 using ImageService.Modal;
 using ImageService.Infrastructure.Enums;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace ImageServiceGui.Model
 {
