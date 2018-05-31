@@ -9,7 +9,8 @@
         <Grid.Resources>
             <Style x:Key="TextBlock">
                 <Setter Property="TextBlock.Margin" Value ="4"></Setter>
-                <Setter Property="TextBlock.FontStyle"
+                <Setter Property="TextBlock.FontStyle" Value="Italic"></Setter>
+                <Setter Property="TextBlock.FontSize" Value="20"></Setter>
             </Style>
         </Grid.Resources>
         <ScrollViewer Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch">
@@ -39,14 +40,15 @@
                     <TextBlock Grid.Row="3" Grid.Column="1" Text="    " Margin="4" FontSize="20" FontStyle="Italic" />
                     <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Settings" Margin="4" HorizontalAlignment="Center" 
                                FontSize="40" Foreground="BlueViolet" FontStyle="Italic" FontWeight="Bold" />
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Output Directory: " Margin="4" FontSize="20" FontStyle="Italic"/>
-                    <TextBlock Grid.Row = "3" Grid.Column="2" FontStyle="Italic" FontSize="20" Text="{Binding VM_OutputDir}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Source Name:" Margin="4" FontSize="20" FontStyle="Italic" />
-                    <TextBlock Grid.Row = "4" Grid.Column="2" FontStyle="Italic" FontSize="20" Text="{Binding VM_SourceName}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Log Name:" Margin="4" FontSize="20" FontStyle="Italic" />
-                    <TextBlock Grid.Row = "5" Grid.Column="2" FontStyle="Italic" FontSize="20" Text="{Binding VM_LogName}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Thumbnail Size:" Margin="4" FontSize="20" FontStyle="Italic"/>
-                    <TextBlock Grid.Row = "6" Grid.Column="2" FontStyle="Italic" FontSize="20" Text="{Binding VM_ThumbnailSize}"/>
+                
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Output Directory: " Style="{StaticResource TextBlock}"/>
+                    <TextBlock Grid.Row = "3" Grid.Column="2" Style="{StaticResource TextBlock}" Text="{Binding VM_OutputDir}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Source Name:" Style="{StaticResource TextBlock}" />
+                    <TextBlock Grid.Row = "4" Grid.Column="2" Style="{StaticResource TextBlock}" Text="{Binding VM_SourceName}"/>
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Log Name:" Style="{StaticResource TextBlock}" />
+                    <TextBlock Grid.Row = "5" Grid.Column="2" Style="{StaticResource TextBlock}" Text="{Binding VM_LogName}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Thumbnail Size:" Style="{StaticResource TextBlock}"/>
+                    <TextBlock Grid.Row = "6" Grid.Column="2" Style="{StaticResource TextBlock}" Text="{Binding VM_ThumbnailSize}"/>
                 </Grid>
                 <Button x:Name="btnRemove" FontSize="13" Height="25" Content="Remove" Command="{Binding RemoveCommand}"></Button>
                 <StackPanel>

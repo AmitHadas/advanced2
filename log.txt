@@ -1,3 +1,210 @@
+commit 2f8691cf9855ab3270ebdc30083c856420e3131c
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Sun May 27 14:33:42 2018 +0300
+
+    added style
+
+commit a2e73b1b6e94efe35c1c3fc17e639c73cbef615d
+Author: noa or <noaor7@gmail.com>
+Date:   Wed May 23 16:31:08 2018 +0300
+
+    finish comments wohoooo
+
+commit 32082d114287c465cafe4c193870c64418b15eb6
+Author: noa or <noaor7@gmail.com>
+Date:   Tue May 22 14:53:17 2018 +0300
+
+    finish wohoooo
+
+commit 9893ccab8d2abdd284d2ab160ca2e80cffb3f432
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Tue May 22 12:29:56 2018 +0300
+
+    server isn't null
+
+commit 9b0436fb6037ab7a4e0e6f8133c6630c7d2aba4c
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Mon May 21 11:37:14 2018 +0300
+
+    added remove handler command
+
+commit 5d2de7789360554ff6916b331f63245084e3c9d8
+Author: noa or <noaor7@gmail.com>
+Date:   Fri May 18 11:27:07 2018 +0300
+
+    close gui command
+
+commit ec0dc691038fc34149c1cbb83cbe237d24b00887
+Author: noa or <noaor7@gmail.com>
+Date:   Fri May 18 09:34:19 2018 +0300
+
+    try to fix log
+
+commit 9f90e2ff1f8d7efacf2b5db68f8735fa57f52959
+Author: noa or <noaor7@gmail.com>
+Date:   Thu May 17 19:26:05 2018 +0300
+
+    fix remove handler from all guis
+
+commit 661784d81fce23143e86d9d776853081883570b5
+Author: noa or <noaor7@gmail.com>
+Date:   Thu May 17 18:56:20 2018 +0300
+
+    settings?
+
+commit d07aa7af116355c3623bbd96a6d9290fa542fb34
+Author: noa or <noaor7@gmail.com>
+Date:   Thu May 17 17:48:48 2018 +0300
+
+    fix communication
+
+commit efbb0285a19abafd3adb20af3991575e2f742ce8
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Thu May 17 16:25:28 2018 +0300
+
+    binary reader & writer
+
+commit 9adcf4794eecb7704b85b0490ea8c986b2a65bd2
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Thu May 17 13:09:27 2018 +0300
+
+    add support of remove handler (have to fix)
+
+commit 96417d52eae66828ad8d8f28f82fc0ea32bd3a12
+Author: noa or <noaor7@gmail.com>
+Date:   Thu May 17 01:54:21 2018 +0300
+
+    merge
+
+commit a06f34986e29438c27b0e0c735efe36227b0e149
+Author: noa or <noaor7@gmail.com>
+Date:   Thu May 17 00:52:11 2018 +0300
+
+    hansled remove handler in app config
+
+commit 255e1e762508219aeb97568fb550b3e87d74dc09
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Thu May 17 00:28:22 2018 +0300
+
+    add support of is connect
+
+commit 4f49ea99ee488797661f91707d279ac4b845de75
+Author: noa or <noaor7@gmail.com>
+Date:   Wed May 16 23:21:07 2018 +0300
+
+    handled connection - logs
+
+commit bec344a272df7149d448fcbbbef3c599e5bf1b98
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Wed May 16 21:22:54 2018 +0300
+
+    change to stream reader
+
+commit 39a3315fcc984f890447168d68be7a8bf411a15a
+Merge: 1e564bf 4251631
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Wed May 16 19:11:52 2018 +0300
+
+    Merge branch 'master' of https://github.com/AmitHadas/advanced2.git
+
+commit 1e564bf9cde487356f940396032c2c4b80597d89
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Wed May 16 19:11:03 2018 +0300
+
+    debug log
+
+commit 42516317be138f506d9afd4dc60419fd285ea628
+Author: noa or <noaor7@gmail.com>
+Date:   Mon May 14 01:11:19 2018 +0300
+
+    log not working
+
+commit ff8bdd16bdb51db0a96102fee176b685c1bbe3dd
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Sun May 13 23:46:45 2018 +0300
+
+    fix communication
+
+commit 571b05b02ac25dac2dc2f8dc9fa9747a480b389e
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Thu May 10 14:06:31 2018 +0300
+
+    :)
+
+commit b7993028a604300eba0ea3e3eb37277d2d4643bc
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Wed May 9 23:55:41 2018 +0300
+
+    try to fix service
+
+commit 6b30c5ac35c331bd43a26fe1fe76d778a37cc83e
+Merge: 2c972df d4ef28c
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Tue May 8 16:56:00 2018 +0300
+
+    Merge branch 'master' of https://github.com/AmitHadas/advanced2.git
+
+commit 2c972df5fe584a7df4a1cbc2a810849ccdc5c5c0
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Tue May 8 16:55:52 2018 +0300
+
+    merge
+
+commit d4ef28ca3edd4bb10dff4476e016c3eae320f344
+Author: noa or <noaor7@gmail.com>
+Date:   Tue May 8 16:53:47 2018 +0300
+
+    fix interfaces
+
+commit f6c1f0fe7cef6dc53f09e82fa3024096e5c500c6
+Author: noa or <noaor7@gmail.com>
+Date:   Tue May 8 16:48:49 2018 +0300
+
+    added interfaces
+
+commit 57f9ed67f18ce4c222edb9b529605281acb74080
+Author: noa or <noaor7@gmail.com>
+Date:   Tue May 8 16:29:44 2018 +0300
+
+    fix log
+
+commit 27f84a5e8130a9f50cc0a42776b770dbee6226c0
+Author: noa or <noaor7@gmail.com>
+Date:   Mon May 7 14:39:06 2018 +0300
+
+    added background to log
+
+commit 45806df5971e8714254f9d7eb02c868bff890044
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Thu May 3 13:51:18 2018 +0300
+
+    fix remove button and scroll
+
+commit 8922d34b4c93e28317f957624d27bec82160a06c
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Wed May 2 19:51:41 2018 +0300
+
+    handle settings window
+
+commit d3fc5d35bb4de7398b4f922d860dca2ad82e1417
+Merge: 00e5115 11dde5f
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Wed May 2 15:53:52 2018 +0300
+
+    merge
+
+commit 00e5115cb58a0c61fe24166d26fbd7396a3a0950
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
+Date:   Wed May 2 15:52:06 2018 +0300
+
+    change log
+
+commit 11dde5f321eb014dd6291472da7072c941bc448a
+Author: noa or <noaor7@gmail.com>
+Date:   Wed May 2 15:04:19 2018 +0300
+
+    added the settings view, vm and model
+
 commit af18927255c454fe349e482ec1f54e636c1bf461
 Author: noa or <noaor7@gmail.com>
 Date:   Sun Apr 15 20:23:20 2018 +0300
@@ -5,13 +212,13 @@ Date:   Sun Apr 15 20:23:20 2018 +0300
     added comments
 
 commit 2338fb698932934f9030d4468e5f4a17d3018a15
-Author: noa or <noaor7@gmail.com>
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
 Date:   Sun Apr 15 00:48:48 2018 +0300
 
     handle duplicated images
 
 commit 43b5312e2fc30ba69793e1509afadbad78397705
-Author: noa or <noaor7@gmail.com>
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
 Date:   Sun Apr 15 00:39:26 2018 +0300
 
     handle create hidden directory
@@ -23,37 +230,37 @@ Date:   Fri Apr 13 14:47:43 2018 +0300
     add comments, fix creation time of image
 
 commit 1d47c9a1ddb3e742eb5c6f05bc4378725371c12b
-Author: noa or <noaor7@gmail.com>
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
 Date:   Wed Apr 11 21:50:35 2018 +0300
 
     fix lof name
 
 commit fbe29e0932cdf27787d17313db02c29c9c8f06c0
-Author: amit hadas <amitr.hadas@gmail.com>
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
 Date:   Wed Apr 4 19:56:00 2018 +0300
 
     handle service closing
 
 commit be38e484c3c766ababaf1dacfd72e283972d6a5f
-Author: amit hadas <amitr.hadas@gmail.com>
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
 Date:   Mon Apr 2 10:05:22 2018 +0300
 
     fix log
 
 commit 49928bbe78994f2dd7cfc9dec17ff85ae449c958
-Author: noa or <noaor7@gmail.com>
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
 Date:   Sun Apr 1 01:12:42 2018 +0300
 
     Initial Commit
 
 commit 523733d6e03960032757ce1275487ebb170ca700
-Author: amit hadas <amitr.hadas@gmail.com>
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
 Date:   Wed Mar 28 00:52:03 2018 +0300
 
     Add project files.
 
 commit fb23131e7dc5c360f59e2590ecb686cb74f88d66
-Author: noa or <noaor7@gmail.com>
+Author: מחשב <מחשב@DESKTOP-E5FKQN2>
 Date:   Wed Mar 28 00:52:01 2018 +0300
 
     Add .gitignore and .gitattributes.
