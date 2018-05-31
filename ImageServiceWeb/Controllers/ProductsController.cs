@@ -50,6 +50,7 @@ namespace ImageServiceWeb.Controllers
             if (!config.isReady) {
                 LoadConfig();
             }
+            while(!config.isReady) { }
             Data data = new Data();
             data.students = m_students;
             data.numOfPictures = CountPictures();
@@ -78,6 +79,7 @@ namespace ImageServiceWeb.Controllers
             {
                 LoadConfig();
             }
+            while (!config.isReady) { }
             return View(config);
         }
 
@@ -89,8 +91,14 @@ namespace ImageServiceWeb.Controllers
             string[] args = { };
             client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, args, ""));
         }
-
         public ActionResult DeleteHandler(string handlerToRemove)
+        {
+            Handler handler = new Handler();
+            handler.path = handlerToRemove;
+            return View(handler);
+        }
+
+        public void DeleteHandlerAnswer(string handlerToRemove)
         {
             for (int i = 0; i < config.handlers.Count; i++)
             {
@@ -103,7 +111,6 @@ namespace ImageServiceWeb.Controllers
                     client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, ""));
                 }
             }
-            return View();
         }
 
 
@@ -179,6 +186,10 @@ namespace ImageServiceWeb.Controllers
                 }
             }
             return counter;
+        }
+
+        public struct Handler{
+            public string path;
         }
     }
 }

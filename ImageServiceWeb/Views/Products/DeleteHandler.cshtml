@@ -1,6 +1,38 @@
-﻿
+﻿@model ImageServiceWeb.Controllers.ProductsController.Handler
 @{
     ViewBag.Title = "DeleteHandler";
 }
 
 <h2>DeleteHandler</h2>
+<br />
+<br />
+<br />
+
+
+<b>Are You Sure You Want To Delete Handler?</b>
+<br />
+<br />
+<br />
+<br />
+<br />
+
+@*<a> @Html.ActionLink("Yes", "DeleteHandlerAnswer", new { answer = true }, null) @Html.ActionLink("No", "DeleteHandlerAnswer", new { answer = false }, null) </a>*@
+
+<input type="button" id="OK" value="OK" />
+<input type="button" id="CANCEL" value="CANCEL" onclick='window.location="Config";' />
+<div>
+    @Html.ActionLink("Back to Config", "Config")
+</div>
+
+<script>
+
+    $("#OK").click(function () {
+        var input = {
+            handlerToRemove:@Html.Raw(Json.Encode(Model.path))
+        };
+        $.post("@Url.Action("DeleteHandlerAnswer")", input, function () { }, "json");
+        window.location = "Config";
+    });
+</script>
+
+

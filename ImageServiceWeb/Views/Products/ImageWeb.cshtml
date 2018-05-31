@@ -46,23 +46,3 @@
     </table>
 
 </div>
-
-<script>
-    $("#btnStart").click(function () {
-        $.getJSON("@Url.Action("GetEmployee")", function (empl) {
-            $("#prodId").text(empl.FirstName);
-            $("#prodName").text(empl.LastName);
-        });
-    });
-
-    $("#btnSearch").click(function () {
-        var input = {
-            name:$("#NameID").val(),
-            salary: $("#txtSalaryId").val()
-        };
-        $.post("@Url.Action("GetEmployee")", input, function (data) {
-            $("#lstProducts").append("<li>" + data.FirstName + " " + data.LastName + " : $" + data.Salary + "</li>");
-        }, "json");
-    });
-
-</script>
