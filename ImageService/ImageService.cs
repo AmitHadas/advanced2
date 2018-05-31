@@ -77,8 +77,7 @@ namespace ImageService
             LoggingService.NotifyLogEntry += tcpServer.NotifyAllClients;
             ImageServer.NotifyHandlerRemoved += tcpServer.NotifyAllClients;
             ImageServer.NotifyCloseGui += tcpServer.NotifyAllClients;
-            ImageServer.NotifyCloseGui += tcpServer.CallRemoveClient
-;
+            ImageServer.NotifyCloseGui += tcpServer.CallRemoveClient;
             tcpServer.Start();
         }
 
