@@ -14,6 +14,7 @@ namespace ImageServiceWeb.Controllers
 {
     public class ProductsController : Controller
     {
+        
 
         static ClientSingleton client = ClientSingleton.ClientInsatnce;
         static string[] s1 = ReadFromFile(1);
@@ -45,12 +46,10 @@ namespace ImageServiceWeb.Controllers
         public ActionResult ImageWeb()
         {
            
-            client.UpdateResponse += HandleCommand;
-            client.ReceivedCommand();
-            string[] args = { };
-            client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, args, ""));
             //Thread.Sleep(1000);
-            while (!config.isReady) { }
+            if (!config.isReady) {
+                LoadConfig();
+            }
             Data data = new Data();
             data.students = m_students;
             data.numOfPictures = CountPictures();
@@ -75,8 +74,20 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Config()
         {
-           // while (!config.isReady) { }
+            if (!config.isReady)
+            {
+                LoadConfig();
+            }
             return View(config);
+        }
+
+        private void LoadConfig()
+        {
+            while(client == null) { }
+            client.UpdateResponse += HandleCommand;
+            client.ReceivedCommand();
+            string[] args = { };
+            client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, args, ""));
         }
 
         public ActionResult DeleteHandler(string handlerToRemove)

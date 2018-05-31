@@ -27,9 +27,7 @@
             {
                 <tr>
                     <td>
-                        <a href="@Url.Action("DeleteHandler", "Products", new { handler = item})" style="font-size:15px">
-                            @Html.DisplayFor(modelItem => item)
-                        </a>
+                        <a> @Html.ActionLink(item, "DeleteHandler", new { handlerToRemove = item.ToString() }, null) </a>
                     </td>
                 </tr>
             }
