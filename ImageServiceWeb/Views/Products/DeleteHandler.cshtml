@@ -16,23 +16,47 @@
 <br />
 <br />
 
-@*<a> @Html.ActionLink("Yes", "DeleteHandlerAnswer", new { answer = true }, null) @Html.ActionLink("No", "DeleteHandlerAnswer", new { answer = false }, null) </a>*@
 
-<input type="button" id="OK" value="OK" />
-<input type="button" id="CANCEL" value="CANCEL" onclick='window.location="Config";' />
+@*<input type="button" id="OK" value="OK"/>
+<input type="button" id="CANCEL" value="CANCEL" onclick='window.location="Config";' />*@
+<button class="btn btn-primary" type="button" id="OK" style="margin:10px">OK</button>
+<button class="btn btn-primary" type="button" id="CANCEL" style="margin:10px">CANCEL</button>
 <div>
     @Html.ActionLink("Back to Config", "Config")
 </div>
 
 <script>
 
+
     $("#OK").click(function () {
+        
+        document.getElementById("OK").disabled = true;
+        document.getElementById("CANCEL").disabled = true;
+        
+        var path = localStorage['objectToPass'];
+        localStorage.removeItem('objectToPass'); // Clear the localStorage
         var input = {
-            handlerToRemove:@Html.Raw(Json.Encode(Model.path))
+            handlerToRemove: Model.path
+        };
+        $.post("@Url.Action("DeleteHandlerAnswer")", input, function (result) {
+            
+            window.location.href = "Config";
+            
+        });
+    });
+    
+    $("#CANCEL").click(function () {
+        window.location.href = "Config";
+    });
+
+
+    @*$("#OK").click(function () {
+        var input = {
+            handlerToRemove: @Html.Raw(Json.Encode(Model.path))
         };
         $.post("@Url.Action("DeleteHandlerAnswer")", input, function () { }, "json");
-        window.location = "Config";
-    });
+        window.location="Config";*@
+  //  });
 </script>
 
 
