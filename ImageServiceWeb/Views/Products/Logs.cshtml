@@ -9,7 +9,14 @@
 <p> Type: </p>
 <input type="text" id="typeID" size="5" />
 <input type="button" id="btnFilter" value="Filter" />
+@Html.ActionLink("OK", "FilterLogType", new { logType = item.value })
 
+<form action="/Form" method="post">
+    <label for="FirstName">First Name</label>
+    <input placeholder="Your name goes here" type="text" id="FirstName" name="FirstName" value="">
+    <input type="submit">
+    <input name="__RequestVerificationToken" type="hidden" value="<token_generated_here>">
+</form>
 
 
 <table class="table">

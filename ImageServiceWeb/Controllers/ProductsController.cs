@@ -64,6 +64,20 @@ namespace ImageServiceWeb.Controllers
 
             return View(data);
         }
+        public ActionResult Config()
+        {
+            if (!config.isReady)
+            {
+                LoadConfig();
+            }
+            while (!config.isReady) { }
+            return View(config);
+        }
+
+        public ActionResult Photos()
+        {
+            return View();
+        }
         public static string[] ReadFromFile(int line)
         {
             string[] lines = System.IO.File.ReadAllLines(HostingEnvironment.MapPath("~/App_Data/StudentsDetails.txt"));
@@ -77,16 +91,6 @@ namespace ImageServiceWeb.Controllers
             public List<Student> students;
             public string isServiceRunning;
             public int numOfPictures;
-        }
-
-        public ActionResult Config()
-        {
-            if (!config.isReady)
-            {
-                LoadConfig();
-            }
-            while (!config.isReady) { }
-            return View(config);
         }
 
         private void LoadConfig()
@@ -129,14 +133,6 @@ namespace ImageServiceWeb.Controllers
             }
             Thread.Sleep(5000);
             while (!isLogLoaded) { }
-            return View(logModel);
-        }
-
-        [HttpPost]
-        public ActionResult Logs(string logType)
-        {
-            logModel.FilterType = logType;
-            GetLogList(logType);
             return View(logModel);
         }
 
@@ -264,9 +260,7 @@ namespace ImageServiceWeb.Controllers
             }
         }
 
-
-        [HttpPost]
-        public JObject FilterLogList(string logType)
+        public ActionResult FilterLogType(string logType)
         {
             logModel.FilterType = logType;
             logModel.LogsToShow.Clear();
@@ -277,21 +271,7 @@ namespace ImageServiceWeb.Controllers
                     logModel.LogsToShow.Add(new Tuple<string, string>(log.Type, log.Info));
                 }
             }
-            return new JObject();
+            return RedirectToAction("Log");
         }
-
-        [HttpPost]
-        public JObject GetEmployee(string name, int salary)
-        {
-            logModel.FilterType = "INFO";
-            logModel.LogsToShow.Clear();
-            foreach (var log in logModel.Logs)
-            {
-                logModel.LogsToShow.Add(new Tuple<string, string>(log.Type, log.Info));
-
-            }
-            return null;
-        }
-
     }
 }
