@@ -32,6 +32,7 @@ namespace ImageServiceWeb.Controllers
           new Student  { FirstName = s1[0] , LastName =  s1[1], ID = s1[2] },
           new Student  { FirstName = s2[0] , LastName =  s2[1], ID = s2[2] }
         };
+
         static AppConfig config;
 
         public struct AppConfig
@@ -76,7 +77,9 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Photos()
         {
-            return View();
+            while (!config.isReady) { }
+            PhotosModel model = new PhotosModel(config.OutputDir);
+            return View(model);
         }
         public static string[] ReadFromFile(int line)
         {

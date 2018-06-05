@@ -1,38 +1,22 @@
-﻿
+﻿@model ImageServiceWeb.Models.PhotosModel
 @{
     ViewBag.Title = "Photos";
 }
 
 <h2>Photos</h2>
 
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-
+@foreach (var item in Model.ThumbPathList)
+{
     <div class="row">
         <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="C:\Users\User\Source\Repos\advanced2\ImageServiceWeb\OutputDir\Thumbnails\2018\4\smile.png" alt="noa" class="img-rounded">
-                <div class="caption">
-                    <h3>Thumbnail label</h3>
-                    <p>...</p>
-                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                </div>
+
+            <img src = item class="img-circle" alt="name" width="200" height="200">
+            <img src="~/Content/img/@Url.Content(item)" style="height:50px;width:100px;" />
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>...</p>
+                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
             </div>
         </div>
     </div>
-
-</body>
-</html>
+}
