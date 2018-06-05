@@ -6,6 +6,7 @@ using ImageService.Modal;
 using ImageService.Infrastructure.Enums;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Threading;
 
 namespace ImageServiceGui.Model
 {
@@ -177,11 +178,12 @@ namespace ImageServiceGui.Model
             {
                 if (!directories.Contains(dir))
                 {
-                    //App.Current.Dispatcher.Invoke((System.Action)delegate
+                   
+                    Dispatcher.CurrentDispatcher.Invoke((System.Action)delegate
 
-                    //{
-                    //    HandlersList.Remove(dir);
-                    //});
+                    {
+                        HandlersList.Remove(dir);
+                    });
                 }
             }
         }

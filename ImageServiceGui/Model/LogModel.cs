@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace ImageServiceGui.Model
 {
@@ -64,6 +65,8 @@ namespace ImageServiceGui.Model
                 OnPropertyChanged("Log List");
             }
         }
+
+        public object AppConfig { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogModel"/> class.
@@ -123,10 +126,11 @@ namespace ImageServiceGui.Model
                         if (!isFirstTime)
                         {
                             LogEntry newLog = JsonConvert.DeserializeObject<LogEntry>(e.Args[0]);
-                            //App.Current.Dispatcher.Invoke((System.Action)delegate
-                            //{
-                            //    LogList.Insert(0, newLog);
-                            //});
+                            Dispatcher.CurrentDispatcher.Invoke((System.Action)delegate
+                   //         App.Current.Dispatcher.Invoke((System.Action)delegate
+                            {
+                                LogList.Insert(0, newLog);
+                            });
                         }
                     }
                 }

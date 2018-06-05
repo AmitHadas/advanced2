@@ -96,6 +96,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -129,6 +130,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -146,6 +148,7 @@
     </Compile>
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\ImageWebModel.cs" />
+    <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -154,6 +157,7 @@
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -163,6 +167,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Products\Config.cshtml" />
     <Content Include="Views\Products\DeleteHandler.cshtml" />
+    <Content Include="Views\Products\Logs.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Web.Debug.config">
@@ -173,6 +178,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageServiceGui\ImageServiceGui.csproj">
+      <Project>{101E9419-4C68-4AC7-AED2-6E9A299DBB82}</Project>
+      <Name>ImageServiceGui</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageService\ImageService.csproj">
       <Project>{c4c651d7-7357-4836-b46b-d92f3cb07164}</Project>
       <Name>ImageService</Name>

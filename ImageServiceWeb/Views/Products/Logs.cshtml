@@ -1,0 +1,47 @@
+﻿@model  ImageServiceWeb.Models.LogModel
+
+@{
+    ViewBag.Title = "Logs";
+}
+
+<h2>Logs</h2>
+
+<p> Type: </p>
+<input type="text" id="typeID" size="5" />
+<input type="button" id="btnFilter" value="Filter" />
+
+
+
+<table class="table">
+    <tr>
+        <th> Type </th>
+        <th> Message </th>
+    </tr>
+
+    @foreach (var item in Model.LogsToShow)
+    {
+        <div>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item2)
+                </td>
+            </tr>
+        </div>
+    }
+</table>
+
+<script>
+
+    $("#btnFilter").click(function () {
+        var input = {
+            logType: $("#typeID").val(),
+        };
+        $.post("@Url.Action("FilterLogList")", input, function (data) { }, "json");
+    });
+
+</script>
+
+

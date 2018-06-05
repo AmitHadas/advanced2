@@ -8,19 +8,25 @@ using ImageService.Infrastructure.Enums;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.IO;
-
+using Newtonsoft.Json.Linq;
+using ImageService.Logging;
+using Newtonsoft.Json;
+using ImageServiceGui;
+using System;
+using System.Windows.Threading;
 
 namespace ImageServiceWeb.Controllers
 {
     public class ProductsController : Controller
     {
         
-
         static ClientSingleton client = ClientSingleton.ClientInsatnce;
         static string[] s1 = ReadFromFile(1);
         static string[] s2 = ReadFromFile(2);
         static string m_isServiceRunning = client.IsConnectedStr;
-        static int m_numOfPictures = 100;
+        static Mutex mtx = new Mutex();
+        static LogModel logModel;
+        static volatile bool isLogLoaded = false;
         static List<Student> m_students = new List<Student>()
         {
           new Student  { FirstName = s1[0] , LastName =  s1[1], ID = s1[2] },
@@ -35,7 +41,7 @@ namespace ImageServiceWeb.Controllers
             public string LogName;
             public string ThumbSize;
             public ObservableCollection<string> handlers;
-            public bool isReady;
+            public volatile bool isReady;
         }
 
         // GET: Products
@@ -98,7 +104,8 @@ namespace ImageServiceWeb.Controllers
             return View(handler);
         }
 
-        public void DeleteHandlerAnswer(string handlerToRemove)
+        [HttpPost]
+        public bool DeleteHandlerAnswer(string handlerToRemove)
         {
             for (int i = 0; i < config.handlers.Count; i++)
             {
@@ -111,23 +118,46 @@ namespace ImageServiceWeb.Controllers
                     client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, ""));
                 }
             }
+            return true;
         }
 
+        public ActionResult Logs()
+        {
+            if (logModel == null)
+            {
+                logModel = new LogModel();
+            }
+            Thread.Sleep(5000);
+            while (!isLogLoaded) { }
+            return View(logModel);
+        }
 
-        //public void RemoveHandlerFromList(string[] args)
-        //{
-        //    string[] directories = args[0].Split(';');
-        //    foreach (var dir in config.handlers)
-        //    {
-        //        if (!directories.Contains(dir))
-        //        {
-        //            //App.Current.Dispatcher.Invoke(delegate
-        //           // {
-        //                config.handlers.Remove(dir);
-        //            //});
-        //        }
-        //    }
-        //}
+        [HttpPost]
+        public ActionResult Logs(string logType)
+        {
+            logModel.FilterType = logType;
+            GetLogList(logType);
+            return View(logModel);
+        }
+
+        [HttpPost]
+        public void RemoveHandlerFromList(string[] args)
+        {
+            string[] directories = args[0].Split(';');
+            foreach (var dir in config.handlers)
+            {
+
+                if (!((IList<string>)directories).Contains(dir))
+                {
+                    Dispatcher.CurrentDispatcher.Invoke((System.Action)delegate
+                    {
+                        config.handlers.Remove(dir);
+
+                    });
+                }
+            }
+        }
+        [HttpPost]
 
         private string getUpdatedList()
         {
@@ -142,6 +172,7 @@ namespace ImageServiceWeb.Controllers
             }
             return handlers;
         }
+        [HttpPost]
 
         public void HandleCommand(CommandRecievedEventArgs e)
         {
@@ -164,10 +195,35 @@ namespace ImageServiceWeb.Controllers
                 config.isReady = true;
             } else if (e.CommandID == (int)CommandEnum.CloseHandler)
             {
-                //RemoveHandlerFromList(e.Args);
+                RemoveHandlerFromList(e.Args);
+            } else if (e.CommandID == (int)CommandEnum.GetLogList)
+            {
+                ObservableCollection<LogEntry> obsList = JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(e.Args[0]);
+                mtx.WaitOne();
+                foreach (LogEntry log in obsList)
+                {
+                    logModel.Logs.Add(log);
+                    logModel.LogsToShow.Add(new Tuple<string, string>(log.Type, log.Info));
+                }
+                isLogLoaded = true;
+                mtx.ReleaseMutex();
+            }
+            else if (e.CommandID == (int)CommandEnum.LogCommand)
+            {
+                if (logModel != null && logModel.Logs.Count != 0)
+                {
+                    LogEntry newLog = JsonConvert.DeserializeObject<LogEntry>(e.Args[0]);
+                    logModel.Logs.Add(newLog);
+                    if (newLog.Type == logModel.FilterType || logModel.FilterType == "")
+                    {
+                        logModel.LogsToShow.Add(new Tuple<string, string>(newLog.Type, newLog.Info));
+                    }
+                }
+
             }
         }
 
+        [HttpPost]
         public int CountPictures()
         {
             string outputDirPath = config.OutputDir;
@@ -188,8 +244,54 @@ namespace ImageServiceWeb.Controllers
             return counter;
         }
 
+        
         public struct Handler{
             public string path;
         }
+
+
+        [HttpPost]
+        public void GetLogList(string logType)
+        {
+            logModel.FilterType = logType;
+            logModel.LogsToShow.Clear();
+            foreach (LogEntry log in logModel.Logs)
+            {
+                if (log.Type == logType || logType == "" || logType == null)
+                {
+                    logModel.LogsToShow.Add(new Tuple<string, string>(log.Type, log.Info));
+                }
+            }
+        }
+
+
+        [HttpPost]
+        public JObject FilterLogList(string logType)
+        {
+            logModel.FilterType = logType;
+            logModel.LogsToShow.Clear();
+            foreach (LogEntry log in logModel.Logs)
+            {
+                if (log.Type == logType || logType == "" || logType == null)
+                {
+                    logModel.LogsToShow.Add(new Tuple<string, string>(log.Type, log.Info));
+                }
+            }
+            return new JObject();
+        }
+
+        [HttpPost]
+        public JObject GetEmployee(string name, int salary)
+        {
+            logModel.FilterType = "INFO";
+            logModel.LogsToShow.Clear();
+            foreach (var log in logModel.Logs)
+            {
+                logModel.LogsToShow.Add(new Tuple<string, string>(log.Type, log.Info));
+
+            }
+            return null;
+        }
+
     }
 }
