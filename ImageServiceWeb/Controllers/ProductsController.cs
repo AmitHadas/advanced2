@@ -77,6 +77,10 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Photos()
         {
+            if (!config.isReady)
+            {
+                LoadConfig();
+            }
             while (!config.isReady) { }
             PhotosModel model = new PhotosModel(config.OutputDir);
             return View(model);
@@ -275,6 +279,11 @@ namespace ImageServiceWeb.Controllers
                 }
             }
             return RedirectToAction("Log");
+        }
+
+        public ActionResult ViewPhoto(Image image)
+        {
+            return View(image);
         }
     }
 }
