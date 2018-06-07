@@ -1,38 +1,48 @@
-﻿
+﻿@model ImageServiceWeb.Models.PhotosModel
 @{
     ViewBag.Title = "Photos";
 }
 
 <h2>Photos</h2>
 
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-
-    <div class="row">
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <img src="C:\Users\User\Source\Repos\advanced2\ImageServiceWeb\OutputDir\Thumbnails\2018\4\smile.png" alt="noa" class="img-rounded">
+@foreach (var item in Model.ThumbPathList)
+{
+    <div>
+        <div class="col-sm-5 col-md-3">
+            <div class="thumnail">
+            <img src="@Url.Content(item.RelativeThumbnailImagePath)" class="img-circle" alt="Cinque Terre" width="242" height="200">
                 <div class="caption">
-                    <h3>Thumbnail label</h3>
-                    <p>...</p>
-                    <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <div class="table table-striped-group">
+                        <table>
+                            <tr>
+                                
+                                <td> @Html.LabelFor(m => item.ImageName, new { @class = "col-md-2 control-label" }) </td>
+                                <td> @Html.DisplayFor(modelItem => item.ImageName, new { @class = "col-md-2 control-label" }) </td>
 
-</body>
-</html>
+                            </tr>
+                            <tr>
+                                <td> @Html.LabelFor(m => item.Year, new { @class = "col-md-2 control-label" }) </td>
+                                <td> @Html.DisplayFor(modelItem => item.Year, new { @class = "col-md-2 control-label" }) </td>
+                               
+                            </tr>
+                            <tr>
+                               
+                                 <td> @Html.LabelFor(m => item.Month, new { @class = "col-md-2 control-label" }) </td>
+                                 <td>   @Html.DisplayFor(modelItem => item.Month, new { @class = "col-md-2 control-label" }) </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <p>
+                        @Html.ActionLink("View", "ViewPhoto", new { absoluteOriginalPath = item.AbsoluteOriginalImagePath, absoluteThumbPath = item.AbsoluteThumbnailImagePath,
+                        originalPath = item.RelativeOriginalImagePath, thumbPath = item.RelativeThumbnailImagePath }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Delete", "DeletePhoto", new { absoluteOriginalPath = item.AbsoluteOriginalImagePath, absoluteThumbPath = item.AbsoluteThumbnailImagePath,
+                        originalPath = item.RelativeOriginalImagePath, thumbPath = item.RelativeThumbnailImagePath }, new { @class = "btn btn-danger" })
+                    </p>
+
+                    </div>
+            </div>
+            <br />
+        </div>
+   </div>
+}

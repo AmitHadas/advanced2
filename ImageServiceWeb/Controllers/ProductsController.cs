@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using ImageServiceGui;
 using System;
 using System.Windows.Threading;
+using System.Text.RegularExpressions;
 
 namespace ImageServiceWeb.Controllers
 {
@@ -32,6 +33,7 @@ namespace ImageServiceWeb.Controllers
           new Student  { FirstName = s1[0] , LastName =  s1[1], ID = s1[2] },
           new Student  { FirstName = s2[0] , LastName =  s2[1], ID = s2[2] }
         };
+
         static AppConfig config;
 
         public struct AppConfig
@@ -76,7 +78,13 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Photos()
         {
-            return View();
+            if (!config.isReady)
+            {
+                LoadConfig();
+            }
+            while (!config.isReady) { }
+            PhotosModel model = new PhotosModel(config.OutputDir);
+            return View(model);
         }
         public static string[] ReadFromFile(int line)
         {
@@ -272,6 +280,30 @@ namespace ImageServiceWeb.Controllers
                 }
             }
             return RedirectToAction("Log");
+        }
+
+        public ActionResult ViewPhoto(string absoluteOriginalPath, string absoluteThumbPath, string originalPath, string thumbPath)
+        {
+            ImageModel image = new ImageModel(absoluteOriginalPath, absoluteThumbPath, originalPath, thumbPath);
+            return View(image);
+        }
+
+        public ActionResult DeletePhoto(string absoluteOriginalPath, string absoluteThumbPath, string originalPath, string thumbPath)
+        {
+            ImageModel image = new ImageModel(absoluteOriginalPath, absoluteThumbPath,originalPath, thumbPath);
+            return View(image);
+        }
+        public ActionResult BackToPhotos()
+        {
+            return RedirectToAction("Photos");
+        } 
+
+        public ActionResult DeletePhotoFromDirectory(string outputPath, string thumbnailPath)
+        {
+            System.IO.File.Delete(outputPath);
+            System.IO.File.Delete(thumbnailPath);
+
+            return RedirectToAction("Photos");
         }
     }
 }

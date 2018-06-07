@@ -1,0 +1,36 @@
+﻿@model  ImageServiceWeb.Models.ImageModel
+
+
+<h2>ViewPhoto</h2>
+
+<div>
+    <img src="@Url.Content(Model.RelativeOriginalImagePath)" />
+</div>
+
+
+<div class="table table-striped-group">
+    <table>
+        <tr>
+
+            <td> @Html.LabelFor(m => Model.ImageName, new { @class = "col-md-2 control-label" }) </td>
+            <td> @Html.DisplayFor(modelItem => Model.ImageName, new { @class = "col-md-2 control-label" }) </td>
+
+        </tr>
+        <tr>
+            <td> @Html.LabelFor(m => Model.Year, new { @class = "col-md-2 control-label" }) </td>
+            <td> @Html.DisplayFor(modelItem => Model.Year, new { @class = "col-md-2 control-label" }) </td>
+
+        </tr>
+        <tr>
+
+            <td> @Html.LabelFor(m => Model.Month, new { @class = "col-md-2 control-label" }) </td>
+            <td>   @Html.DisplayFor(modelItem => Model.Month, new { @class = "col-md-2 control-label" }) </td>
+        </tr>
+    </table>
+
+    <p>
+    @Html.ActionLink("Delete", "DeletePhoto", new { absoluteOriginalPath = Model.AbsoluteOriginalImagePath, absoluteThumbPath = Model.AbsoluteThumbnailImagePath,
+    originalPath = Model.RelativeOriginalImagePath, thumbPath = Model.RelativeThumbnailImagePath }, new { @class = "btn btn-danger" })
+    @Html.ActionLink("Back To Photos", "BackToPhotos", null, new { @class = "btn btn-primary" })
+    </p>
+</div>

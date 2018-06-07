@@ -1,0 +1,31 @@
+﻿@model  ImageServiceWeb.Models.ImageModel
+
+<h2>DeletePhoto</h2>
+
+<h2>"Are You Sure You Want To Delete The Photo?"</h2>
+<div class="table table-striped-group">
+    <table>
+        <tr>
+
+            <td> @Html.LabelFor(m => Model.ImageName, new { @class = "col-md-2 control-label" }) </td>
+            <td> @Html.DisplayFor(modelItem => Model.ImageName, new { @class = "col-md-2 control-label" }) </td>
+
+        </tr>
+        <tr>
+            <td> @Html.LabelFor(m => Model.Year, new { @class = "col-md-2 control-label" }) </td>
+            <td> @Html.DisplayFor(modelItem => Model.Year, new { @class = "col-md-2 control-label" }) </td>
+
+        </tr>
+        <tr>
+
+            <td> @Html.LabelFor(m => Model.Month, new { @class = "col-md-2 control-label" }) </td>
+            <td>   @Html.DisplayFor(modelItem => Model.Month, new { @class = "col-md-2 control-label" }) </td>
+        </tr>
+    </table>
+
+    <p>
+        @Html.ActionLink("Yes", "DeletePhotoFromDirectory", new { outputPath = Model.AbsoluteOriginalImagePath, thumbnailPath = Model.AbsoluteThumbnailImagePath },
+       new { @class = "btn btn-danger" })
+        @Html.ActionLink("Cancel", "BackToPhotos", null, new { @class = "btn btn-primary" })
+    </p>
+</div>
