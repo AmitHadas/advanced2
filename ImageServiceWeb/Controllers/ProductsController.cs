@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using ImageServiceGui;
 using System;
 using System.Windows.Threading;
+using System.Text.RegularExpressions;
 
 namespace ImageServiceWeb.Controllers
 {
@@ -281,9 +282,28 @@ namespace ImageServiceWeb.Controllers
             return RedirectToAction("Log");
         }
 
-        public ActionResult ViewPhoto(Image image)
+        public ActionResult ViewPhoto(string absoluteOriginalPath, string absoluteThumbPath, string originalPath, string thumbPath)
         {
+            ImageModel image = new ImageModel(absoluteOriginalPath, absoluteThumbPath, originalPath, thumbPath);
             return View(image);
+        }
+
+        public ActionResult DeletePhoto(string absoluteOriginalPath, string absoluteThumbPath, string originalPath, string thumbPath)
+        {
+            ImageModel image = new ImageModel(absoluteOriginalPath, absoluteThumbPath,originalPath, thumbPath);
+            return View(image);
+        }
+        public ActionResult BackToPhotos()
+        {
+            return RedirectToAction("Photos");
+        } 
+
+        public ActionResult DeletePhotoFromDirectory(string outputPath, string thumbnailPath)
+        {
+            System.IO.File.Delete(outputPath);
+            System.IO.File.Delete(thumbnailPath);
+
+            return RedirectToAction("Photos");
         }
     }
 }

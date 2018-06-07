@@ -1,13 +1,8 @@
 ﻿@model  ImageServiceWeb.Models.ImageModel
 
+<h2>DeletePhoto</h2>
 
-<h2>ViewPhoto</h2>
-
-<div>
-    <img src="@Url.Content(Model.RelativeOriginalImagePath)" />
-</div>
-
-
+<h2>"Are You Sure You Want To Delete The Photo?"</h2>
 <div class="table table-striped-group">
     <table>
         <tr>
@@ -29,8 +24,8 @@
     </table>
 
     <p>
-    @Html.ActionLink("Delete", "DeletePhoto", new { absoluteOriginalPath = Model.AbsoluteOriginalImagePath, absoluteThumbPath = Model.AbsoluteThumbnailImagePath,
-    originalPath = Model.RelativeOriginalImagePath, thumbPath = Model.RelativeThumbnailImagePath }, new { @class = "btn btn-danger" })
-    @Html.ActionLink("Back To Photos", "BackToPhotos", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Yes", "DeletePhotoFromDirectory", new { outputPath = Model.AbsoluteOriginalImagePath, thumbnailPath = Model.AbsoluteThumbnailImagePath },
+       new { @class = "btn btn-danger" })
+        @Html.ActionLink("Cancel", "BackToPhotos", null, new { @class = "btn btn-primary" })
     </p>
 </div>

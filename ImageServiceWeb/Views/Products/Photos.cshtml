@@ -10,7 +10,7 @@
     <div>
         <div class="col-sm-5 col-md-3">
             <div class="thumnail">
-            <img src="@Url.Content(item.ImagePath)" class="img-circle" alt="Cinque Terre" width="242" height="200">
+            <img src="@Url.Content(item.RelativeThumbnailImagePath)" class="img-circle" alt="Cinque Terre" width="242" height="200">
                 <div class="caption">
                     <div class="table table-striped-group">
                         <table>
@@ -34,9 +34,10 @@
                     </div>
 
                     <p>
-
-                        @Html.ActionLink("View", "ViewPhoto", new { item }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Delete", "DeletePhoto", new { item }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("View", "ViewPhoto", new { absoluteOriginalPath = item.AbsoluteOriginalImagePath, absoluteThumbPath = item.AbsoluteThumbnailImagePath,
+                        originalPath = item.RelativeOriginalImagePath, thumbPath = item.RelativeThumbnailImagePath }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Delete", "DeletePhoto", new { absoluteOriginalPath = item.AbsoluteOriginalImagePath, absoluteThumbPath = item.AbsoluteThumbnailImagePath,
+                        originalPath = item.RelativeOriginalImagePath, thumbPath = item.RelativeThumbnailImagePath }, new { @class = "btn btn-danger" })
                     </p>
 
                     </div>

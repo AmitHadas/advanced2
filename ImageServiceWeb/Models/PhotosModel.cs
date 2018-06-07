@@ -9,18 +9,32 @@ namespace ImageServiceWeb.Models
 {
     public class PhotosModel
     {
-        public List<Image> ThumbPathList { get; set; }
+        public List<ImageModel> ThumbPathList { get; set; }
 
         public PhotosModel(string outputDir)
         {
-            ThumbPathList = new List<Image>();
+            ThumbPathList = new List<ImageModel>();
             string thumbnailPath = outputDir + "\\Thumbnails";
-            string[] directoryFiles = Directory.GetFiles(thumbnailPath, "*", SearchOption.AllDirectories);
-            foreach (string photo in directoryFiles)
+            string[] directoryFilesThumb = Directory.GetFiles(thumbnailPath, "*", SearchOption.AllDirectories);
+            string[] directoryFilesOrigin = Directory.GetFiles(outputDir, "*", SearchOption.AllDirectories);
+            foreach (string photo in directoryFilesOrigin)
             {
-                var tokens = Regex.Split(photo, "OutputDir");
-                string pathPhoto = "..\\..\\OutputDir" + tokens[1]; 
-                ThumbPathList.Add(new Image(pathPhoto));
+
+                if (!photo.Contains("Thumbnails"))
+                {
+                    var tokens = Regex.Split(photo, "OutputDir");
+                    string originPathPhoto = "..\\..\\OutputDir" + tokens[1];
+                    // thumbnail photo path
+                    foreach (string thumbPhoto in directoryFilesThumb)
+                    {
+                        if (Path.GetFileName(thumbPhoto) == Path.GetFileName(photo)) {
+                            var tokens1 = Regex.Split(thumbPhoto, "OutputDir");
+                            string thumbPathPhoto = "..\\..\\OutputDir" + tokens1[1];
+                            ThumbPathList.Add(new ImageModel(photo, thumbPhoto,originPathPhoto, thumbPathPhoto));
+                        }
+
+                    }
+                }
             }
         }
 
