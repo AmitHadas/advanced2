@@ -9,14 +9,10 @@
 <p> Type: </p>
 <input type="text" id="typeID" size="5" />
 <input type="button" id="btnFilter" value="Filter" />
-@Html.ActionLink("OK", "FilterLogType", new { logType = "aaa" })
+<input type="submit" id="btnOK" value="OK" class="btn btn-primary btn-sm" />
+@Html.ActionLink("OK", "FilterLogType", new { logType = "ERROR" })
 
-<form action="/Form" method="post">
-    <label for="FirstName">First Name</label>
-    <input placeholder="Your name goes here" type="text" id="FirstName" name="FirstName" value="">
-    <input type="submit">
-    <input name="__RequestVerificationToken" type="hidden" value="<token_generated_here>">
-</form>
+
 
 
 <table class="table">
@@ -42,11 +38,11 @@
 
 <script>
 
-    $("#btnFilter").click(function () {
+    $("#btnOK").click(function () {
         var input = {
             logType: $("#typeID").val(),
         };
-        $.post("@Url.Action("FilterLogList")", input, function (data) { }, "json");
+        $.post("@Url.Action("FilterLogType")", input, function (data) { }, "json");
     });
 
 </script>

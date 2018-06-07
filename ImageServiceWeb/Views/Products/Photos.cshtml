@@ -5,14 +5,29 @@
 
 <h2>Photos</h2>
 
+
+@*css*@
+<head>
+    <style>
+        h1 {
+            color: mediumspringgreen;
+            font-weight: bold;
+        }
+
+        .img-circle {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
 @foreach (var item in Model.ThumbPathList)
 {
     <div>
         <div class="col-sm-5 col-md-3">
-            <div class="thumnail">
+            <div style="border:thin">
             <img src="@Url.Content(item.RelativeThumbnailImagePath)" class="img-circle" alt="Cinque Terre" width="242" height="200">
                 <div class="caption">
-                    <div class="table table-striped-group">
+                    <div class="table table-striped-group";"thumbnail">
                         <table>
                             <tr>
                                 

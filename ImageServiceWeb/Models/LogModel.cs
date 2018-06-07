@@ -24,6 +24,12 @@ namespace ImageServiceWeb.Models
         {
             Logs = new ObservableCollection<LogEntry>();
             LogsToShow = new ObservableCollection<Tuple<string, string>>();
+            LogsToShow.Add(new Tuple<string, string>("WARNING", "hi im warning log"));
+            LogsToShow.Add(new Tuple<string, string>("WARNING", "hi im warning log2"));
+            LogsToShow.Add(new Tuple<string, string>("ERROR", "hi im ERROR log"));
+            LogsToShow.Add(new Tuple<string, string>("ERROR", "hi im ERROR log2"));
+
+
             FilterType = "";
             ClientSingleton client = ClientSingleton.ClientInsatnce;
             string[] args = { };

@@ -116,8 +116,7 @@ namespace ImageServiceWeb.Controllers
             return View(handler);
         }
 
-        [HttpPost]
-        public bool DeleteHandlerAnswer(string handlerToRemove)
+        public ActionResult DeleteHandlerAnswer(string handlerToRemove)
         {
             for (int i = 0; i < config.handlers.Count; i++)
             {
@@ -130,7 +129,7 @@ namespace ImageServiceWeb.Controllers
                     client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.CloseHandler, args, ""));
                 }
             }
-            return true;
+            return RedirectToAction("Config");
         }
 
         public ActionResult Logs()
@@ -279,7 +278,7 @@ namespace ImageServiceWeb.Controllers
                     logModel.LogsToShow.Add(new Tuple<string, string>(log.Type, log.Info));
                 }
             }
-            return RedirectToAction("Log");
+            return RedirectToAction("Logs");
         }
 
         public ActionResult ViewPhoto(string absoluteOriginalPath, string absoluteThumbPath, string originalPath, string thumbPath)
@@ -304,6 +303,11 @@ namespace ImageServiceWeb.Controllers
             System.IO.File.Delete(thumbnailPath);
 
             return RedirectToAction("Photos");
+        }
+
+        public ActionResult BackToConfig()
+        {
+            return RedirectToAction("Config");
         }
     }
 }

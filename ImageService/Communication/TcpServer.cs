@@ -126,6 +126,7 @@ namespace ImageService.Communication
                     }
                     catch (Exception ex)
                     {
+                        mtx.ReleaseMutex();
                         m_logging.Log(ex.ToString(), MessageTypeEnum.FAIL);
                     }
                 }).Start();
