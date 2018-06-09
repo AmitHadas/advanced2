@@ -23,8 +23,7 @@
 @foreach (var item in Model.ThumbPathList)
 {
     <div>
-        <div class="col-sm-5 col-md-3">
-            <div style="border:thin">
+        <div class="col-sm-5 col-md-3"  style="stroke:blue">
             <img src="@Url.Content(item.RelativeThumbnailImagePath)" class="img-circle" alt="Cinque Terre" width="242" height="200">
                 <div class="caption">
                     <div class="table table-striped-group";"thumbnail">
@@ -54,8 +53,6 @@
                         @Html.ActionLink("Delete", "DeletePhoto", new { absoluteOriginalPath = item.AbsoluteOriginalImagePath, absoluteThumbPath = item.AbsoluteThumbnailImagePath,
                         originalPath = item.RelativeOriginalImagePath, thumbPath = item.RelativeThumbnailImagePath }, new { @class = "btn btn-danger" })
                     </p>
-
-                    </div>
             </div>
             <br />
         </div>

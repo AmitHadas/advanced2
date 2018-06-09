@@ -14,28 +14,34 @@ namespace ImageServiceWeb.Models
         public PhotosModel(string outputDir)
         {
             ThumbPathList = new List<ImageModel>();
-            string thumbnailPath = outputDir + "\\Thumbnails";
-            string[] directoryFilesThumb = Directory.GetFiles(thumbnailPath, "*", SearchOption.AllDirectories);
-            string[] directoryFilesOrigin = Directory.GetFiles(outputDir, "*", SearchOption.AllDirectories);
-            foreach (string photo in directoryFilesOrigin)
+            if (outputDir != "")
             {
-
-                if (!photo.Contains("Thumbnails"))
+               // ThumbPathList = new List<ImageModel>();
+                string thumbnailPath = outputDir + "\\Thumbnails";
+                string[] directoryFilesThumb = Directory.GetFiles(thumbnailPath, "*", SearchOption.AllDirectories);
+                string[] directoryFilesOrigin = Directory.GetFiles(outputDir, "*", SearchOption.AllDirectories);
+                foreach (string photo in directoryFilesOrigin)
                 {
-                    var tokens = Regex.Split(photo, "OutputDir");
-                    string originPathPhoto = "..\\..\\OutputDir" + tokens[1];
-                    // thumbnail photo path
-                    foreach (string thumbPhoto in directoryFilesThumb)
-                    {
-                        if (Path.GetFileName(thumbPhoto) == Path.GetFileName(photo)) {
-                            var tokens1 = Regex.Split(thumbPhoto, "OutputDir");
-                            string thumbPathPhoto = "..\\..\\OutputDir" + tokens1[1];
-                            ThumbPathList.Add(new ImageModel(photo, thumbPhoto,originPathPhoto, thumbPathPhoto));
-                        }
 
+                    if (!photo.Contains("Thumbnails"))
+                    {
+                        var tokens = Regex.Split(photo, "OutputDir");
+                        string originPathPhoto = "..\\..\\OutputDir" + tokens[1];
+                        // thumbnail photo path
+                        foreach (string thumbPhoto in directoryFilesThumb)
+                        {
+                            if (Path.GetFileName(thumbPhoto) == Path.GetFileName(photo))
+                            {
+                                var tokens1 = Regex.Split(thumbPhoto, "OutputDir");
+                                string thumbPathPhoto = "..\\..\\OutputDir" + tokens1[1];
+                                ThumbPathList.Add(new ImageModel(photo, thumbPhoto, originPathPhoto, thumbPathPhoto));
+                            }
+
+                        }
                     }
                 }
             }
+
         }
 
     }

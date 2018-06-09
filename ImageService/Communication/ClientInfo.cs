@@ -39,18 +39,7 @@ namespace ImageService.Communication
             get { return m_stream; }
             set { m_stream = value; }
         }
-        //private BinaryReader m_reader;
-        //public BinaryReader Reader
-        //{
-        //    get { return m_reader; }
-        //    set { m_reader = value; }
-        //}
-        //private BinaryWriter m_writer;
-        //public BinaryWriter Writer
-        //{
-        //    get { return m_writer; }
-        //    set { m_writer = value; }
-        //}
+       
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientInfo"/> class.
         /// </summary>

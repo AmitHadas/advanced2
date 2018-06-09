@@ -130,6 +130,7 @@ namespace ImageServiceWeb.Communication
             }
             catch (Exception e)
             {
+                m_isListening = false;
                 Console.WriteLine(e.ToString());
                 return false;
             }

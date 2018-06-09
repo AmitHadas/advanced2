@@ -96,7 +96,7 @@ namespace ImageService.Communication
                                 string[] args = { JsonConvert.SerializeObject(client) };
                                 CommandRecievedEventArgs closeCommand = new CommandRecievedEventArgs((int)CommandEnum.CloseGui, args, "");
                                 m_controller.ExecuteCommand(closeCommand.CommandID, closeCommand.Args, out res);
-                                m_logging.Log("Client disconnected", Logging.Modal.MessageTypeEnum.INFO);
+                                m_logging.Log("Client disconnected", Logging.Modal.MessageTypeEnum.WARNING);
                                 break;
                             }
                             string result = m_controller.ExecuteCommand(command.CommandID, command.Args, out res);
@@ -109,6 +109,7 @@ namespace ImageService.Communication
                                 mtx.ReleaseMutex();
                             } catch(Exception e)
                             {
+                                m_logging.Log("Client disconnected", Logging.Modal.MessageTypeEnum.WARNING);
                                 RemoveClient?.Invoke(client);
                             }
                         }
@@ -121,7 +122,6 @@ namespace ImageService.Communication
                     }
 
                 }
-                // client.Close();
             }).Start();
         }
     }

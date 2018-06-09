@@ -104,10 +104,24 @@ namespace ImageServiceWeb.Controllers
         private void LoadConfig()
         {
             while(client == null) { }
-            client.UpdateResponse += HandleCommand;
-            client.ReceivedCommand();
-            string[] args = { };
-            client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, args, ""));
+            if (!client.IsConnected)
+            {
+                config = new AppConfig();
+
+                config.OutputDir = "";
+                config.SourceName = "";
+                config.LogName = "";
+                config.ThumbSize = "";
+                config.handlers = new ObservableCollection<string>();
+                config.isReady = true;
+            }
+            else
+            {
+                client.UpdateResponse += HandleCommand;
+                client.ReceivedCommand();
+                string[] args = { };
+                client.SendCommand(new CommandRecievedEventArgs((int)CommandEnum.GetConfigCommand, args, ""));
+            }
         }
         public ActionResult DeleteHandler(string handlerToRemove)
         {
@@ -139,7 +153,9 @@ namespace ImageServiceWeb.Controllers
                 logModel = new LogModel();
             }
             Thread.Sleep(5000);
+            if (logModel.isConnected) { 
             while (!isLogLoaded) { }
+        }
             return View(logModel);
         }
 
@@ -229,6 +245,10 @@ namespace ImageServiceWeb.Controllers
         [HttpPost]
         public int CountPictures()
         {
+            if(!client.IsConnected)
+            {
+                return 0;
+            }
             string outputDirPath = config.OutputDir;
             //Get Files in Specific directory
             string[] directoryFiles = Directory.GetFiles(outputDirPath, "*", SearchOption.AllDirectories);

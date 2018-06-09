@@ -20,6 +20,8 @@ namespace ImageServiceWeb.Models
         public ObservableCollection<Tuple<string, string>> LogsToShow { get; set; }
 
         public string FilterType { get; set; }
+
+        public bool isConnected { get; set; }
         public LogModel()
         {
             Logs = new ObservableCollection<LogEntry>();
@@ -32,10 +34,16 @@ namespace ImageServiceWeb.Models
 
             FilterType = "";
             ClientSingleton client = ClientSingleton.ClientInsatnce;
-            string[] args = { };
-            CommandRecievedEventArgs e = new CommandRecievedEventArgs((int)CommandEnum.GetLogList, args, "");
-            client.SendCommand(e);
-          //  Thread.Sleep(1000);
+            if (client.IsConnected)
+            {
+                this.isConnected = true;
+                string[] args = { };
+                CommandRecievedEventArgs e = new CommandRecievedEventArgs((int)CommandEnum.GetLogList, args, "");
+                client.SendCommand(e);
+            } else
+            {
+                this.isConnected = false;
+            }
 
         }
 
