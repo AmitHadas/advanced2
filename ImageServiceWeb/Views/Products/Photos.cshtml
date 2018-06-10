@@ -22,29 +22,34 @@
 
 @foreach (var item in Model.ThumbPathList)
 {
-    <div>
-        <div class="col-sm-5 col-md-3"  style="stroke:blue">
+    <div style="stroke:black">
+        <div class="col-sm-5 col-md-3"  style="stroke:black">
+            <hr style="font-size:large;color:black"/>
             <img src="@Url.Content(item.RelativeThumbnailImagePath)" class="img-circle" alt="Cinque Terre" width="242" height="200">
-                <div class="caption">
-                    <div class="table table-striped-group";"thumbnail">
+                <div class="caption" style="stroke:black">
+                    <div class="table table-striped-group";"thumbnail" >
                         <table>
                             <tr>
                                 
                                 <td> @Html.LabelFor(m => item.ImageName, new { @class = "col-md-2 control-label" }) </td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <td> @Html.DisplayFor(modelItem => item.ImageName, new { @class = "col-md-2 control-label" }) </td>
 
                             </tr>
                             <tr>
                                 <td> @Html.LabelFor(m => item.Year, new { @class = "col-md-2 control-label" }) </td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <td> @Html.DisplayFor(modelItem => item.Year, new { @class = "col-md-2 control-label" }) </td>
                                
                             </tr>
                             <tr>
                                
                                  <td> @Html.LabelFor(m => item.Month, new { @class = "col-md-2 control-label" }) </td>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                  <td>   @Html.DisplayFor(modelItem => item.Month, new { @class = "col-md-2 control-label" }) </td>
                             </tr>
                         </table>
+                        <hr style="font-size:large;color:black" />
                     </div>
 
                     <p>

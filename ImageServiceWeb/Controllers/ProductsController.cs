@@ -148,6 +148,12 @@ namespace ImageServiceWeb.Controllers
 
         public ActionResult Logs()
         {
+            if (!config.isReady)
+            {
+                LoadConfig();
+            }
+            while (!config.isReady) { }
+
             if (logModel == null)
             {
                 logModel = new LogModel();
