@@ -146,8 +146,9 @@ namespace ImageServiceWeb.Controllers
             return RedirectToAction("Config");
         }
 
-        public ActionResult Logs()
+        public ActionResult Logs(string filterByType)
         {
+
             if (!config.isReady)
             {
                 LoadConfig();
@@ -162,6 +163,10 @@ namespace ImageServiceWeb.Controllers
             if (logModel.isConnected) { 
             while (!isLogLoaded) { }
         }
+            if (filterByType != null)
+            {
+                return FilterLogType(filterByType);
+            }
             return View(logModel);
         }
 

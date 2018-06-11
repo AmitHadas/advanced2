@@ -72,6 +72,8 @@ namespace ImageService.Communication
                 m_listener.Start();
 
                 m_logging.Log("Waiting for connections ...", MessageTypeEnum.INFO);
+                m_logging.Log("hi", MessageTypeEnum.WARNING);
+
                 Task task = new Task(() => {
                     while (true)
                     {
